@@ -1,15 +1,53 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+// Main en el paquete por defecto (sin "package")
+import java.sql.*;
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+public class Main {
+
+    // Opción A: H2 EMBEBIDA EN MEMORIA (se borra al cerrar el proceso)
+    //private static final String URL  = "jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1";
+    // Opción B: H2 EMBEBIDA EN ARCHIVO (persistente) -> descomenta y crea la carpeta 'data'
+    private static final String URL  = "jdbc:h2:file:./data/demo;AUTO_SERVER=TRUE";
+
+    private static final String USER = "sa";
+    private static final String PASS = "";
+
+    public static void main(String[] args) {
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
+            // 1) Crear tabla
+            try (Statement st = conn.createStatement()) {
+                st.execute("""
+                    CREATE TABLE IF NOT EXISTS persona (
+                      id IDENTITY PRIMARY KEY,
+                      nombre VARCHAR(100) NOT NULL,
+                      edad INT
+                    )
+                """);
+            }
+
+            // 2) Insertar datos
+            try (PreparedStatement ps = conn.prepareStatement(
+                    "INSERT INTO persona(nombre, edad) VALUES (?,?)")) {
+                ps.setString(1, "Ana");    ps.setInt(2, 25); ps.executeUpdate();
+                ps.setString(1, "Carlos"); ps.setInt(2, 31); ps.executeUpdate();
+            }
+
+            // 3) Consultar y mostrar
+            try (PreparedStatement ps = conn.prepareStatement(
+                    "SELECT id, nombre, edad FROM persona ORDER BY id");
+                 ResultSet rs = ps.executeQuery()) {
+
+                System.out.println("== Personas ==");
+                while (rs.next()) {
+                    long id = rs.getLong("id");
+                    String nombre = rs.getString("nombre");
+                    int edad = rs.getInt("edad");
+                    System.out.printf("%d | %s | %d%n", id, nombre, edad);
+                }
+            }
+
+            System.out.println("\nOK: H2 embebida funcionando -> " + URL);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 }
