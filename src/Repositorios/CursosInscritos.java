@@ -12,6 +12,9 @@ public class CursosInscritos implements Servicios {
     private List<Inscripcion> inscripcion;
 
     public CursosInscritos() {}
+    public CursosInscritos(List<Inscripcion> inscripcion) {
+        this.inscripcion = inscripcion;
+    }
 
     @Override
     public String imprimirPosicion(int posicion){
@@ -36,7 +39,9 @@ public class CursosInscritos implements Servicios {
     }
 
     public void inscribirCurso(Inscripcion inscripcion){
-
+        if(inscripcion != null){
+            this.inscripcion.add(inscripcion);
+        }
     }
     public void eliminar(Inscripcion inscripcion){
 
