@@ -48,7 +48,7 @@ public class InscripcionesPersonas implements Servicios {
     }
 
     public void eliminar(Persona persona){
-        if (persona != null && listado.contains(persona)) {
+        if ((persona != null) && listado.contains(persona)) {
             listado.remove(persona);
         } else {
             System.out.println("No se puede eliminar una persona nula o que no está inscrita.");
