@@ -66,6 +66,7 @@ public class CursosInscritos implements Servicios {
     public void guardarInformacion(Inscripcion inscripcion){
 
     }
+    
     public String toString(){
         StringBuilder sb = new StringBuilder();
         for (Inscripcion I : inscripcion) {

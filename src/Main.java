@@ -1,53 +1,80 @@
 // Main en el paquete por defecto (sin "package")
-import java.sql.*;
+import java.util.Arrays;
+import java.util.List;
+
+import java.util.Date; 
+import Modelos.Cursos.CursoProfesor;
+import Modelos.Personas.Persona;
+import Modelos.Personas.Profesor;
+import Modelos.Universidad.Curso;
+import Modelos.Universidad.Facultad;
+import Modelos.Universidad.Programa;
+import Repositorios.CursosProfesores;
+import Repositorios.DB;
 
 public class Main {
 
-    // Opción A: H2 EMBEBIDA EN MEMORIA (se borra al cerrar el proceso)
-    //private static final String URL  = "jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1";
-    // Opción B: H2 EMBEBIDA EN ARCHIVO (persistente) -> descomenta y crea la carpeta 'data'
-    private static final String URL  = "jdbc:h2:file:./data/demo;AUTO_SERVER=TRUE";
+   public static List<CursoProfesor> datosIniciales(){
+      // ====== Personas y facultades ======
+      Persona decanoIng = new Persona(9001d, "Laura", "Mejía", "laura.mejia@uni.com");
+      Persona decanoCiencias = new Persona(9002d, "Héctor", "Núñez", "hector.nunez@uni.com");
 
-    private static final String USER = "sa";
-    private static final String PASS = "";
+      Facultad facIng      = new Facultad(1d, "Ingeniería",         decanoIng);
+      Facultad facCiencias = new Facultad(2d, "Ciencias Exactas",   decanoCiencias);
 
-    public static void main(String[] args) {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASS)) {
-            // 1) Crear tabla
-            try (Statement st = conn.createStatement()) {
-                st.execute("""
-                    CREATE TABLE IF NOT EXISTS persona (
-                      id IDENTITY PRIMARY KEY,
-                      nombre VARCHAR(100) NOT NULL,
-                      edad INT
-                    )
-                """);
-            }
+      // ====== Programas ======
+      Programa progSis = new Programa(1d, "Ingeniería de Sistemas", 10d, new Date(), facIng);
+      Programa progMat = new Programa(2d, "Matemáticas",             8d, new Date(), facCiencias);
 
-            // 2) Insertar datos
-            try (PreparedStatement ps = conn.prepareStatement(
-                    "INSERT INTO persona(nombre, edad) VALUES (?,?)")) {
-                ps.setString(1, "Ana");    ps.setInt(2, 25); ps.executeUpdate();
-                ps.setString(1, "Carlos"); ps.setInt(2, 31); ps.executeUpdate();
-            }
+      // ====== Cursos ======
+      Curso cursoProg1 = new Curso(101, "Programación I",       progSis, true);
+      Curso cursoED    = new Curso(102, "Estructuras de Datos", progSis, true);
+      Curso cursoBD    = new Curso(103, "Bases de Datos",       progMat, true);
 
-            // 3) Consultar y mostrar
-            try (PreparedStatement ps = conn.prepareStatement(
-                    "SELECT id, nombre, edad FROM persona ORDER BY id");
-                 ResultSet rs = ps.executeQuery()) {
+      // ====== Profesores (extienden Persona) ======
+      Profesor profAna    = new Profesor(1001d, "Ana",    "García", "ana.garcia@uni.com",    "Tiempo completo");
+      Profesor profCarlos = new Profesor(1002d, "Carlos", "López",  "carlos.lopez@uni.com",  "Cátedra");
+      Profesor profMaria  = new Profesor(1003d, "María",  "Ruiz",   "maria.ruiz@uni.com",    "Medio tiempo");
 
-                System.out.println("== Personas ==");
-                while (rs.next()) {
-                    long id = rs.getLong("id");
-                    String nombre = rs.getString("nombre");
-                    int edad = rs.getInt("edad");
-                    System.out.printf("%d | %s | %d%n", id, nombre, edad);
-                }
-            }
+      // ====== Asignaciones Curso-Profesor (anio, semestre) ======
+      CursoProfesor cp1 = new CursoProfesor(profAna,    2025, 1, cursoProg1);
+      CursoProfesor cp2 = new CursoProfesor(profCarlos, 2025, 1, cursoED);
+      CursoProfesor cp3 = new CursoProfesor(profMaria,  2025, 2, cursoBD);
 
-            System.out.println("\nOK: H2 embebida funcionando -> " + URL);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+      // ====== Lista inicial y repositorio ======
+      return Arrays.asList(cp1, cp2, cp3);
+   }
+
+   public static void main(String[] args) {
+       
+      DB.initSchema();
+   
+      CursosProfesores cursos = new CursosProfesores();
+
+      cursos.cargarDatos();
+
+      System.out.println("\n\n");
+      System.out.println(cursos.toString());
+      System.out.println("\n\n");
+
+      cursos = new CursosProfesores(datosIniciales());
+
+      System.out.println("\n\n");
+      System.out.println(cursos.toString());
+      System.out.println("\n\n");
+      
+      cursos.guardarInformacion();
+
+      cursos = new CursosProfesores(); // Carga desde BD
+
+      cursos.cargarDatos();
+
+      System.out.println("\n\n");
+      System.out.println(cursos.toString());
+      System.out.println("\n\n");
+
+      System.out.println("Creado por Daniel y Dhanielt");
+
+   }
+
 }

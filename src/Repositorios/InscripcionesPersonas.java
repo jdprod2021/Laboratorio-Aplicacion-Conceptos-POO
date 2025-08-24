@@ -9,9 +9,7 @@ public class InscripcionesPersonas implements Servicios {
 
     private List<Persona> listado;
 
-    public InscripcionesPersonas(){
-        cargarDatos();
-    }
+    public InscripcionesPersonas(){}
 
     public InscripcionesPersonas(List<Persona> listado){
         this.listado = listado;

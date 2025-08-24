@@ -1,5 +1,7 @@
 package Repositorios;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,10 @@ public class CursosProfesores implements Servicios {
 
     private List<CursoProfesor> cursoProfesores;
 
-    public CursosProfesores() {}
+    public CursosProfesores() {
+        this.cursoProfesores = new ArrayList<>();
+    }
+
 
     @Override
     public String imprimirPosicion(int posicion) {
@@ -35,6 +40,7 @@ public class CursosProfesores implements Servicios {
 
     public CursosProfesores(List<CursoProfesor> cursoProfesores) {
         this.cursoProfesores = cursoProfesores;
+        System.out.println("creamos todo");
     }
 
     public void inscribir(CursoProfesor cursoProfesor) {
@@ -46,6 +52,17 @@ public class CursosProfesores implements Servicios {
     }
 
     public void guardarInformacion(){
+
+        try (Connection conn = DB.get()) {
+           
+            for (CursoProfesor curso : cursoProfesores) {
+                curso.guardar(conn);
+            }
+            System.out.println("Información guardada correctamente.");
+
+        } catch (SQLException e) {
+            System.err.println("Error al guardar información: " + e.getMessage());
+        }
 
     }
 
@@ -59,6 +76,20 @@ public class CursosProfesores implements Servicios {
     }
 
     public void cargarDatos() {
-    
+        
+        try (Connection conn = DB.get()) {
+            var rs = conn.createStatement().executeQuery("SELECT id FROM CURSO_PROFESOR");
+            while (rs.next()) {
+               
+                CursoProfesor cp = new CursoProfesor();
+                cp.cargar(conn, rs.getInt("id"));
+                cursoProfesores.add(cp);
+
+            }
+            System.out.println("Datos cargados correctamente.");
+        } catch (SQLException e) {
+            System.err.println("Error al cargar datos: " + e.getMessage());
+        }
+
     }
 }
