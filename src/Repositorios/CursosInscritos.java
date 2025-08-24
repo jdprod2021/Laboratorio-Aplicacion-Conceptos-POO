@@ -38,16 +38,21 @@ public class CursosInscritos implements Servicios {
         return listado;
     }
 
-    public void inscribirCurso(Inscripcion inscripcionadd){
-        if(inscripcion != null){
-            inscripcion.add(inscripcionadd);
+    public void inscribirCurso(Inscripcion inscripcionAdd){
+        if(inscripcionAdd != null){
+            inscripcion.add(inscripcionAdd);
         }
+        else{
+            System.out.println("No se puede inscribir una inscripción nula.");
+        }
+
+
     }
-    public void eliminar(Inscripcion inscripciondel){
-        if((inscripcion != null) && inscripcion.contains(inscripciondel)){
-            inscripcion.remove(inscripciondel);
+    public void eliminar(Inscripcion inscripcionDel){
+        if((inscripcionDel != null) && inscripcion.contains(inscripcionDel)){
+            inscripcion.remove(inscripcionDel);
         }else {
-            System.out.println("No se puede eliminar una persona nula o que no está inscrita.");
+            System.out.println("No se puede eliminar una inscripción nula o que no está inscrita.");
         }
     }
     public void actualizar(Inscripcion inscripcionact){
