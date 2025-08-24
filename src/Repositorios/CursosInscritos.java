@@ -1,6 +1,8 @@
 package Repositorios;
 
 import java.io.Serializable;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,8 +65,15 @@ public class CursosInscritos implements Servicios {
             System.out.println("No se puede actualizar una persona nula o que no está inscrita.");
         }
     }
-    public void guardarInformacion(Inscripcion inscripcion){
-
+    public void guardarInformacion(){
+        try (Connection conn = DB.get()){
+            for(Inscripcion I: inscripcion){
+                I.guardar(conn);
+            }
+            System.out.println("Información guardada correctamente.");
+        } catch (SQLException e){
+            System.err.println("Error al guardar informacion: " + e.getMessage());
+        }
     }
     
     public String toString(){
@@ -76,8 +85,19 @@ public class CursosInscritos implements Servicios {
 
     }
 
-    public void CargarDatos(Inscripcion inscripcion){
+    public void CargarDatos(){
 
+        try (Connection conn = DB.get()){
+            var rs = conn.createStatement().executeQuery("SELECT id FROM INSCRIPCION");
+            while(rs.next()) {
+
+                Inscripcion I = new Inscripcion();
+                I.cargar(conn, rs.getInt("id"));
+                inscripcion.add(I);
+
+            }
+    } catch (SQLException e){
+            System.err.println("Error al cargar datos: " + e.getMessage());
+        }
     }
-
 }

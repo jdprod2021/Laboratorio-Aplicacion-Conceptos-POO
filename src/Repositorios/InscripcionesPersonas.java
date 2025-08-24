@@ -1,6 +1,8 @@
 package Repositorios;
 
+import java.sql.Connection;
 import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.List;
 
 import Modelos.Personas.Persona;
@@ -64,7 +66,15 @@ public class InscripcionesPersonas implements Servicios {
 
     public void guardarInformacion(){
 
-        
+        try(Connection conn = DB.get()){
+            for(Persona cp : listado){
+                cp.guardar(conn);
+            }
+            System.out.println("Información guardada correctamente.");
+        }catch(SQLException e){
+            System.err.println("Error al guardar información: " + e.getMessage());
+        }
+
     }
 
     public void cargarDatos(){}
