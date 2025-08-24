@@ -62,7 +62,10 @@ public class InscripcionesPersonas implements Servicios {
         }
     }
 
-    public void guardarInformacion(){}
+    public void guardarInformacion(){
+
+        
+    }
 
     public void cargarDatos(){}
 
