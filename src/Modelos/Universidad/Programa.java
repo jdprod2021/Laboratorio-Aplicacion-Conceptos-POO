@@ -22,7 +22,7 @@ public class Programa {
 
     @Override
     public String toString(){
-        return id + " " + nombre + " " + duracion + " " + registro + " " + facultad.toString();
+        return "id: " + id + ", nombre: " + nombre + ", duracion: " + duracion + ", registro: " + registro + ", facultad: " + facultad.toString();
     }
 
     public double getID() {

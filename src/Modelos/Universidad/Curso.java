@@ -20,7 +20,7 @@ public class Curso {
     
     @Override
     public String toString() {
-        return this.ID + " " +  " " + this.nombre + " " + this.activo + " " + this.programa.toString();
+        return "ID: " + this.ID +  ", Nombre: " + this.nombre + ", Activo: " + this.activo + ", Programa: " + this.programa.toString();
     }
 
     public void guardar(Connection conn){
