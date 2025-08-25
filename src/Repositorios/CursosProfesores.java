@@ -66,8 +66,8 @@ public class CursosProfesores implements Servicios {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (CursoProfesor cp : cursoProfesores) {
-            sb.append(cp.toString()).append("\n");
+        for (String cp : imprimirListado()) {
+            sb.append(cp).append("\n");
         }
         return sb.toString();
     }
