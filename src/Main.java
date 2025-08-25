@@ -57,13 +57,16 @@ public class Main {
       System.out.println(cursos.toString());
       System.out.println("\n\n");
 
-      cursos = new CursosProfesores(datosIniciales());
+      cursos = new CursosProfesores();
+
+      for(CursoProfesor cp : datosIniciales()){
+         cursos.inscribir(cp);
+         cursos.guardarInformacion(cp);
+      }
 
       System.out.println("\n\n");
       System.out.println(cursos.toString());
       System.out.println("\n\n");
-      
-      cursos.guardarInformacion();
 
       cursos = new CursosProfesores(); // Carga desde BD
 

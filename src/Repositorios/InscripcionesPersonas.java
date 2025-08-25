@@ -64,12 +64,10 @@ public class InscripcionesPersonas implements Servicios {
         }
     }
 
-    public void guardarInformacion(){
+    public void guardarInformacion(Persona persona){
 
         try(Connection conn = DB.get()){
-            for(Persona cp : listado){
-                cp.guardar(conn);
-            }
+            persona.guardar(conn);
             System.out.println("Información guardada correctamente.");
         }catch(SQLException e){
             System.err.println("Error al guardar información: " + e.getMessage());
@@ -77,7 +75,23 @@ public class InscripcionesPersonas implements Servicios {
 
     }
 
-    public void cargarDatos(){}
+    public void cargarDatos(){
+        try(Connection conn = DB.get()){
+            String sql = "SELECT id FROM PERSONA";
+            try(var ps = conn.prepareStatement(sql)){
+                var rs = ps.executeQuery();
+                while(rs.next()){
+                    Persona p = new Persona();
+                    p.cargar(conn, rs.getInt("id"));
+                    listado.add(p);
+                }
+            }catch(SQLException e){
+                System.err.println("Error al cargar datos de PERSONA: " + e.getMessage());
+            }
+        }catch(SQLException e){
+            System.err.println("Error al conectar a la base de datos: " + e.getMessage());
+        }
+    }
 
 
 }

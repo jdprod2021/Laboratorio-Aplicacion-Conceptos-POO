@@ -1,7 +1,6 @@
 package Modelos.Universidad;
 
 import Modelos.Personas.Estudiante;
-import Modelos.Universidad.Curso;
 import java.sql.Connection;
 import java.sql.SQLException;
 

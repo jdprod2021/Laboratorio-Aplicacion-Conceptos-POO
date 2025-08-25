@@ -15,6 +15,9 @@ public class CursosProfesores implements Servicios {
         this.cursoProfesores = new ArrayList<>();
     }
 
+    public CursosProfesores(List<CursoProfesor> cursoProfesores) {
+        this.cursoProfesores = cursoProfesores;
+    }
 
     @Override
     public String imprimirPosicion(int posicion) {
@@ -38,11 +41,6 @@ public class CursosProfesores implements Servicios {
         return listado;
     }
 
-    public CursosProfesores(List<CursoProfesor> cursoProfesores) {
-        this.cursoProfesores = cursoProfesores;
-        System.out.println("creamos todo");
-    }
-
     public void inscribir(CursoProfesor cursoProfesor) {
         if (cursoProfesor != null) {
             cursoProfesores.add(cursoProfesor);
@@ -51,13 +49,12 @@ public class CursosProfesores implements Servicios {
         }
     }
 
-    public void guardarInformacion(){
+    public void guardarInformacion(CursoProfesor cursoProfesor){
 
         try (Connection conn = DB.get()) {
-           
-            for (CursoProfesor curso : cursoProfesores) {
-                curso.guardar(conn);
-            }
+
+            cursoProfesor.guardar(conn);
+
             System.out.println("Información guardada correctamente.");
 
         } catch (SQLException e) {
@@ -91,5 +88,9 @@ public class CursosProfesores implements Servicios {
             System.err.println("Error al cargar datos: " + e.getMessage());
         }
 
+    }
+
+    public List<CursoProfesor> getCursoProfesores() {
+        return cursoProfesores;
     }
 }

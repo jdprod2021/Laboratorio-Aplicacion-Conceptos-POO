@@ -1,12 +1,10 @@
 package Repositorios;
 
-import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Modelos.Cursos.CursoProfesor;
 import Modelos.Universidad.Inscripcion;
 
 public class CursosInscritos implements Servicios {
@@ -47,9 +45,8 @@ public class CursosInscritos implements Servicios {
         else{
             System.out.println("No se puede inscribir una inscripción nula.");
         }
-
-
     }
+
     public void eliminar(Inscripcion inscripcionDel){
         if((inscripcionDel != null) && inscripcion.contains(inscripcionDel)){
             inscripcion.remove(inscripcionDel);
@@ -57,6 +54,7 @@ public class CursosInscritos implements Servicios {
             System.out.println("No se puede eliminar una inscripción nula o que no está inscrita.");
         }
     }
+
     public void actualizar(Inscripcion inscripcionact){
         if (inscripcionact != null && inscripcion.contains(inscripcionact)) {
             int index = inscripcion.indexOf(inscripcionact);
@@ -65,11 +63,10 @@ public class CursosInscritos implements Servicios {
             System.out.println("No se puede actualizar una persona nula o que no está inscrita.");
         }
     }
-    public void guardarInformacion(){
+
+    public void guardarInformacion(Inscripcion inscripcionAdd){
         try (Connection conn = DB.get()){
-            for(Inscripcion I: inscripcion){
-                I.guardar(conn);
-            }
+            inscripcionAdd.guardar(conn);
             System.out.println("Información guardada correctamente.");
         } catch (SQLException e){
             System.err.println("Error al guardar informacion: " + e.getMessage());
@@ -96,8 +93,8 @@ public class CursosInscritos implements Servicios {
                 inscripcion.add(I);
 
             }
-    } catch (SQLException e){
-            System.err.println("Error al cargar datos: " + e.getMessage());
+        } catch (SQLException e){
+                System.err.println("Error al cargar datos: " + e.getMessage());
         }
     }
 }
