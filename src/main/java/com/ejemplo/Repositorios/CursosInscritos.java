@@ -6,11 +6,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ejemplo.DAOs.Universidad.InscripcionDAO;
 import com.ejemplo.Modelos.Universidad.Inscripcion;
 
 public class CursosInscritos implements Servicios {
 
     private List<Inscripcion> inscripcion;
+    private InscripcionDAO inscripcionDAO = new InscripcionDAO();
 
     public CursosInscritos() {}
     public CursosInscritos(List<Inscripcion> inscripcion) {
@@ -67,7 +69,7 @@ public class CursosInscritos implements Servicios {
 
     public void guardarInformacion(Inscripcion inscripcionAdd){
         try (Connection conn = DB.get()){
-            inscripcionAdd.guardar(conn);
+            inscripcionDAO.guardar(conn, inscripcionAdd);
             System.out.println("Información guardada correctamente.");
         } catch (SQLException e){
             System.err.println("Error al guardar informacion: " + e.getMessage());
@@ -89,9 +91,11 @@ public class CursosInscritos implements Servicios {
             ResultSet rs = conn.createStatement().executeQuery("SELECT id FROM INSCRIPCION");
             while(rs.next()) {
 
-                Inscripcion I = new Inscripcion();
-                I.cargar(conn, rs.getInt("id"));
-                inscripcion.add(I);
+                Inscripcion I = inscripcionDAO.cargar(conn, rs.getInt("id")).orElse(null);
+
+                if (I != null) {
+                    inscripcion.add(I);
+                }
 
             }
         } catch (SQLException e){
