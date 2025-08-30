@@ -63,5 +63,33 @@ public class Persona {
     public double getId() {
         return id;
     }
+
+    public void setId(double id) {
+        this.id = id;
+    }
+
+    public String getNombres() {
+        return nombre;
+    }
+
+    public void setNombres(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellidos() {
+        return apellido;
+    }
+
+    public void setApellidos(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
 

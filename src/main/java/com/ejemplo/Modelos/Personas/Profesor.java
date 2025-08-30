@@ -21,9 +21,6 @@ public class Profesor extends Persona{
         return super.toString() + " TipoContrato: " + this.TipoContrato;
     }
 
-    public String getTipoContrato() {
-        return TipoContrato;
-    }
 
     @Override
     public void guardar(Connection conn) {
@@ -57,5 +54,13 @@ public class Profesor extends Persona{
         } catch (SQLException e) {
             System.err.println("Error cargando PROFESOR: " + e.getMessage());
         }
+    }
+
+    public String getTipoContrato() {
+        return TipoContrato;
+    }
+
+    public void setTipoContrato(String tipoContrato) {
+        TipoContrato = tipoContrato;
     }
 }
