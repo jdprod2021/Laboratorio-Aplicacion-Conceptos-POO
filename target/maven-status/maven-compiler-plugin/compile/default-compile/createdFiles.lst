@@ -1,0 +1,14 @@
+com/ejemplo/Modelos/Universidad/Inscripcion.class
+com/ejemplo/Main.class
+com/ejemplo/Modelos/Universidad/Curso.class
+com/ejemplo/Modelos/Personas/Persona.class
+com/ejemplo/Modelos/Universidad/Facultad.class
+com/ejemplo/Modelos/Universidad/Programa.class
+com/ejemplo/Repositorios/CursosProfesores.class
+com/ejemplo/Repositorios/CursosInscritos.class
+com/ejemplo/Modelos/Personas/Estudiante.class
+com/ejemplo/Repositorios/DB.class
+com/ejemplo/Repositorios/Servicios.class
+com/ejemplo/Modelos/Cursos/CursoProfesor.class
+com/ejemplo/Repositorios/InscripcionesPersonas.class
+com/ejemplo/Modelos/Personas/Profesor.class

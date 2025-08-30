@@ -1,7 +1,9 @@
-package Modelos.Universidad;
+package com.ejemplo.Modelos.Universidad;
 
-import Modelos.Personas.Estudiante;
+import com.ejemplo.Modelos.Personas.Estudiante;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Inscripcion {
@@ -24,7 +26,7 @@ public class Inscripcion {
         estudiante.guardar(conn);
 
         String sql = "MERGE INTO INSCRIPCION (curso_id, anio, semestre, estudiante_id) KEY (curso_id, anio, semestre, estudiante_id) VALUES (?, ?, ?, ?)";
-        try (var ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, ((int)this.curso.getID()));
             ps.setInt(2, this.anio);
             ps.setInt(3, this.semestre);
@@ -38,9 +40,9 @@ public class Inscripcion {
     public void cargar(Connection conn, int id){
 
         String sql = "SELECT * FROM INSCRIPCION WHERE id = ?";
-        try (var ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
-            var rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 this.curso = new Curso();
                 this.curso.cargar(conn, rs.getInt("curso_id"));

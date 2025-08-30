@@ -1,6 +1,6 @@
-package Modelos.Personas;
+package com.ejemplo.Modelos.Personas;
 
-import Modelos.Universidad.Programa;
+import com.ejemplo.Modelos.Universidad.Programa;
 
 public class Estudiante extends Persona{
 

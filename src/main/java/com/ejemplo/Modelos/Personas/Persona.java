@@ -1,6 +1,8 @@
-package Modelos.Personas;
+package com.ejemplo.Modelos.Personas;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Persona {
@@ -29,7 +31,7 @@ public class Persona {
         
         String sql = "MERGE INTO PERSONA (id, nombres, apellidos, email) KEY(id) VALUES (?, ?, ?, ?)";
         
-        try (var ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             // Si tu columna id es BIGINT en la BD, usa setLong:
             ps.setLong(1, (long) this.id);        // o ps.setDouble(1, this.id) si realmente es DOUBLE
             ps.setString(2, this.nombre);
@@ -44,9 +46,9 @@ public class Persona {
     public void cargar(Connection conn, int id){
 
         String sql = "SELECT * FROM PERSONA WHERE id = ?";
-        try (var ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
-            var rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 this.id = rs.getDouble("id");
                 this.nombre = rs.getString("nombres");

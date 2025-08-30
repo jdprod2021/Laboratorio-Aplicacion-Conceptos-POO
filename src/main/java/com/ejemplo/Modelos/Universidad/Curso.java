@@ -1,6 +1,8 @@
-package Modelos.Universidad;
+package com.ejemplo.Modelos.Universidad;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Curso {
 
@@ -29,7 +31,7 @@ public class Curso {
 
         String sql = "MERGE INTO CURSO (id, nombre, programa_id, activo) KEY(id) VALUES (?, ?, ?, ?)";
         
-        try (var ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, this.ID);        
             ps.setString(2, this.nombre);
             ps.setLong(3, ((long)this.programa.getID()));
@@ -47,9 +49,9 @@ public class Curso {
     public void cargar(Connection conn, int id){
 
         String sql = "SELECT * FROM CURSO WHERE id = ?";
-        try (var ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
-            var rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 this.ID = rs.getInt("id");
                 this.nombre = rs.getString("nombre");

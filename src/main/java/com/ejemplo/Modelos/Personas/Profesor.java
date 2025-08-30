@@ -1,6 +1,8 @@
-package Modelos.Personas;
+package com.ejemplo.Modelos.Personas;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class Profesor extends Persona{
@@ -28,7 +30,7 @@ public class Profesor extends Persona{
         super.guardar(conn);
 
         String sql = "MERGE INTO PROFESOR (id, tipo_contrato) KEY(id) VALUES (?, ?)";
-        try (var ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setDouble(1, this.getId());         
             ps.setString(2, this.TipoContrato);   
             ps.executeUpdate();
@@ -43,9 +45,9 @@ public class Profesor extends Persona{
 
         String sql = "SELECT  * FROM PROFESOR WHERE id = ?";
         
-        try (var ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
-            try (var rs = ps.executeQuery()) {
+            try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
                     this.TipoContrato = rs.getString("tipo_contrato");
                 } else {

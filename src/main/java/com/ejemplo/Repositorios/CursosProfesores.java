@@ -1,11 +1,12 @@
-package Repositorios;
+package com.ejemplo.Repositorios;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Modelos.Cursos.CursoProfesor;
+import com.ejemplo.Modelos.Cursos.CursoProfesor;
 
 public class CursosProfesores implements Servicios {
 
@@ -75,7 +76,7 @@ public class CursosProfesores implements Servicios {
     public void cargarDatos() {
         
         try (Connection conn = DB.get()) {
-            var rs = conn.createStatement().executeQuery("SELECT id FROM CURSO_PROFESOR");
+            ResultSet rs = conn.createStatement().executeQuery("SELECT id FROM CURSO_PROFESOR");
             while (rs.next()) {
                
                 CursoProfesor cp = new CursoProfesor();
