@@ -1,4 +1,4 @@
-package Repositorios;
+package com.ejemplo.Repositorios;
 
 import java.util.List;
 

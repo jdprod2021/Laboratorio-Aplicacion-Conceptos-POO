@@ -1,16 +1,17 @@
-// Main en el paquete por defecto (sin "package")
+package com.ejemplo;
+
 import java.util.Arrays;
 import java.util.List;
 
 import java.util.Date; 
-import Modelos.Cursos.CursoProfesor;
-import Modelos.Personas.Persona;
-import Modelos.Personas.Profesor;
-import Modelos.Universidad.Curso;
-import Modelos.Universidad.Facultad;
-import Modelos.Universidad.Programa;
-import Repositorios.CursosProfesores;
-import Repositorios.DB;
+import com.ejemplo.Modelos.Cursos.CursoProfesor;
+import com.ejemplo.Modelos.Personas.Persona;
+import com.ejemplo.Modelos.Personas.Profesor;
+import com.ejemplo.Modelos.Universidad.Curso;
+import com.ejemplo.Modelos.Universidad.Facultad;
+import com.ejemplo.Modelos.Universidad.Programa;
+import com.ejemplo.Repositorios.CursosProfesores;
+import com.ejemplo.Repositorios.DB;
 
 public class Main {
 

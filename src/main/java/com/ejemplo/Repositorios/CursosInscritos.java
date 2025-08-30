@@ -1,11 +1,12 @@
-package Repositorios;
+package com.ejemplo.Repositorios;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import Modelos.Universidad.Inscripcion;
+import com.ejemplo.Modelos.Universidad.Inscripcion;
 
 public class CursosInscritos implements Servicios {
 
@@ -85,7 +86,7 @@ public class CursosInscritos implements Servicios {
     public void CargarDatos(){
 
         try (Connection conn = DB.get()){
-            var rs = conn.createStatement().executeQuery("SELECT id FROM INSCRIPCION");
+            ResultSet rs = conn.createStatement().executeQuery("SELECT id FROM INSCRIPCION");
             while(rs.next()) {
 
                 Inscripcion I = new Inscripcion();

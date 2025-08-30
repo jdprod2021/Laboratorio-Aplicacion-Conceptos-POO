@@ -1,8 +1,10 @@
-package Modelos.Universidad;
+package com.ejemplo.Modelos.Universidad;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
-import Modelos.Personas.Persona;
+import com.ejemplo.Modelos.Personas.Persona;
 
 public class Facultad {
 
@@ -32,7 +34,7 @@ public class Facultad {
         decano.guardar(conn);
 
         String sql = "MERGE INTO FACULTAD (id, nombre, decano_id) KEY(id) VALUES (?, ?, ?)";
-        try (var ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setDouble(1, this.id);
             ps.setString(2, this.nombre);
             ps.setLong(3, ((long)this.decano.getId()));
@@ -45,9 +47,9 @@ public class Facultad {
     public void cargar(Connection conn, int id){
 
         String sql = "SELECT * FROM FACULTAD WHERE id = ?";
-        try (var ps = conn.prepareStatement(sql)) {
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setInt(1, id);
-            var rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 this.id = rs.getDouble("id");
                 this.nombre = rs.getString("nombre");
