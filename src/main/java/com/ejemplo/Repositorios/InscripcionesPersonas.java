@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.ejemplo.DAOs.Personas.PersonaDAO;
 import com.ejemplo.Modelos.Personas.Persona;
 
 public class InscripcionesPersonas implements Servicios {
 
     private List<Persona> listado;
+    private PersonaDAO personaDAO = new PersonaDAO();
 
     public InscripcionesPersonas(){}
 
@@ -69,7 +71,7 @@ public class InscripcionesPersonas implements Servicios {
     public void guardarInformacion(Persona persona){
 
         try(Connection conn = DB.get()){
-            persona.guardar(conn);
+            personaDAO.guardar(conn, persona);
             System.out.println("Información guardada correctamente.");
         }catch(SQLException e){
             System.err.println("Error al guardar información: " + e.getMessage());
@@ -83,9 +85,10 @@ public class InscripcionesPersonas implements Servicios {
             try(PreparedStatement ps = conn.prepareStatement(sql)){
                 ResultSet rs = ps.executeQuery();
                 while(rs.next()){
-                    Persona p = new Persona();
-                    p.cargar(conn, rs.getInt("id"));
-                    listado.add(p);
+                    Persona p = personaDAO.cargar(conn, rs.getInt("id")).orElse(null);
+                    if (p != null) {
+                        listado.add(p);
+                    }
                 }
             }catch(SQLException e){
                 System.err.println("Error al cargar datos de PERSONA: " + e.getMessage());

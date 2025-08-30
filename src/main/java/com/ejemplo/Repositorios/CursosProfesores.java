@@ -6,11 +6,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.ejemplo.DAOs.Cursos.CursoProfesorDAO;
 import com.ejemplo.Modelos.Cursos.CursoProfesor;
 
 public class CursosProfesores implements Servicios {
 
     private List<CursoProfesor> cursoProfesores;
+    private CursoProfesorDAO cursoProfesorDAO = new CursoProfesorDAO();
 
     public CursosProfesores() {
         this.cursoProfesores = new ArrayList<>();
@@ -54,7 +56,7 @@ public class CursosProfesores implements Servicios {
 
         try (Connection conn = DB.get()) {
 
-            cursoProfesor.guardar(conn);
+            cursoProfesorDAO.guardar(conn, cursoProfesor);
 
             System.out.println("Información guardada correctamente.");
 
@@ -78,10 +80,12 @@ public class CursosProfesores implements Servicios {
         try (Connection conn = DB.get()) {
             ResultSet rs = conn.createStatement().executeQuery("SELECT id FROM CURSO_PROFESOR");
             while (rs.next()) {
-               
-                CursoProfesor cp = new CursoProfesor();
-                cp.cargar(conn, rs.getInt("id"));
-                cursoProfesores.add(cp);
+
+                CursoProfesor cp = cursoProfesorDAO.cargar(conn, rs.getInt("id")).orElse(null);
+
+                if (cp != null) {
+                    cursoProfesores.add(cp);
+                }
 
             }
             System.out.println("Datos cargados correctamente.");

@@ -1,10 +1,6 @@
 package com.ejemplo.Modelos.Universidad;
 
 import com.ejemplo.Modelos.Personas.Estudiante;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 public class Inscripcion {
     private Curso curso;
@@ -21,45 +17,40 @@ public class Inscripcion {
         this.estudiante = estudiante;
     }
 
-    public void guardar(Connection conn){
-        curso.guardar(conn);
-        estudiante.guardar(conn);
-
-        String sql = "MERGE INTO INSCRIPCION (curso_id, anio, semestre, estudiante_id) KEY (curso_id, anio, semestre, estudiante_id) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, ((int)this.curso.getID()));
-            ps.setInt(2, this.anio);
-            ps.setInt(3, this.semestre);
-            ps.setInt(4, (int)this.estudiante.getId());
-            ps.executeUpdate();
-        } catch (java.sql.SQLException e) {
-            System.err.println("Error al guardar : INSCRIPCION" + e.getMessage());
-        }
-    }
-
-    public void cargar(Connection conn, int id){
-
-        String sql = "SELECT * FROM INSCRIPCION WHERE id = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                this.curso = new Curso();
-                this.curso.cargar(conn, rs.getInt("curso_id"));
-
-                this.estudiante = new Estudiante();
-                this.estudiante.cargar(conn, rs.getInt("estudiante_id"));
-
-                this.anio = rs.getInt("anio");
-                this.semestre = rs.getInt("semestre");
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al cargar INSCRIPCION: " + e.getMessage());
-        }
-    }
-
     @Override
     public String toString() {
         return "Año: " + this.anio + ", Semestre: " + this.semestre + ", Curso: " + this.curso.toString() + ", Estudiante: " + this.estudiante.toString();
+    }
+
+    public Curso getCurso() {
+        return curso;
+    }
+
+    public void setCurso(Curso curso) {
+        this.curso = curso;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
+    }
+
+    public int getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(int semestre) {
+        this.semestre = semestre;
+    }
+
+    public Estudiante getEstudiante() {
+        return estudiante;
+    }
+
+    public void setEstudiante(Estudiante estudiante) {
+        this.estudiante = estudiante;
     }
 }

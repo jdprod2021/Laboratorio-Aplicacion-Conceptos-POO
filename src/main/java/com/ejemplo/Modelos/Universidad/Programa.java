@@ -1,7 +1,4 @@
 package com.ejemplo.Modelos.Universidad;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.util.Date;
 
 public class Programa {
@@ -31,41 +28,40 @@ public class Programa {
         return id;
     }
 
-    public void guardar(Connection conn){
-
-        facultad.guardar(conn);
-
-        String sql = "MERGE INTO PROGRAMA (id, nombre, duracion, registro, facultad_id) KEY(id) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setDouble(1, this.id);
-            ps.setString(2, this.nombre);
-            ps.setDouble(3, this.duracion);
-            ps.setDate(4, new java.sql.Date(this.registro.getTime()));
-            ps.setDouble(5, this.facultad.getID());
-            ps.executeUpdate();
-        } catch (java.sql.SQLException e) {
-            System.err.println("Error al guardar PROGRAMA: " + e.getMessage());
-        }
+    public void setID(double id) {
+        this.id = id;
     }
 
-    public void cargar(Connection conn, int id){
+    public String getNombre() {
+        return nombre;
+    }
 
-        String sql = "SELECT * FROM PROGRAMA WHERE id = ?";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                this.id = rs.getDouble("id");
-                this.nombre = rs.getString("nombre");
-                this.duracion = rs.getDouble("duracion");
-                this.registro = rs.getDate("registro");
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-                facultad = new Facultad();
-                facultad.cargar(conn, rs.getInt("facultad_id"));
-            }
-        } catch (java.sql.SQLException e) {
-            System.err.println("Error al cargar PROGRAMA: " + e.getMessage());
-        }
+    public double getDuracion() {
+        return duracion;
+    }
+
+    public void setDuracion(double duracion) {
+        this.duracion = duracion;
+    }
+
+    public Date getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(Date registro) {
+        this.registro = registro;
+    }
+
+    public Facultad getFacultad() {
+        return facultad;
+    }
+
+    public void setFacultad(Facultad facultad) {
+        this.facultad = facultad;
     }
 
 }
