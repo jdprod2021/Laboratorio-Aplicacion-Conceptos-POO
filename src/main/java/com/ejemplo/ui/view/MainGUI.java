@@ -2,6 +2,7 @@ package com.ejemplo.ui.view;
 import javax.swing.*;
 import java.awt.*;
 
+
 public class MainGUI extends JFrame {
 
     public static void createAndShowGUI(){
