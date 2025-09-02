@@ -10,8 +10,8 @@ import com.ejemplo.Modelos.Personas.Profesor;
 import com.ejemplo.Modelos.Universidad.Curso;
 import com.ejemplo.Modelos.Universidad.Facultad;
 import com.ejemplo.Modelos.Universidad.Programa;
-import com.ejemplo.Repositorios.CursosProfesores;
 import com.ejemplo.Repositorios.DB;
+import com.ejemplo.Repositorios.Cursos.CursosProfesores;
 
 public class Main {
 

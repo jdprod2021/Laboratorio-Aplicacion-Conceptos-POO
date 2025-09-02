@@ -1,4 +1,4 @@
-package com.ejemplo.Servicios;
+package com.ejemplo.Servicios.Personas;
 
 import com.ejemplo.Modelos.Personas.Persona;
 

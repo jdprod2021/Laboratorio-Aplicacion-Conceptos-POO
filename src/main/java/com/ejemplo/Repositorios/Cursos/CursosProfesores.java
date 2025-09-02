@@ -1,4 +1,4 @@
-package com.ejemplo.Repositorios;
+package com.ejemplo.Repositorios.Cursos;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.ejemplo.DAOs.Cursos.CursoProfesorDAO;
 import com.ejemplo.Modelos.Cursos.CursoProfesor;
+import com.ejemplo.Repositorios.DB;
 import com.ejemplo.Servicios.Servicios;
 
 public class CursosProfesores implements Servicios {

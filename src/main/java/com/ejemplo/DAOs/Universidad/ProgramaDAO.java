@@ -57,4 +57,16 @@ public class ProgramaDAO {
         return Optional.empty();
     }
 
+    public void eliminar(Connection conn, int id){
+
+        String sql = "DELETE FROM PROGRAMA WHERE id = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (java.sql.SQLException e) {
+            System.err.println("Error al eliminar PROGRAMA: " + e.getMessage());
+        }
+    }
+
 }
