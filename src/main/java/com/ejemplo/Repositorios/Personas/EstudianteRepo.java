@@ -1,4 +1,4 @@
-package com.ejemplo.Repositorios;
+package com.ejemplo.Repositorios.Personas;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.ejemplo.DAOs.Personas.EstudianteDAO;
 import com.ejemplo.Modelos.Personas.Estudiante;
+import com.ejemplo.Repositorios.DB;
 
 public class EstudianteRepo {
 

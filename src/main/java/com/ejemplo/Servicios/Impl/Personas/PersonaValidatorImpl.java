@@ -1,7 +1,7 @@
-package com.ejemplo.Servicios.Impl;
+package com.ejemplo.Servicios.Impl.Personas;
 
 import com.ejemplo.Modelos.Personas.Persona;
-import com.ejemplo.Servicios.PersonaValidator;
+import com.ejemplo.Servicios.Personas.PersonaValidator;
 
 public class PersonaValidatorImpl implements PersonaValidator {
 

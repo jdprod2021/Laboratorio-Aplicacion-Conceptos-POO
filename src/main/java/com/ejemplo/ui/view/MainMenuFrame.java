@@ -1,8 +1,7 @@
 package com.ejemplo.ui.view;
 
-import com.ejemplo.Repositorios.CursosInscritos;
-
 import javax.swing.*;
+
 import java.awt.*;
 
 public class MainMenuFrame extends JFrame implements MainMenuView {
