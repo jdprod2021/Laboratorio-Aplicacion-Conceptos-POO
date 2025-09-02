@@ -1,15 +1,15 @@
 package com.ejemplo.ui.view;
 
 public interface MainMenuView {
-    void showUI();
-    void onInscribirPersona(Runnable action);
-    void onInscribirCurso(Runnable action);
-    void onCursosInscritos(Runnable action);
-    void onCursosProfesores(Runnable action);
-    void onGestionarCursos(Runnable action);
-    void onGestionarProgramas(Runnable action);
-    void onGestionarFacultad(Runnable action);
-    void showMessage(String msg);
-    void showError(String msg, Throwable t);
+    public void showUI();
+    public void onInscribirPersona(Runnable action);
+    public void onInscribirCurso(Runnable action);
+    public void onCursosInscritos(Runnable action);
+    public void onCursosProfesores(Runnable action);
+    public void onGestionarCursos(Runnable action);
+    public void onGestionarProgramas(Runnable action);
+    public void onGestionarFacultad(Runnable action);
+    public void showMessage(String msg);
+    public void showError(String msg, Throwable t);
 
 }
