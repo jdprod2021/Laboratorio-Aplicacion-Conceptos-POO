@@ -11,7 +11,7 @@ import com.ejemplo.Repositorios.DB;
 
 public class ProgramaRepo {
 
-    List<Programa> listado;
+    private List<Programa> listado;
     private final ProgramaDAO programaDAO;
 
     public ProgramaRepo(ProgramaDAO programaDAO) {

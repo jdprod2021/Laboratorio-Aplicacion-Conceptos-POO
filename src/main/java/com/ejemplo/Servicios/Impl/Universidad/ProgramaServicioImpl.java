@@ -25,4 +25,15 @@ public class ProgramaServicioImpl implements ProgramaServicio{
         return programaRepo.getListado();
     }
 
+    @Override
+    public String eliminarPrograma(int id) {
+        var optPrograma = programaRepo.cargarInformacion(id);
+        if (optPrograma.isPresent()) {
+            programaRepo.eliminar(optPrograma.get());
+            return "Programa eliminado exitosamente";
+        } else {
+            return "Programa no encontrado";
+        }
+    }
+
 }

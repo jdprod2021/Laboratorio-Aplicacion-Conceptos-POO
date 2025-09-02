@@ -9,4 +9,6 @@ public interface ProgramaServicio {
     String crearPrograma(Programa programa);
     
     List<Programa> listarProgramas();
+
+    String eliminarPrograma(int id);
 }

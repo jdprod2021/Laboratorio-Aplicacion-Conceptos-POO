@@ -13,6 +13,8 @@ public class FacultadDAO {
 
     PersonaDAO personaDAO = new PersonaDAO();
 
+    
+
     public void guardar(Connection conn, Facultad facultad) {
         
         personaDAO.guardar(conn, facultad.getDecano());
@@ -51,5 +53,15 @@ public class FacultadDAO {
         }
 
         return Optional.empty();
+    }
+
+    public void eliminar(Connection conn, int id) {
+        String sql = "DELETE FROM FACULTAD WHERE id = ?";
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, id);
+            ps.executeUpdate();
+        } catch (java.sql.SQLException e) {
+            System.err.println("Error al eliminar FACULTAD: " + e.getMessage());
+        }
     }
 }
