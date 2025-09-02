@@ -48,4 +48,20 @@ public class PersonaDAO {
         return Optional.empty();
     }
 
+    public void eliminar(Connection conn, Persona persona) {
+        String sql = "DELETE FROM PERSONA WHERE id = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, (long)persona.getId());
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Información eliminada correctamente.");
+            } else {
+                System.out.println("No se encontró la persona para eliminar.");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar información: " + e.getMessage());
+        }
+    }
+
 }

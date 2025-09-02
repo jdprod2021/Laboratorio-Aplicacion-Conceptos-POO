@@ -58,4 +58,23 @@ public class ProfesorDAO {
         
         return Optional.empty();
     }
+
+    public void eliminar(Connection conn, Profesor profesor) {
+        String sql = "DELETE FROM PROFESOR WHERE id = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, (long)profesor.getId());
+            int rowsAffected = pstmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Información eliminada correctamente.");
+            } else {
+                System.out.println("No se encontró el profesor para eliminar.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Luego elimina la parte de Persona
+        personaDAO.eliminar(conn, profesor);
+    }
 }

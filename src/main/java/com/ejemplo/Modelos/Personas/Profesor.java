@@ -6,8 +6,8 @@ public class Profesor extends Persona{
 
     public Profesor() {}
 
-    public Profesor (double id, String nombre, String apellido, String email, String TipoContrato) {
-        super(id,nombre, apellido, email);
+    public Profesor (String nombre, String apellido, String email, String TipoContrato) {
+        super(nombre, apellido, email);
         this.TipoContrato = TipoContrato;
     }
 
