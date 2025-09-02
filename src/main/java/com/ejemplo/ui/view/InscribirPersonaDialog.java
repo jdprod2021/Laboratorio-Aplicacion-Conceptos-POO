@@ -2,6 +2,9 @@ package com.ejemplo.ui.view;
 
 import com.ejemplo.Modelos.Personas.Estudiante;
 import com.ejemplo.Modelos.Personas.Profesor;
+import com.ejemplo.Modelos.Universidad.Programa;
+import com.ejemplo.Servicios.Personas.EstudianteServicio;
+import com.ejemplo.Servicios.Personas.ProfesorServicio;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,8 +16,21 @@ public class InscribirPersonaDialog extends JDialog {
     private JPanel panelRol;
     private CardLayout cardLayout;
 
-    public InscribirPersonaDialog(JFrame parent) {
+    // Campos estudiante
+    private JTextField txtCodigo, txtPrograma, txtActivo, txtPromedio;
+
+    // Campos profesor
+    private JTextField txtTipoContrato;
+
+    // Servicios
+    private final EstudianteServicio estudianteServicio;
+    private final ProfesorServicio profesorServicio;
+
+    public InscribirPersonaDialog(JFrame parent, EstudianteServicio estudianteServicio, ProfesorServicio profesorServicio) {
         super(parent, "Inscribir Persona", true);
+        this.estudianteServicio = estudianteServicio;
+        this.profesorServicio = profesorServicio;
+
         setSize(450, 400);
         setLocationRelativeTo(parent);
 
@@ -43,14 +59,12 @@ public class InscribirPersonaDialog extends JDialog {
         // --- Panel central con rol + panel dinámico ---
         JPanel centro = new JPanel(new BorderLayout(5,5));
 
-        // Selector de rol
         JPanel rolPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         rolPanel.add(new JLabel("Rol:"));
         cmbRol = new JComboBox<>(new String[]{"Estudiante", "Profesor"});
         rolPanel.add(cmbRol);
         centro.add(rolPanel, BorderLayout.NORTH);
 
-        // Panel dinámico según rol
         cardLayout = new CardLayout();
         panelRol = new JPanel(cardLayout);
 
@@ -58,26 +72,29 @@ public class InscribirPersonaDialog extends JDialog {
         JPanel estudiantePanel = new JPanel(new GridLayout(4, 2, 5, 5));
         estudiantePanel.setBorder(BorderFactory.createTitledBorder("Datos de Estudiante"));
         estudiantePanel.add(new JLabel("Código:"));
-        estudiantePanel.add(new JTextField());
+        txtCodigo = new JTextField();
+        estudiantePanel.add(txtCodigo);
         estudiantePanel.add(new JLabel("Programa:"));
-        estudiantePanel.add(new JTextField());
+        txtPrograma = new JTextField();
+        estudiantePanel.add(txtPrograma);
         estudiantePanel.add(new JLabel("Activo (sí/no):"));
-        estudiantePanel.add(new JTextField());
+        txtActivo = new JTextField();
+        estudiantePanel.add(txtActivo);
         estudiantePanel.add(new JLabel("Promedio:"));
-        estudiantePanel.add(new JTextField());
+        txtPromedio = new JTextField();
+        estudiantePanel.add(txtPromedio);
 
         // Panel Profesor
         JPanel profesorPanel = new JPanel(new GridLayout(1, 2, 5, 5));
         profesorPanel.setBorder(BorderFactory.createTitledBorder("Datos de Profesor"));
         profesorPanel.add(new JLabel("Tipo de contrato:"));
-        profesorPanel.add(new JTextField());
+        txtTipoContrato = new JTextField();
+        profesorPanel.add(txtTipoContrato);
 
-        // Añadir al CardLayout
         panelRol.add(estudiantePanel, "Estudiante");
         panelRol.add(profesorPanel, "Profesor");
 
         centro.add(panelRol, BorderLayout.CENTER);
-
         mainPanel.add(centro, BorderLayout.CENTER);
 
         // --- Botonera ---
@@ -85,24 +102,7 @@ public class InscribirPersonaDialog extends JDialog {
         JButton btnGuardar = new JButton("Guardar");
         JButton btnVolver = new JButton("Volver al menú principal");
 
-        btnGuardar.addActionListener(e -> {
-            String nombre = txtNombre.getText();
-            String apellidos = txtApellidos.getText();
-            String email = txtEmail.getText();
-            String rol = (String) cmbRol.getSelectedItem();
-
-            JOptionPane.showMessageDialog(
-                    this,
-                    "Datos guardados:\n" +
-                            "Nombre: " + nombre + "\n" +
-                            "Apellidos: " + apellidos + "\n" +
-                            "Email: " + email + "\n" +
-                            "Rol: " + rol,
-                    "Confirmación",
-                    JOptionPane.INFORMATION_MESSAGE
-            );
-        });
-
+        btnGuardar.addActionListener(e -> guardarPersona());
         btnVolver.addActionListener(e -> dispose());
 
         botonesPanel.add(btnGuardar);
@@ -116,20 +116,48 @@ public class InscribirPersonaDialog extends JDialog {
             cardLayout.show(panelRol, rol);
         });
 
-        // Mostrar por defecto "Estudiante"
         cardLayout.show(panelRol, "Estudiante");
     }
 
-    // Para probarlo rápido
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame dummy = new JFrame();
-            InscribirPersonaDialog dialog = new InscribirPersonaDialog(dummy);
-            dialog.setVisible(true);
-        });
+    private void guardarPersona() {
+        try {
+            String nombre = txtNombre.getText();
+            String apellidos = txtApellidos.getText();
+            String email = txtEmail.getText();
+            String rol = (String) cmbRol.getSelectedItem();
+
+            String mensaje;
+
+            if ("Estudiante".equals(rol)) {
+                Estudiante est = new Estudiante();
+                est.setNombres(nombre);
+                est.setApellidos(apellidos);
+                est.setEmail(email);
+                est.setCodigo(Double.parseDouble(txtCodigo.getText()));
+                //est.setPrograma(new Programa());
+                est.setActivo("si".equalsIgnoreCase(txtActivo.getText()));
+                est.setPromedio(Double.parseDouble(txtPromedio.getText()));
+
+                mensaje = estudianteServicio.inscribir(est);
+
+            } else {
+                Profesor prof = new Profesor();
+                prof.setNombres(nombre);
+                prof.setApellidos(apellidos);
+                prof.setEmail(email);
+                prof.setTipoContrato(txtTipoContrato.getText());
+
+                mensaje = profesorServicio.inscribir(prof);
+            }
+
+            JOptionPane.showMessageDialog(this, mensaje, "Confirmación", JOptionPane.INFORMATION_MESSAGE);
+            dispose();
+
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }
-
 
 
 //nombre apellidos email
