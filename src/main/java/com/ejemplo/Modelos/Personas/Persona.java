@@ -9,8 +9,7 @@ public class Persona {
 
     public Persona() {}
 
-    public Persona(double id, String nombre, String apellido, String email) {
-        this.id = id;
+    public Persona(String nombre, String apellido, String email) {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;

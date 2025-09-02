@@ -63,4 +63,23 @@ public class EstudianteDAO {
         return Optional.empty();
     }
 
+    public void eliminar(Connection conn, Estudiante estudiante){
+
+        String sql = "DELETE FROM ESTUDIANTE WHERE id = ?";
+
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, (long)estudiante.getId());
+            int rowsAffected = ps.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Información eliminada correctamente.");
+                // Eliminar la parte de Persona
+                personaDAO.eliminar(conn, estudiante);
+            } else {
+                System.out.println("No se encontró el estudiante para eliminar.");
+            }
+        } catch (java.sql.SQLException e) {
+            System.err.println("Error al eliminar ESTUDIANTE: " + e.getMessage());
+        }
+    }
+
 }

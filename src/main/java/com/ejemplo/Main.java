@@ -17,8 +17,8 @@ public class Main {
 
    public static List<CursoProfesor> datosIniciales(){
       // ====== Personas y facultades ======
-      Persona decanoIng = new Persona(9001d, "Laura", "Mejía", "laura.mejia@uni.com");
-      Persona decanoCiencias = new Persona(9002d, "Héctor", "Núñez", "hector.nunez@uni.com");
+      Persona decanoIng = new Persona( "Laura", "Mejía", "laura.mejia@uni.com");
+      Persona decanoCiencias = new Persona( "Héctor", "Núñez", "hector.nunez@uni.com");
 
       Facultad facIng      = new Facultad(1d, "Ingeniería",         decanoIng);
       Facultad facCiencias = new Facultad(2d, "Ciencias Exactas",   decanoCiencias);
@@ -33,9 +33,9 @@ public class Main {
       Curso cursoBD    = new Curso(103, "Bases de Datos",       progMat, true);
 
       // ====== Profesores (extienden Persona) ======
-      Profesor profAna    = new Profesor(1001d, "Ana",    "García", "ana.garcia@uni.com",    "Tiempo completo");
-      Profesor profCarlos = new Profesor(1002d, "Carlos", "López",  "carlos.lopez@uni.com",  "Cátedra");
-      Profesor profMaria  = new Profesor(1003d, "María",  "Ruiz",   "maria.ruiz@uni.com",    "Medio tiempo");
+      Profesor profAna    = new Profesor( "Ana",    "García", "ana.garcia@uni.com",    "Tiempo completo");
+      Profesor profCarlos = new Profesor( "Carlos", "López",  "carlos.lopez@uni.com",  "Cátedra");
+      Profesor profMaria  = new Profesor( "María",  "Ruiz",   "maria.ruiz@uni.com",    "Medio tiempo");
 
       // ====== Asignaciones Curso-Profesor (anio, semestre) ======
       CursoProfesor cp1 = new CursoProfesor(profAna,    2025, 1, cursoProg1);

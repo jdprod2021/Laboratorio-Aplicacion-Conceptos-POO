@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.ejemplo.DAOs.Universidad.InscripcionDAO;
 import com.ejemplo.Modelos.Universidad.Inscripcion;
+import com.ejemplo.Servicios.Servicios;
 
 public class CursosInscritos implements Servicios {
 
