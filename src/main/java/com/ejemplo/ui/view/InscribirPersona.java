@@ -1,4 +1,4 @@
-package com.ejemplo.GUI;
+package com.ejemplo.ui.view;
 
 public class InscribirPersona {
 }

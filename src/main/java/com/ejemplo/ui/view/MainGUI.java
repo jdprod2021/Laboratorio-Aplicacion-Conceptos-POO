@@ -1,8 +1,6 @@
-package com.ejemplo.GUI;
+package com.ejemplo.ui.view;
 import javax.swing.*;
-import javax.swing.border.*;
 import java.awt.*;
-import java.awt.event.*;
 
 public class MainGUI extends JFrame {
 
@@ -19,6 +17,8 @@ public class MainGUI extends JFrame {
         title.setFont(new Font("Arial", Font.BOLD, 16));
         top.add(title);
         frame.getContentPane().add(top, BorderLayout.PAGE_START);
+
+
 
         // LEFT PANEL (Placeholder)
         JPanel left = new JPanel(new BorderLayout());

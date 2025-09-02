@@ -1,38 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
-  <component name="PropertiesComponent">{}</component>
-=======
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa438562-8673-41a0-bdf7-431f00afa140" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/GUI/InscribirPersona.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/GUI/MainGUI.java" afterDir="false" />
+    <list default="true" id="05768e26-d798-40cc-8c36-ed5e7017aee1" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ejemplo/GUI/MainGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/GUI/MainGUI.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Dhanielt" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -50,9 +34,9 @@
   }
 }]]></component>
   <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 4
+  "associatedIndex": 5
 }]]></component>
-  <component name="ProjectId" id="326dCkDqFV18QA74oK30TO7TGSx" />
+  <component name="ProjectId" id="327d3L1PdpvPpGs1ngYK6GfDue6" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -60,13 +44,10 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "Application.MainGUI.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
+    "git-widget-placeholder": "Daniel",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/josed/OneDrive/Documentos/TECNOLOGIAS AVANZADAS/Laboratorios/Laboratorio-Aplicacion-Conceptos-POO",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -85,23 +66,16 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="aa438562-8673-41a0-bdf7-431f00afa140" name="Changes" comment="" />
-      <created>1756744833169</created>
+      <changelist id="05768e26-d798-40cc-8c36-ed5e7017aee1" name="Changes" comment="" />
+      <created>1756775346203</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1756744833169</updated>
-      <workItem from="1756744834688" duration="2956000" />
+      <updated>1756775346203</updated>
+      <workItem from="1756775349096" duration="1092000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
   </component>
-<<<<<<< Updated upstream
-<<<<<<< Updated upstream
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
-=======
->>>>>>> Stashed changes
 </project>
