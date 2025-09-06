@@ -8,7 +8,10 @@ public class Facultad {
     private String nombre;
     private Persona decano;
 
-    public Facultad(){}
+    public Facultad() {
+        nombre = "";
+        decano = new Persona();
+    }
     
     public Facultad(double id, String nombre, Persona decano) {
         this.id = id;

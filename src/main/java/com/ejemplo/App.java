@@ -1,28 +1,25 @@
 package com.ejemplo;
 
-import com.ejemplo.Repositorios.Personas.EstudianteRepo;
-import com.ejemplo.Repositorios.Personas.ProfesorRepo; // crea o usa tu versión de profesor
-import com.ejemplo.Servicios.Impl.Personas.EstudianteImpl;
-import com.ejemplo.Servicios.Impl.Personas.ProfesorImpl;
-import com.ejemplo.Servicios.Personas.EstudianteServicio;
-import com.ejemplo.Servicios.Personas.ProfesorServicio;
-import com.ejemplo.ui.presenter.MainMenuPresenter;
-import com.ejemplo.ui.view.MainMenuFrame;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
-public class App {
+public class App extends Application {
+
+    @Override
+    public void start(Stage stage) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/ejemplo/app/view/MainMenu.fxml"));
+        //Scene scene = new Scene(fxmlLoader.load());
+
+        stage.setTitle("Menú Principal - MVC JavaFX");
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.setScene(new Scene(root));
+        stage.show();
+    }
+
     public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(() -> {
-            var view = new MainMenuFrame();
-
-            // Inyecta tus repos concretos
-            var estudianteRepo = new EstudianteRepo();
-            var profesorRepo   = new ProfesorRepo(); // o ProfesorRepoMemoria/DB según tengas
-
-            EstudianteServicio estSrv = new EstudianteImpl(estudianteRepo);
-            ProfesorServicio   profSrv = new ProfesorImpl(profesorRepo);
-
-            new MainMenuPresenter(view, estSrv, profSrv);
-            view.showUI();
-        });
+        launch();
     }
 }

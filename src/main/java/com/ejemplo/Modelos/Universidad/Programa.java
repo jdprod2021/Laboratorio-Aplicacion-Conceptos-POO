@@ -9,7 +9,12 @@ public class Programa {
     private Date registro;
     private Facultad facultad; // ASOCIACION FACULTAD
 
-    public Programa(){}
+    public Programa(){
+        this.nombre = "sitemas";
+        this.duracion = 5;
+        this.registro = new Date();
+        this.facultad = new Facultad();
+    }
 
     public Programa(double id, String nombre, double duracion, Date registro, Facultad facultad){
         this.id = id;
