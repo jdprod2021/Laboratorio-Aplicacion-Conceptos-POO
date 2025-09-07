@@ -1,4 +1,4 @@
-package com.ejemplo.ui.controllers;
+package com.ejemplo.controllers;
 
 public class InscripcionController {
 }

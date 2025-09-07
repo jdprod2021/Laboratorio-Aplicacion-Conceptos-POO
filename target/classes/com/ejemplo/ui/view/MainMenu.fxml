@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="465.0" prefWidth="768.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/24.0.1" fx:controller="com.ejemplo.ui.controllers.MainMenuController">
+<AnchorPane prefHeight="465.0" prefWidth="768.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/24.0.1" fx:controller="com.ejemplo.controllers.MainMenuController">
    <children>
       <VBox prefHeight="432.0" prefWidth="210.0" style="-fx-background-color: #2660A4;" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>

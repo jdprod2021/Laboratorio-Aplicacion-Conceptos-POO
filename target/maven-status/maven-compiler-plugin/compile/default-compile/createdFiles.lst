@@ -1,7 +1,7 @@
 com/ejemplo/Servicios/Impl/Personas/PersonaValidatorImpl.class
-com/ejemplo/ui/view/MainMenuFrame.class
-com/ejemplo/ui/view/MainMenuView.class
+com/ejemplo/controllers/CursosController.class
 com/ejemplo/Modelos/Personas/Persona.class
+com/ejemplo/App.class
 com/ejemplo/DAOs/Cursos/CursoProfesorDAO.class
 com/ejemplo/Modelos/Universidad/Programa.class
 com/ejemplo/DAOs/Universidad/ProgramaDAO.class
@@ -18,9 +18,7 @@ com/ejemplo/Repositorios/Personas/EstudianteRepo.class
 com/ejemplo/Modelos/Cursos/CursoProfesor.class
 com/ejemplo/Servicios/Personas/EstudianteServicio.class
 com/ejemplo/Modelos/Personas/Profesor.class
-H2Console.class
 com/ejemplo/Servicios/Personas/PersonaServicio.class
-com/ejemplo/ui/presenter/MainMenuPresenter.class
 com/ejemplo/Servicios/Personas/ProfesorServicio.class
 com/ejemplo/DAOs/Universidad/FacultadDAO.class
 com/ejemplo/Modelos/Universidad/Inscripcion.class
@@ -33,9 +31,8 @@ com/ejemplo/Servicios/Impl/Personas/EstudianteImpl.class
 com/ejemplo/Modelos/Universidad/Facultad.class
 com/ejemplo/Servicios/Impl/Universidad/ProgramaServicioImpl.class
 com/ejemplo/Servicios/Servicios.class
+com/ejemplo/controllers/InscripcionController.class
+com/ejemplo/controllers/MainMenuController.class
 com/ejemplo/Repositorios/Cursos/CursosInscritos.class
-com/ejemplo/ui/app.class
 com/ejemplo/Servicios/Universidad/ProgramaServicio.class
-com/ejemplo/ui/view/InscribirPersonaDialog.class
 com/ejemplo/DAOs/Universidad/InscripcionDAO.class
-com/ejemplo/ui/view/MainGUI.class
