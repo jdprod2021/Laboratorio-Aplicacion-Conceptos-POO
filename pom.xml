@@ -11,14 +11,14 @@
   <url>http://maven.apache.org</url>
 
   <properties>
-    <!-- Ajusta a 11, 17 o 21 según tu JDK -->
+    <!-- Ajusta según tu JDK -->
     <maven.compiler.release>17</maven.compiler.release>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
   </properties>
 
   <dependencies>
-    <!-- Puedes actualizar a JUnit 4/5 luego; dejo el que tenías -->
+    <!-- Test (puedes actualizar luego a JUnit 5) -->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -26,16 +26,34 @@
       <scope>test</scope>
     </dependency>
 
-    <!-- H2 SIN scope para que esté en classpath de compilación -->
+    <!-- Base de datos H2 -->
     <dependency>
       <groupId>com.h2database</groupId>
       <artifactId>h2</artifactId>
       <version>2.2.224</version>
     </dependency>
+
+    <!-- JavaFX (mínimo controls, fxml, graphics) -->
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-controls</artifactId>
+      <version>21</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-fxml</artifactId>
+      <version>21</version>
+    </dependency>
+    <dependency>
+      <groupId>org.openjfx</groupId>
+      <artifactId>javafx-graphics</artifactId>
+      <version>21</version>
+    </dependency>
   </dependencies>
 
   <build>
     <plugins>
+      <!-- Compilación -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
@@ -43,6 +61,17 @@
         <configuration>
           <release>${maven.compiler.release}</release>
           <encoding>${project.build.sourceEncoding}</encoding>
+        </configuration>
+      </plugin>
+
+      <!-- Plugin JavaFX -->
+      <plugin>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-maven-plugin</artifactId>
+        <version>0.0.8</version>
+        <configuration>
+          <!-- Ajusta esta clase si tu main está en otro lado -->
+          <mainClass>com.ejemplo.App</mainClass>
         </configuration>
       </plugin>
     </plugins>

@@ -7,7 +7,11 @@ public class Persona {
     private String apellido;
     private String email;
 
-    public Persona() {}
+    public Persona() {
+        nombre = "";
+        apellido = "";
+        email = "a@";
+    }
 
     public Persona(String nombre, String apellido, String email) {
         this.nombre = nombre;
