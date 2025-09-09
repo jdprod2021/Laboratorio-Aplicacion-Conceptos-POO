@@ -97,14 +97,18 @@ public class MainMenuController implements Initializable {
 
     // BOTÓN ACTUALIZAR
     @FXML
-    private void actualizar(ActionEvent event) {
+    private void actualizar(ActionEvent event) throws IOException {
         switch (seccionActiva) {
             case "estudiantes":
                 mostrarAlerta("Actualizar estudiante seleccionado");
+                abrirFormulario("/com/ejemplo/ui/view/Inscripcion.fxml", "Inscripción de estudiantes");
                 break;
+
             case "profesores":
                 mostrarAlerta("Actualizar profesor seleccionado");
+                abrirFormulario("/com/ejemplo/ui/view/Inscripcion.fxml", "Inscripción de estudiantes");
                 break;
+
             case "cursos":
                 mostrarAlerta("Actualizar curso seleccionado");
                 break;

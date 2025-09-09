@@ -112,15 +112,16 @@ public class InscripcionController implements Initializable {
         txtNombre.setText(est.nombres);
         txtApellidos.setText(est.apellidos);
         txtEmail.setText(est.email);
-        txtCodigo.setText(String.valueOf(est.codigo));
-        txtPromedio.setText(String.valueOf(est.promedio));
-        comboActivo.setValue(est.activo ? "Sí" : "No");
+        //txtCodigo.setText(String.valueOf(est.codigo));
+        //txtPromedio.setText(String.valueOf(est.promedio));
+        //comboActivo.setValue(est.activo ? "Sí" : "No");
 
         // Seleccionar programa en el ComboBox
-        cmbPrograma.getItems().stream()
+        /*cmbPrograma.getItems().stream()
                 .filter(p -> p.ID == est.programaId)
                 .findFirst()
                 .ifPresent(cmbPrograma::setValue);
+    */
     }
 
     /* ==========================================================

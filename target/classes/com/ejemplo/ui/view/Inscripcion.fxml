@@ -78,6 +78,7 @@
                     text="Inscribir"
                     style="-fx-background-color: #2FBF71;"
                     onAction="#guardarEstudiante"/>
+
             <Button fx:id="btnCancelar"
                     text="Cancelar"
                     onAction="#volverMenu"/>
