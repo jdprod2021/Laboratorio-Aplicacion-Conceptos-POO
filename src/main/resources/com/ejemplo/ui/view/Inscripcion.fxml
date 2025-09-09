@@ -11,6 +11,8 @@
 <?import javafx.scene.text.Font?>
 
 
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="344.0" style="-fx-background-color: #E7E7E7;" xmlns="http://javafx.com/javafx/24.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ejemplo.controllers.InscripcionController">
    <children>
       <HBox prefHeight="44.0" prefWidth="344.0" style="-fx-background-color: #2B6CB6;">
@@ -47,6 +49,21 @@
             <TextField fx:id="txtPrograma" />
             <Label fx:id="labelEmail" text="Email:" />
             <TextField fx:id="txtEmail" />
+             <Label text="Código:" />
+             <TextField fx:id="txtCodigo" />
+
+             <Label text="Promedio:" />
+             <TextField fx:id="txtPromedio" />
+
+             <Label text="Activo:" />
+             <ComboBox fx:id="comboActivo" prefWidth="150.0">
+                 <items>
+                     <FXCollections fx:factory="observableArrayList">
+                         <String fx:value="Sí"/>
+                         <String fx:value="No"/>
+                     </FXCollections>
+                 </items>
+             </ComboBox>
             <HBox prefHeight="94.0" prefWidth="286.0">
                <VBox.margin>
                   <Insets />
@@ -54,7 +71,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="BtnInscribir" mnemonicParsing="false" prefHeight="15.0" prefWidth="111.0" style="-fx-background-color: #2FBF71;" text="Inscribir" textAlignment="CENTER">
+                  <Button fx:id="BtnInscribir" mnemonicParsing="false" onAction="#guardarEstudiante" prefWidth="111.0" style="-fx-background-color: #2FBF71;" text="Inscribir" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="30.0" />
                      </HBox.margin>

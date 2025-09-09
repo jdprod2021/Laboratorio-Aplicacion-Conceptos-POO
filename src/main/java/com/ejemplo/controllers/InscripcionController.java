@@ -10,11 +10,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.event.ActionEvent;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -44,6 +41,12 @@ public class InscripcionController implements Initializable {
     private TextField txtApellidos;
     @FXML
     private TextField txtEmail;
+    @FXML
+    private TextField txtCodigo;
+    @FXML
+    private TextField txtPromedio;
+    @FXML
+    private ComboBox<String> comboActivo;
 
     private final EstudianteServicio estudianteServicio;
 
@@ -61,17 +64,40 @@ public class InscripcionController implements Initializable {
     public InscripcionController() {
         this.estudianteServicio = new EstudianteImpl(new EstudianteRepo());
     }
+
+    @FXML
     private void guardarEstudiante(ActionEvent event){
+
+    try {
         String nombre = txtNombre.getText();
         String apellidos = txtApellidos.getText();
         String email = txtEmail.getText();
-       // String programa = txtPrograma.getText();
+        long codigo = Long.parseLong(txtCodigo.getText());
+        double promedio = Double.parseDouble(txtPromedio.getText());
+        boolean activo = "Sí".equals(comboActivo.getValue());
+        Long programaID = Long.parseLong(txtPrograma.getText());
+
 
         Estudiante estudiante = new Estudiante();
         estudiante.setNombres(nombre);
         estudiante.setApellidos(apellidos);
         estudiante.setEmail(email);
-        //estudiante.setPrograma();
+        estudiante.setCodigo(codigo);
+        estudiante.setPromedio(promedio);
+        estudiante.setActivo(activo);
+        estudiante.setPrograma();
+
+        String resultado = estudianteServicio.inscribir(estudiante);
+        System.out.println(resultado);
+
+    } catch (Exception e){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Error");
+        alert.setHeaderText("Error al inscribir");
+        alert.setContentText("Verifique los datos: " + e.getMessage());
+        alert.showAndWait();
+
+    }
 
     }
 
