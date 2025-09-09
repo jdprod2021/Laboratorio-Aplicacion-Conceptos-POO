@@ -17,7 +17,10 @@ public class Persona {
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
+    }
 
+    public Persona (long id) {
+        this.id = id;
     }
 
     @Override

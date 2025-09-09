@@ -1,11 +1,11 @@
 package com.ejemplo.Repositorios.Personas;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 import com.ejemplo.DAOs.Personas.EstudianteDAO;
 import com.ejemplo.Modelos.Personas.Estudiante;
@@ -13,86 +13,86 @@ import com.ejemplo.Repositorios.DB;
 
 public class EstudianteRepo {
 
-    private List<Estudiante> listado;
-    private EstudianteDAO estudianteDAO = new EstudianteDAO();
+    private final List<Estudiante> listado = new ArrayList<>();
 
-    public EstudianteRepo() {
-        this.listado = new ArrayList<>();
-    }
+    private final EstudianteDAO estudianteDAO = new EstudianteDAO();
 
-    public EstudianteRepo(List<Estudiante> listado) {
-        this.listado = listado;
-    }
-
-    public List<Estudiante> getListado() {
-        return listado;
-    }
-
-    public void inscribir(Estudiante estudiante) {
-        if (estudiante != null) {
+    /* =================== CREATE / UPSERT =================== */
+    public void save(Estudiante estudiante) {
+        if (estudiante == null) {
+            System.out.println("No se puede guardar un estudiante nulo.");
+            return;
+        }
+        try (Connection conn = DB.get()) {
+            estudianteDAO.guardar(conn, estudiante);   
+            listado.removeIf(e -> e.getId() == estudiante.getId());
             listado.add(estudiante);
-            guardarInformacion(estudiante);
-        } else {
-            System.out.println("No se puede inscribir un estudiante nulo.");
+            System.out.println("Estudiante guardado correctamente.");
+        } catch (SQLException e) {
+            System.err.println("Error al guardar estudiante: " + e.getMessage());
         }
     }
 
-    public void eliminar(Estudiante estudiante) {
-        if ((estudiante != null) && listado.contains(estudiante)) {
-
-            listado.remove(estudiante);
-
-            try(Connection conn = DB.get()){
-                estudianteDAO.eliminar(conn, estudiante);
-                System.out.println("Información eliminada correctamente.");
-            }catch(SQLException e){
-                System.err.println("Error al eliminar información: " + e.getMessage());
-            }
-
-        } else {
-            System.out.println("No se puede eliminar un estudiante nulo o que no está inscrito.");
+    /* =================== READ =================== */
+    public Optional<Estudiante> findById(long id) {
+        try (Connection conn = DB.get()) {
+            return estudianteDAO.cargar(conn, id);
+        } catch (SQLException e) {
+            System.err.println("Error al cargar estudiante: " + e.getMessage());
+            return Optional.empty();
         }
     }
 
-    public void actualizar(Estudiante estudiante) {
-        if (estudiante != null && listado.contains(estudiante)) {
-            int index = listado.indexOf(estudiante);
-            listado.set(index, estudiante);
-            guardarInformacion(estudiante);
-        } else {
-            System.out.println("No se puede actualizar un estudiante nulo o que no está inscrito.");
+    public List<Estudiante> findAll() {
+        try (Connection conn = DB.get()) {
+            List<Estudiante> result = estudianteDAO.listar(conn);
+            
+            listado.clear();
+            listado.addAll(result);
+            return result;
+        } catch (SQLException e) {
+            System.err.println("Error al listar estudiantes: " + e.getMessage());
+            return Collections.emptyList();
         }
     }
 
-    public void guardarInformacion(Estudiante estudiante) {
+    /* =================== UPDATE =================== */
 
-        try(Connection conn = DB.get()){
-            estudianteDAO.guardar(conn, estudiante);
-            System.out.println("Información guardada correctamente.");
-        }catch(SQLException e){
-            System.err.println("Error al guardar información: " + e.getMessage());
+    public void update(Estudiante estudiante) {
+        if (estudiante == null) {
+            System.out.println("No se puede actualizar un estudiante nulo.");
+            return;
         }
-
+        save(estudiante);
     }
 
-    public void cargarDatos() {
-
-        try(Connection conn = DB.get()){
-            String sql = "SELECT id FROM ESTUDIANTE";
-            try(PreparedStatement ps = conn.prepareStatement(sql)){
-                ResultSet rs = ps.executeQuery();
-                while(rs.next()){
-                    Estudiante e = estudianteDAO.cargar(conn, rs.getInt("id")).orElse(null);
-                    if (e != null) {
-                        listado.add(e);
-                    }
-                }
-            }catch(SQLException e){
-                System.err.println("Error al cargar datos de ESTUDIANTE: " + e.getMessage());
-            }
-        }catch(SQLException e){
-            System.err.println("Error al conectar a la base de datos: " + e.getMessage());
+    /* =================== DELETE =================== */
+    public void deleteById(long id) {
+        try (Connection conn = DB.get()) {
+            estudianteDAO.eliminar(conn, id);
+            listado.removeIf(e -> e.getId() == id);
+            System.out.println("Estudiante eliminado correctamente.");
+        } catch (SQLException e) {
+            System.err.println("Error al eliminar estudiante: " + e.getMessage());
         }
     }
 
+    public void delete(Estudiante estudiante) {
+        if (estudiante == null) {
+            System.out.println("No se puede eliminar un estudiante nulo.");
+            return;
+        }
+        deleteById((long)estudiante.getId());
+    }
+
+    /* =================== CACHE HELPERS (opcionales) =================== */
+
+    public List<Estudiante> getListadoCache() {
+        return Collections.unmodifiableList(listado);
+    }
+
+
+    public void reloadCache() {
+        findAll();
+    }
 }

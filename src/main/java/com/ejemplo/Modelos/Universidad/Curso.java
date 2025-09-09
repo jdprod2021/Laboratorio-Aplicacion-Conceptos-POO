@@ -15,7 +15,11 @@ public class Curso {
         this.programa = programa;
         this.activo = activo;
     }
-    
+
+    public Curso(int ID) {
+        this.ID = ID;
+    }
+
     @Override
     public String toString() {
         return "ID: " + this.ID +  ", Nombre: " + this.nombre + ", Activo: " + this.activo + ", Programa: " + this.programa.toString();
