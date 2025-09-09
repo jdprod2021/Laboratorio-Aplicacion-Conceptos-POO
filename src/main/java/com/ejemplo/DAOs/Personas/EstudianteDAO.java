@@ -3,6 +3,9 @@ package com.ejemplo.DAOs.Personas;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import com.ejemplo.DAOs.Universidad.ProgramaDAO;
@@ -11,40 +14,77 @@ import com.ejemplo.Modelos.Universidad.Programa;
 
 public class EstudianteDAO {
 
-    ProgramaDAO programaDAO = new ProgramaDAO();
-    PersonaDAO personaDAO = new PersonaDAO();
+    private final PersonaDAO personaDAO = new PersonaDAO();
+    private final ProgramaDAO programaDAO = new ProgramaDAO();
 
-
-    public void guardar(Connection conn, Estudiante estudiante){
-
+    /* =============== CREATE/UPDATE =============== */
+    public void guardar(Connection conn, Estudiante estudiante) {
+        
         personaDAO.guardar(conn, estudiante);
-        programaDAO.guardar(conn, estudiante.getPrograma());
 
-        String sql = "MERGE INTO ESTUDIANTE (id, codigo, programa_id, activo, promedio) KEY(id) VALUES (?, ?, ?, ?, ?)";
+        
+        String sql = "MERGE INTO ESTUDIANTE (id, codigo, programa_id, activo, promedio) " +
+                     "KEY(id) VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setLong(1, (long)estudiante.getId());
             ps.setDouble(2, estudiante.getCodigo());
-            ps.setLong(3, (long)estudiante.getPrograma().getID());
+            ps.setLong(3, (long)(estudiante.getPrograma() != null ? estudiante.getPrograma().getID() : 0L));
             ps.setBoolean(4, estudiante.isActivo());
             ps.setDouble(5, estudiante.getPromedio());
             ps.executeUpdate();
-        } catch (java.sql.SQLException e) {
-            System.err.println("Error al guardar ESTUDIANTE: " + e.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al guardar ESTUDIANTE", e);
         }
     }
 
-    public Optional<Estudiante> cargar(Connection conn, int id){
-
-        String sql = "SELECT P.*, E.codigo, E.activo, E.promedio, E.programa_id FROM PERSONA P LEFT JOIN ESTUDIANTE E ON P.id = E.id WHERE P.id = ?";
+    /* =============== READ =============== */
+    public Optional<Estudiante> cargar(Connection conn, long id) {
+        String sql = "SELECT P.id, P.nombre, P.apellido, P.email, " +
+                     "E.codigo, E.programa_id, E.activo, E.promedio " +
+                     "FROM PERSONA P " +
+                     "LEFT JOIN ESTUDIANTE E ON P.id = E.id " +
+                     "WHERE P.id = ?";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
+            ps.setLong(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    Estudiante estudiante = new Estudiante();
+                    estudiante.setId(rs.getLong("id"));
+                    estudiante.setNombres(rs.getString("nombre"));
+                    estudiante.setApellidos(rs.getString("apellido"));
+                    estudiante.setEmail(rs.getString("email"));
+                    estudiante.setCodigo(rs.getDouble("codigo"));
+                    estudiante.setActivo(rs.getBoolean("activo"));
+                    estudiante.setPromedio(rs.getDouble("promedio"));
 
-                Programa programa = programaDAO.cargar(conn, (int)rs.getLong("programa_id")).orElse(null);
+                    long programaId = rs.getLong("programa_id");
+                    if (programaId != 0) {
+                        Programa programa = programaDAO.cargarPorId(conn, (long)programaId).orElse(null);
+                        estudiante.setPrograma(programa);
+                    }
 
+                    return Optional.of(estudiante);
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al cargar ESTUDIANTE", e);
+        }
+        return Optional.empty();
+    }
+
+    public List<Estudiante> listar(Connection conn) {
+        String sql = "SELECT P.id, P.nombre, P.apellido, P.email, " +
+                     "E.codigo, E.programa_id, E.activo, E.promedio " +
+                     "FROM PERSONA P " +
+                     "INNER JOIN ESTUDIANTE E ON P.id = E.id " +
+                     "ORDER BY P.apellido, P.nombre";
+
+        List<Estudiante> lista = new ArrayList<>();
+        try (PreparedStatement ps = conn.prepareStatement(sql);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
                 Estudiante estudiante = new Estudiante();
                 estudiante.setId(rs.getLong("id"));
                 estudiante.setNombres(rs.getString("nombre"));
@@ -53,33 +93,33 @@ public class EstudianteDAO {
                 estudiante.setCodigo(rs.getDouble("codigo"));
                 estudiante.setActivo(rs.getBoolean("activo"));
                 estudiante.setPromedio(rs.getDouble("promedio"));
-                estudiante.setPrograma(programa);
-                
-                return Optional.of(estudiante);
+
+                long programaId = rs.getLong("programa_id");
+                if (programaId != 0) {
+                    Programa programa = programaDAO.cargarPorId(conn, (long)programaId).orElse(null);
+                    estudiante.setPrograma(programa);
+                }
+
+                lista.add(estudiante);
             }
-        } catch (java.sql.SQLException e) {
-            System.err.println("Error al cargar ESTUDIANTE: " + e.getMessage());
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al listar ESTUDIANTES", e);
         }
-        return Optional.empty();
+        return lista;
     }
 
-    public void eliminar(Connection conn, Estudiante estudiante){
-
+    /* =============== DELETE =============== */
+    public void eliminar(Connection conn, long id) {
+        
         String sql = "DELETE FROM ESTUDIANTE WHERE id = ?";
-
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, (long)estudiante.getId());
-            int rowsAffected = ps.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Información eliminada correctamente.");
-                // Eliminar la parte de Persona
-                personaDAO.eliminar(conn, estudiante);
-            } else {
-                System.out.println("No se encontró el estudiante para eliminar.");
-            }
-        } catch (java.sql.SQLException e) {
-            System.err.println("Error al eliminar ESTUDIANTE: " + e.getMessage());
+            ps.setLong(1, id);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar ESTUDIANTE", e);
         }
-    }
 
+       
+        personaDAO.eliminar(conn, id);
+    }
 }

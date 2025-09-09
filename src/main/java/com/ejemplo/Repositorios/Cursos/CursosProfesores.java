@@ -1,7 +1,6 @@
 package com.ejemplo.Repositorios.Cursos;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -80,17 +79,10 @@ public class CursosProfesores implements Servicios {
     public void cargarDatos() {
         
         try (Connection conn = DB.get()) {
-            ResultSet rs = conn.createStatement().executeQuery("SELECT id FROM CURSO_PROFESOR");
-            while (rs.next()) {
 
-                CursoProfesor cp = cursoProfesorDAO.cargar(conn, rs.getInt("id")).orElse(null);
-
-                if (cp != null) {
-                    cursoProfesores.add(cp);
-                }
-
-            }
+            cursoProfesores = cursoProfesorDAO.listar(conn);
             System.out.println("Datos cargados correctamente.");
+
         } catch (SQLException e) {
             System.err.println("Error al cargar datos: " + e.getMessage());
         }
