@@ -22,6 +22,7 @@ public final class EstudianteMapper {
 
     public static EstudianteRespuestaDTO toDTO(Estudiante e, Programa prog) {
         return new EstudianteRespuestaDTO(
+            (long)e.getId(),
             e.getNombres(),
             e.getApellidos(),
             e.getEmail(),

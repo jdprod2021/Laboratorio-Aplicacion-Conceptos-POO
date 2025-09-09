@@ -56,7 +56,6 @@ public class EstudianteServicio {
     public List<EstudianteRespuestaDTO> listar() {
         List<Estudiante> lista = estudianteRepo.findAll();
 
-        // Pequeña optimización para evitar llamadas repetidas a ProgramaRepo
         Map<Long, Programa> cacheProgramas = new HashMap<>();
         return lista.stream()
             .map(est -> {
@@ -74,7 +73,6 @@ public class EstudianteServicio {
     }
 
     /* ======================= UPDATE ======================= */
-    // Usa el mismo DTO de solicitud; si prefieres campos opcionales, crea un EstudianteUpdateDTO.
     public EstudianteRespuestaDTO actualizar(long id, EstudianteSolicitudDTO dto) {
         validar(dto);
 
@@ -84,7 +82,6 @@ public class EstudianteServicio {
         Programa programa = programaRepo.findById(dto.programaId)
             .orElseThrow(() -> new IllegalArgumentException("Programa no existe: " + dto.programaId));
 
-        // Actualiza campos (mapper tuyo no tiene "applyUpdate", así que lo hacemos aquí)
         existente.setNombres(dto.nombres);
         existente.setApellidos(dto.apellidos);
         existente.setEmail(dto.email);
@@ -100,7 +97,6 @@ public class EstudianteServicio {
 
     /* ======================= DELETE ======================= */
     public void eliminar(long id) {
-        // Podrías chequear existencia primero si quieres mensajes más claros
         estudianteRepo.deleteById(id);
     }
 
