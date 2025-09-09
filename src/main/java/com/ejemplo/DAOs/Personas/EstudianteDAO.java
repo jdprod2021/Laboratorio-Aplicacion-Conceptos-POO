@@ -19,21 +19,66 @@ public class EstudianteDAO {
 
     /* =============== CREATE/UPDATE =============== */
     public void guardar(Connection conn, Estudiante estudiante) {
-        
+        // 1) Upsert de PERSONA: debe dejar estudiante.id seteado (por GeneratedKeys o lookup por email)
         personaDAO.guardar(conn, estudiante);
 
-        
-        String sql = "MERGE INTO ESTUDIANTE (codigo, programa_id, activo, promedio) " +
-                     "KEY(codigo) VALUES (?, ?, ?, ?)";
+        // 2) Fallback: si por alguna razón aún no tiene id, lo recuperamos por email (único)
+        if (estudiante.getId() <= 0) {
+            try (PreparedStatement q = conn.prepareStatement("SELECT id FROM PERSONA WHERE email = ?")) {
+                q.setString(1, estudiante.getEmail());
+                try (ResultSet r = q.executeQuery()) {
+                    if (r.next()) {
+                        estudiante.setId(r.getLong(1));
+                    } else {
+                        throw new IllegalStateException(
+                            "PERSONA no encontrada luego de guardar (email=" + estudiante.getEmail() + ")"
+                        );
+                    }
+                }
+            } catch (SQLException e) {
+                throw new RuntimeException("Error recuperando id de PERSONA por email antes de guardar ESTUDIANTE", e);
+            }
+        }
+
+        // 3) Upsert de ESTUDIANTE por clave primaria (id) — recomendado dado tu DDL
+        final String sql = "MERGE INTO ESTUDIANTE (id, codigo, programa_id, activo, promedio) " +
+                        "KEY(id) VALUES (?, ?, ?, ?, ?)";
+
+        Long programaId = (estudiante.getPrograma() != null)
+                ? (long) estudiante.getPrograma().getID()
+                : null;
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setDouble(1, estudiante.getCodigo());
-            ps.setLong(2, (long)(estudiante.getPrograma() != null ? estudiante.getPrograma().getID() : 0L));
-            ps.setBoolean(3, estudiante.isActivo());
-            ps.setDouble(4, estudiante.getPromedio());
+            ps.setLong(1, (long) estudiante.getId());              // FK a PERSONA(id)
+            ps.setLong(2, (long) estudiante.getCodigo());          // UNIQUE (uq_estudiante_codigo)
+            if (programaId != null && programaId > 0) {
+                ps.setLong(3, programaId);
+            } else {
+                ps.setNull(3, java.sql.Types.BIGINT);              // puede ser NULL según tu DDL
+            }
+            ps.setBoolean(4, estudiante.isActivo());
+            ps.setDouble(5, estudiante.getPromedio());
+
             ps.executeUpdate();
+
         } catch (SQLException e) {
-            throw new RuntimeException("Error al guardar ESTUDIANTE", e);
+            SQLException next = e.getNextException();
+            String nextInfo = (next == null) ? "—"
+                    : String.format("SQLState=%s, ErrorCode=%d, Msg=%s",
+                        next.getSQLState(), next.getErrorCode(), next.getMessage());
+
+            String detalle = String.format(
+                "Error al guardar ESTUDIANTE. Datos=[id=%d, codigo=%d, programaId=%s, activo=%s, promedio=%.3f]. " +
+                "SQLState=%s, ErrorCode=%d, Msg=%s. SQL=%s. Next=%s",
+                (long) estudiante.getId(),
+                (long) estudiante.getCodigo(),
+                (programaId == null ? "NULL" : programaId.toString()),
+                estudiante.isActivo(),
+                estudiante.getPromedio(),
+                e.getSQLState(), e.getErrorCode(), e.getMessage(),
+                sql, nextInfo
+            );
+            throw new RuntimeException(detalle, e);
         }
     }
 

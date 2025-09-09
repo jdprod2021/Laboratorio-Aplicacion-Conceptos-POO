@@ -26,6 +26,7 @@ public class EstudianteView implements MenuView {
     @Override
     public void handle() {
         while (true) {
+            show();
             int op = InputUtils.readInt("Opción (Estudiante): ");
             switch (op) {
                 case 1 -> crear();
@@ -46,7 +47,7 @@ public class EstudianteView implements MenuView {
         try {
             EstudianteRespuestaDTO out = servicio.crear(dto);
             System.out.println("✅ Estudiante registrado:");
-            System.out.println(render(out));
+            //System.out.println(render(out));
         } catch (Exception e) {
             System.out.println("❌ Error: " + e.getMessage());
         }
@@ -80,7 +81,7 @@ public class EstudianteView implements MenuView {
         try {
             EstudianteRespuestaDTO out = servicio.actualizar(id, dto);
             System.out.println("✅ Estudiante actualizado:");
-            System.out.println(render(out));
+            //System.out.println(render(out));
         } catch (Exception e) {
             System.out.println("❌ Error: " + e.getMessage());
         }

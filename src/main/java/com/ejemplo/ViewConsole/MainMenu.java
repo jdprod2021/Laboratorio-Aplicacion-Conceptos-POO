@@ -16,6 +16,8 @@ public class MainMenu implements MenuView {
 
     @Override
     public void handle() {
+        show();
+        
         while (true) {
             int op = InputUtils.readInt("Seleccione una opción: ");
             switch (op) {

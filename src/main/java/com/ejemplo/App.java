@@ -1,5 +1,13 @@
 package com.ejemplo;
 
+import com.ejemplo.Repositorios.DB;
+import com.ejemplo.Utils.InputUtils;
+import com.ejemplo.ViewConsole.EstudianteView;
+import com.ejemplo.ViewConsole.FacultadView;
+import com.ejemplo.ViewConsole.MainMenu;
+import com.ejemplo.ViewConsole.ProfesorView;
+import com.ejemplo.ViewConsole.ProgramaView;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -20,7 +28,25 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        while (true) {
+            System.out.println("====== MENÚ PRINCIPAL ======");
+            System.out.println("1. Interfaz Grafica");
+            System.out.println("2. Consola");
+            System.out.println("0. Salir");
+
+            int op = InputUtils.readInt("Seleccione una opción: ");
+            switch (op) {
+                case 1 -> launch();
+                case 2 -> new MainMenu().start();
+                case 0 -> {
+                    System.out.println("Saliendo...");
+                    return;
+                }
+                default -> System.out.println("Opción inválida.");
+            }
+            System.out.println(); // espacio al volver
+        }
+        
     }
 
 }

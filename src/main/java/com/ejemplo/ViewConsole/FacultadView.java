@@ -29,7 +29,9 @@ public class FacultadView implements MenuView {
 
     @Override
     public void handle() {
+        
         while (true) {
+            show();
             int op = InputUtils.readInt("Opción (Facultad): ");
             switch (op) {
                 case 1 -> crear();
@@ -49,7 +51,7 @@ public class FacultadView implements MenuView {
         FacultadSolicitudDTO dto = leerSolicitud();
         try {
             FacultadRespuestaDTO out = servicio.crear(dto);
-            System.out.println("✅ Facultad creada:\n" + render(out));
+            System.out.println("✅ Facultad creada");
         } catch (Exception e) {
             System.out.println("❌ Error: " + e.getMessage());
         }
@@ -82,7 +84,7 @@ public class FacultadView implements MenuView {
         FacultadSolicitudDTO dto = leerSolicitud();
         try {
             FacultadRespuestaDTO out = servicio.actualizar(id, dto);
-            System.out.println("✅ Facultad actualizada:\n" + render(out));
+            System.out.println("✅ Facultad actualizada");
         } catch (Exception e) {
             System.out.println("❌ Error: " + e.getMessage());
         }
