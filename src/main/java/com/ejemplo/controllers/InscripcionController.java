@@ -120,11 +120,9 @@ public class InscripcionController implements Initializable {
     }
 
     @FXML
-    private void volverMenu(ActionEvent event) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/ejemplo/ui/view/MainMenu.fxml"));
-        Parent root = loader.load();
+    private void volverMenu(ActionEvent event) {
         Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        stage.setScene(new Scene(root));
-        stage.show();
+        stage.close();
     }
+
 }
