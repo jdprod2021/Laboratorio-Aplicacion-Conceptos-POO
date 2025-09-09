@@ -48,7 +48,7 @@ public class ProgramaView implements MenuView {
     private void crear() {
         ProgramaSolicitudDTO dto = leerSolicitud();
         try {
-            ProgramaRespuestaDTO out = servicio.crear(dto);
+            servicio.crear(dto);
             System.out.println("✅ Programa creado");
         } catch (Exception e) {
             System.out.println("❌ Error: " + e.getMessage());
@@ -81,7 +81,7 @@ public class ProgramaView implements MenuView {
         long id = InputUtils.readLong("ID del programa a actualizar: ");
         ProgramaSolicitudDTO dto = leerSolicitud();
         try {
-            ProgramaRespuestaDTO out = servicio.actualizar(id, dto);
+            servicio.actualizar(id, dto);
             System.out.println("✅ Programa actualizado");
         } catch (Exception e) {
             System.out.println("❌ Error: " + e.getMessage());
@@ -117,6 +117,6 @@ public class ProgramaView implements MenuView {
     }
 
     private String renderLinea(ProgramaRespuestaDTO p) {
-        return "(" + p.ID + ") " + p.nombre;
+        return " " + p.ID + " | " + p.nombre;
     }
 }

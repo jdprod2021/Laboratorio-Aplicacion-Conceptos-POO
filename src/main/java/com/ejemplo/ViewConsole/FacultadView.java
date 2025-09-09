@@ -50,7 +50,7 @@ public class FacultadView implements MenuView {
     private void crear() {
         FacultadSolicitudDTO dto = leerSolicitud();
         try {
-            FacultadRespuestaDTO out = servicio.crear(dto);
+            servicio.crear(dto);
             System.out.println("✅ Facultad creada");
         } catch (Exception e) {
             System.out.println("❌ Error: " + e.getMessage());
@@ -83,7 +83,7 @@ public class FacultadView implements MenuView {
         long id = InputUtils.readLong("ID de la facultad a actualizar: ");
         FacultadSolicitudDTO dto = leerSolicitud();
         try {
-            FacultadRespuestaDTO out = servicio.actualizar(id, dto);
+            servicio.actualizar(id, dto);
             System.out.println("✅ Facultad actualizada");
         } catch (Exception e) {
             System.out.println("❌ Error: " + e.getMessage());
@@ -115,6 +115,6 @@ public class FacultadView implements MenuView {
     }
 
     private String renderLinea(FacultadRespuestaDTO f) {
-        return "(" + f.ID + ") " + f.nombre;
+        return "  " + f.ID + " | " + f.nombre;
     }
 }
