@@ -6,7 +6,6 @@ import com.ejemplo.Modelos.Personas.Estudiante;
 import com.ejemplo.Modelos.Universidad.Programa;
 
 public final class EstudianteMapper {
-    private EstudianteMapper(){}
 
     public static Estudiante toEntity(EstudianteSolicitudDTO dto, Programa prog) {
         Estudiante e = new Estudiante();
