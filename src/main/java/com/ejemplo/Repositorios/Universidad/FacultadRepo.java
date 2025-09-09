@@ -17,8 +17,8 @@ public class FacultadRepo {
     private final List<Facultad> listado = new ArrayList<>();
     private final FacultadDAO facultadDAO;
 
-    public FacultadRepo(FacultadDAO facultadDAO) {
-        this.facultadDAO = facultadDAO;
+    public FacultadRepo() {
+        this.facultadDAO = new FacultadDAO();
     }
 
     /* =================== CREATE / UPSERT =================== */
