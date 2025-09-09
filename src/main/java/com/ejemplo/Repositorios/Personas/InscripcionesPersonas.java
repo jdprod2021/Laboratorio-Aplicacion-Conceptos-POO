@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 import com.ejemplo.DAOs.Personas.PersonaDAO;
 import com.ejemplo.Modelos.Personas.Persona;
@@ -29,6 +30,15 @@ public class InscripcionesPersonas{
             guardarInformacion(persona);
         } else {
             System.out.println("No se puede inscribir una persona nula.");
+        }
+    }
+
+    public Optional<Persona> findById(long id) {
+        try (Connection conn = DB.get()) {
+            return personaDAO.cargar(conn, id);
+        } catch (SQLException e) {
+            System.err.println("Error al cargar persona: " + e.getMessage());
+            return Optional.empty();
         }
     }
 
