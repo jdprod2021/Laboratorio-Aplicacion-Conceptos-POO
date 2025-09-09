@@ -31,7 +31,7 @@ public class EstudianteDAO {
                         estudiante.setId(r.getLong(1));
                     } else {
                         throw new IllegalStateException(
-                                "PERSONA no encontrada luego de guardar (email=" + estudiante.getEmail() + ")"
+                            "PERSONA no encontrada luego de guardar (email=" + estudiante.getEmail() + ")"
                         );
                     }
                 }
@@ -42,7 +42,7 @@ public class EstudianteDAO {
 
         // 3) Upsert de ESTUDIANTE por clave primaria (id) — recomendado dado tu DDL
         final String sql = "MERGE INTO ESTUDIANTE (id, codigo, programa_id, activo, promedio) " +
-                "KEY(id) VALUES (?, ?, ?, ?, ?)";
+                        "KEY(id) VALUES (?, ?, ?, ?, ?)";
 
         Long programaId = (estudiante.getPrograma() != null)
                 ? (long) estudiante.getPrograma().getID()
@@ -65,18 +65,18 @@ public class EstudianteDAO {
             SQLException next = e.getNextException();
             String nextInfo = (next == null) ? "—"
                     : String.format("SQLState=%s, ErrorCode=%d, Msg=%s",
-                    next.getSQLState(), next.getErrorCode(), next.getMessage());
+                        next.getSQLState(), next.getErrorCode(), next.getMessage());
 
             String detalle = String.format(
-                    "Error al guardar ESTUDIANTE. Datos=[id=%d, codigo=%d, programaId=%s, activo=%s, promedio=%.3f]. " +
-                            "SQLState=%s, ErrorCode=%d, Msg=%s. SQL=%s. Next=%s",
-                    (long) estudiante.getId(),
-                    (long) estudiante.getCodigo(),
-                    (programaId == null ? "NULL" : programaId.toString()),
-                    estudiante.isActivo(),
-                    estudiante.getPromedio(),
-                    e.getSQLState(), e.getErrorCode(), e.getMessage(),
-                    sql, nextInfo
+                "Error al guardar ESTUDIANTE. Datos=[id=%d, codigo=%d, programaId=%s, activo=%s, promedio=%.3f]. " +
+                "SQLState=%s, ErrorCode=%d, Msg=%s. SQL=%s. Next=%s",
+                (long) estudiante.getId(),
+                (long) estudiante.getCodigo(),
+                (programaId == null ? "NULL" : programaId.toString()),
+                estudiante.isActivo(),
+                estudiante.getPromedio(),
+                e.getSQLState(), e.getErrorCode(), e.getMessage(),
+                sql, nextInfo
             );
             throw new RuntimeException(detalle, e);
         }

@@ -27,7 +27,9 @@ public class ProgramaView implements MenuView {
 
     @Override
     public void handle() {
+        
         while (true) {
+            show();
             int op = InputUtils.readInt("Opción (Programa): ");
             switch (op) {
                 case 1 -> crear();
@@ -47,7 +49,7 @@ public class ProgramaView implements MenuView {
         ProgramaSolicitudDTO dto = leerSolicitud();
         try {
             ProgramaRespuestaDTO out = servicio.crear(dto);
-            System.out.println("✅ Programa creado:\n" + render(out));
+            System.out.println("✅ Programa creado");
         } catch (Exception e) {
             System.out.println("❌ Error: " + e.getMessage());
         }
@@ -80,7 +82,7 @@ public class ProgramaView implements MenuView {
         ProgramaSolicitudDTO dto = leerSolicitud();
         try {
             ProgramaRespuestaDTO out = servicio.actualizar(id, dto);
-            System.out.println("✅ Programa actualizado:\n" + render(out));
+            System.out.println("✅ Programa actualizado");
         } catch (Exception e) {
             System.out.println("❌ Error: " + e.getMessage());
         }
