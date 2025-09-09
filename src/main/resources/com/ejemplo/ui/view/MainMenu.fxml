@@ -36,7 +36,7 @@
                   <Insets left="50.0" />
                </padding>
             </Button>
-            <Button fx:id="btnProfesores" alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="73.0" prefWidth="211.0" style="-fx-background-color: #2B6CB6;" text="Docentes" textFill="#fffbfb">
+                <Button fx:id="btnProfesores" alignment="BASELINE_LEFT" graphicTextGap="15.0" mnemonicParsing="false" onAction="#handleClicks" prefHeight="73.0" prefWidth="211.0" style="-fx-background-color: #2B6CB6;" text="Profesores" textFill="#fffbfb">
                <padding>
                   <Insets left="50.0" />
                </padding>
@@ -66,7 +66,7 @@
             </HBox>
             <HBox prefHeight="87.0" prefWidth="569.0">
                <children>
-                  <Button fx:id="btnAñadir" mnemonicParsing="false" prefHeight="44.0" prefWidth="141.0" style="-fx-background-color: #2FBF71;" text="Añadir" textAlignment="CENTER">
+                  <Button fx:id="btnAñadir" mnemonicParsing="false" onAction="#añadirInscripcion"  prefHeight="44.0" prefWidth="141.0" style="-fx-background-color: #2FBF71;" text="Añadir" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="50.0" top="20.0" />
                      </HBox.margin>
