@@ -46,7 +46,7 @@ public class ProfesorView implements MenuView {
     private void registrar() {
         ProfesorSolicitudDTO dto = leerDatosProfesor();
         try {
-            ProfesorRespuestaDTO creado = servicio.crear(dto);
+            servicio.crear(dto);
             System.out.println("✅ Profesor registrado con éxito");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
@@ -72,7 +72,7 @@ public class ProfesorView implements MenuView {
         long id = InputUtils.readInt("Ingrese ID del profesor a actualizar: ");
         ProfesorSolicitudDTO dto = leerDatosProfesor();
         try {
-            ProfesorRespuestaDTO actualizado = servicio.actualizar(id, dto);
+            servicio.actualizar(id, dto);
             System.out.println("Profesor actualizado");
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());

@@ -45,7 +45,7 @@ public class EstudianteView implements MenuView {
     private void crear() {
         EstudianteSolicitudDTO dto = leerSolicitud();
         try {
-            EstudianteRespuestaDTO out = servicio.crear(dto);
+            servicio.crear(dto);
             System.out.println("✅ Estudiante registrado:");
             //System.out.println(render(out));
         } catch (Exception e) {
@@ -79,7 +79,7 @@ public class EstudianteView implements MenuView {
         long id = InputUtils.readLong("ID del estudiante a actualizar: ");
         EstudianteSolicitudDTO dto = leerSolicitud();
         try {
-            EstudianteRespuestaDTO out = servicio.actualizar(id, dto);
+            servicio.actualizar(id, dto);
             System.out.println("✅ Estudiante actualizado:");
             //System.out.println(render(out));
         } catch (Exception e) {
@@ -120,6 +120,6 @@ public class EstudianteView implements MenuView {
 
     private String renderLinea(EstudianteRespuestaDTO e) {
         String prog = (e.NombrePrograma != null ? e.NombrePrograma : "—");
-        return "(" + e.ID + ") " + e.nombres + " " + e.apellidos + " | " + prog;
+        return " " + e.ID + " | " + e.nombres + " | " + e.apellidos + " | " + prog + " | " + e.email;
     }
 }

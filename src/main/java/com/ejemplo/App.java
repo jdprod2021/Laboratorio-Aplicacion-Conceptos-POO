@@ -1,12 +1,7 @@
 package com.ejemplo;
 
-import com.ejemplo.Repositorios.DB;
 import com.ejemplo.Utils.InputUtils;
-import com.ejemplo.ViewConsole.EstudianteView;
-import com.ejemplo.ViewConsole.FacultadView;
 import com.ejemplo.ViewConsole.MainMenu;
-import com.ejemplo.ViewConsole.ProfesorView;
-import com.ejemplo.ViewConsole.ProgramaView;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
