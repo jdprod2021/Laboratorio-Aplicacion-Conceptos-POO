@@ -13,8 +13,7 @@ public class Facultad {
         decano = new Persona();
     }
     
-    public Facultad(double id, String nombre, Persona decano) {
-        this.id = id;
+    public Facultad( String nombre, Persona decano) {
         this.nombre = nombre;
         this.decano = decano;
     }
