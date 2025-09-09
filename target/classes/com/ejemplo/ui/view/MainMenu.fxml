@@ -66,12 +66,12 @@
             </HBox>
             <HBox prefHeight="87.0" prefWidth="569.0">
                <children>
-                  <Button fx:id="btnAñadir" mnemonicParsing="false" onAction="#añadirInscripcion"  prefHeight="44.0" prefWidth="141.0" style="-fx-background-color: #2FBF71;" text="Añadir" textAlignment="CENTER">
+                  <Button fx:id="btnAñadir" mnemonicParsing="false" onAction="#añadir"  prefHeight="44.0" prefWidth="141.0" style="-fx-background-color: #2FBF71;" text="Añadir" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets left="50.0" top="20.0" />
                      </HBox.margin>
                   </Button>
-                  <Button fx:id="btnActualizar" mnemonicParsing="false" prefHeight="44.0" prefWidth="141.0" text="Actualizar">
+                  <Button fx:id="btnActualizar" mnemonicParsing="false"  prefHeight="44.0" prefWidth="141.0" text="Actualizar">
                      <HBox.margin>
                         <Insets left="20.0" top="20.0" />
                      </HBox.margin>
@@ -105,15 +105,15 @@
                       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                     </rowConstraints>
                      <children>
-                        <TableView prefHeight="274.0" prefWidth="571.0">
-                          <columns>
-                            <TableColumn prefWidth="102.0" text="Nombre" />
-                            <TableColumn prefWidth="114.0" text="Apellido" />
-                              <TableColumn prefWidth="95.0" text="Programa" />
-                              <TableColumn prefWidth="161.0" text="Email" />
-                              <TableColumn prefWidth="93.0" text="Facultad" />
-                          </columns>
-                        </TableView>
+                         <TableView fx:id="tblDatos" prefHeight="300" prefWidth="600">
+                             <columns>
+                                 <TableColumn fx:id="colNombre" text="Nombre" prefWidth="120"/>
+                                 <TableColumn fx:id="colApellido" text="Apellido" prefWidth="120"/>
+                                 <TableColumn fx:id="colPrograma" text="Programa" prefWidth="120"/>
+                                 <TableColumn fx:id="colEmail" text="Email" prefWidth="150"/>
+
+                             </columns>
+                         </TableView>
                      </children>
                   </GridPane>
                </children>
