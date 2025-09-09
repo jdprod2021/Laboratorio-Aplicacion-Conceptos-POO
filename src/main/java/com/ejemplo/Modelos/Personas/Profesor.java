@@ -11,6 +11,10 @@ public class Profesor extends Persona{
         this.TipoContrato = TipoContrato;
     }
 
+    public Profesor (long id) {
+        super(id);
+    }
+
     @Override
     public String toString(){
         return super.toString() + " TipoContrato: " + this.TipoContrato;
