@@ -15,4 +15,12 @@ public class ProfesorRespuestaDTO {
         this.email = email;
         this.TipoContrato = TipoContrato;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+            "Profesor[ID=%d, Nombre=%s %s, Email=%s, Contrato=%s]",
+            ID, nombres, apellidos, email, TipoContrato
+        );
+    }
 }

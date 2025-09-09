@@ -17,19 +17,37 @@ public class ProfesorDAO {
     /* ======================= CREATE / UPSERT ======================= */
     
     public void guardar(Connection conn, Profesor profesor) {
-        
-        personaDAO.guardar(conn, profesor);
+    // 1) Upsert de PERSONA (debe dejar profesor.id seteado)
+    personaDAO.guardar(conn, profesor);
 
-        
-        final String sql = "MERGE INTO PROFESOR (id, tipo_contrato) KEY(id) VALUES (?, ?)";
-        try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, (long)profesor.getId());
-            ps.setString(2, profesor.getTipoContrato());
-            ps.executeUpdate();
+    // 2) Por seguridad, si aún no hay id, recuperarlo por email
+    if (profesor.getId() <= 0) {
+        try (PreparedStatement q = conn.prepareStatement("SELECT id FROM PERSONA WHERE email=?")) {
+            q.setString(1, profesor.getEmail());
+            try (ResultSet rs = q.executeQuery()) {
+                if (rs.next()) profesor.setId(rs.getLong(1));
+                else throw new IllegalStateException("No se obtuvo id para PROFESOR tras guardar PERSONA (email=" + profesor.getEmail() + ")");
+            }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al guardar PROFESOR", e);
+            throw new RuntimeException("Error recuperando id PERSONA por email antes de guardar PROFESOR", e);
         }
     }
+
+    // 3) MERGE en PROFESOR con id válido
+    final String sql = "MERGE INTO PROFESOR (id, tipo_contrato) KEY(id) VALUES (?, ?)";
+    try (PreparedStatement ps = conn.prepareStatement(sql)) {
+        ps.setLong(1, (long)profesor.getId());
+        ps.setString(2, profesor.getTipoContrato());
+        ps.executeUpdate();
+    } catch (SQLException e) {
+        String detalle = String.format(
+            "Error al guardar PROFESOR. Datos=[id=%d, tipo_contrato=%s]. SQLState=%s, ErrorCode=%d, Msg=%s",
+            profesor.getId(), profesor.getTipoContrato(),
+            e.getSQLState(), e.getErrorCode(), e.getMessage()
+        );
+        throw new RuntimeException(detalle, e);
+    }
+}
 
     /* ======================= READ (uno) ======================= */
     public Optional<Profesor> cargarPorId(Connection conn, long id) {

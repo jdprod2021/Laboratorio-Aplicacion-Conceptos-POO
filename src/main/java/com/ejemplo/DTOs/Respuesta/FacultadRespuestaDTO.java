@@ -10,4 +10,9 @@ public class FacultadRespuestaDTO {
         this.nombre = nombre;
     }
 
+    @Override
+    public String toString() {
+        return String.format("Facultad[ID=%d, Nombre=%s]", ID, nombre);
+    }
+
 }
