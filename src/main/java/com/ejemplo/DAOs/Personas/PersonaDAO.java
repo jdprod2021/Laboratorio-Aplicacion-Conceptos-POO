@@ -15,16 +15,20 @@ public class PersonaDAO {
     /* ================= CREATE/UPDATE ================= */
 
     public void guardar(Connection conn, Persona persona) {
-        String sql = "MERGE INTO PERSONA (id, nombres, apellidos, email) " +
-                     "KEY(id) VALUES (?, ?, ?, ?)";
+        String sql = "MERGE INTO PERSONA (nombres, apellidos, email) " +
+                     "KEY(email) VALUES (?, ?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, (long)persona.getId());
-            ps.setString(2, persona.getNombres());
-            ps.setString(3, persona.getApellidos());
-            ps.setString(4, persona.getEmail());
+            ps.setString(1, persona.getNombres());
+            ps.setString(2, persona.getApellidos());
+            ps.setString(3, persona.getEmail());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al guardar PERSONA", e);
+            String detalle = String.format(
+            "Error al guardar PERSONA. Datos=[id=%d, nombres=%s, apellidos=%s, email=%s]. SQLState=%s, ErrorCode=%d, Mensaje=%s",
+            (long)persona.getId(), persona.getNombres(), persona.getApellidos(), persona.getEmail(),
+            e.getSQLState(), e.getErrorCode(), e.getMessage()
+            );
+            throw new RuntimeException(detalle, e);
         }
     }
 

@@ -15,15 +15,14 @@ public class ProgramaDAO {
 
     /* ======================= CREATE / UPSERT ======================= */
     public void guardar(Connection conn, Programa programa) {
-        final String sql = "MERGE INTO PROGRAMA (id, nombre, duracion, registro, facultad_id) " +
-                           "KEY(id) VALUES (?, ?, ?, ?, ?)";
+        final String sql = "MERGE INTO PROGRAMA (nombre, duracion, registro, facultad_id) " +
+                           "KEY(nombre) VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, (long)programa.getID());
-            ps.setString(2, programa.getNombre());
-            ps.setDouble(3, programa.getDuracion()); // años/semestres según tu modelo
+            ps.setString(1, programa.getNombre());
+            ps.setDouble(2, programa.getDuracion()); // años/semestres según tu modelo
             // Si programa.getRegistro() es java.util.Date:
-            ps.setDate(4, new java.sql.Date(programa.getRegistro().getTime()));
-            ps.setLong(5, (long)(programa.getFacultad() != null ? programa.getFacultad().getID() : 0L));
+            ps.setDate(3, new java.sql.Date(programa.getRegistro().getTime()));
+            ps.setLong(4, (long)(programa.getFacultad() != null ? programa.getFacultad().getID() : 0L));
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al guardar PROGRAMA", e);

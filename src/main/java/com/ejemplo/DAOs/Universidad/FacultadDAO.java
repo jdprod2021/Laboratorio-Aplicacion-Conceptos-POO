@@ -15,11 +15,10 @@ public class FacultadDAO {
 
     /* ======================= CREATE / UPSERT ======================= */
     public void guardar(Connection conn, Facultad facultad) {
-        final String sql = "MERGE INTO FACULTAD (id, nombre, decano_id) KEY(id) VALUES (?, ?, ?)";
+        final String sql = "MERGE INTO FACULTAD (nombre, decano_id) KEY(nombre) VALUES (?, ?)";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, (long)facultad.getID());
-            ps.setString(2, facultad.getNombre());
-            ps.setLong(3, (long)(facultad.getDecano() != null ? facultad.getDecano().getId() : 0L));
+            ps.setString(1, facultad.getNombre());
+            ps.setLong(2, (long)(facultad.getDecano() != null ? facultad.getDecano().getId() : 0L));
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al guardar FACULTAD", e);

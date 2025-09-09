@@ -23,15 +23,14 @@ public class EstudianteDAO {
         personaDAO.guardar(conn, estudiante);
 
         
-        String sql = "MERGE INTO ESTUDIANTE (id, codigo, programa_id, activo, promedio) " +
-                     "KEY(id) VALUES (?, ?, ?, ?, ?)";
+        String sql = "MERGE INTO ESTUDIANTE (codigo, programa_id, activo, promedio) " +
+                     "KEY(codigo) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, (long)estudiante.getId());
-            ps.setDouble(2, estudiante.getCodigo());
-            ps.setLong(3, (long)(estudiante.getPrograma() != null ? estudiante.getPrograma().getID() : 0L));
-            ps.setBoolean(4, estudiante.isActivo());
-            ps.setDouble(5, estudiante.getPromedio());
+            ps.setDouble(1, estudiante.getCodigo());
+            ps.setLong(2, (long)(estudiante.getPrograma() != null ? estudiante.getPrograma().getID() : 0L));
+            ps.setBoolean(3, estudiante.isActivo());
+            ps.setDouble(4, estudiante.getPromedio());
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("Error al guardar ESTUDIANTE", e);
@@ -40,7 +39,7 @@ public class EstudianteDAO {
 
     /* =============== READ =============== */
     public Optional<Estudiante> cargar(Connection conn, long id) {
-        String sql = "SELECT P.id, P.nombre, P.apellido, P.email, " +
+        String sql = "SELECT P.id, P.nombres, P.apellidos, P.email, " +
                      "E.codigo, E.programa_id, E.activo, E.promedio " +
                      "FROM PERSONA P " +
                      "LEFT JOIN ESTUDIANTE E ON P.id = E.id " +
@@ -52,8 +51,8 @@ public class EstudianteDAO {
                 if (rs.next()) {
                     Estudiante estudiante = new Estudiante();
                     estudiante.setId(rs.getLong("id"));
-                    estudiante.setNombres(rs.getString("nombre"));
-                    estudiante.setApellidos(rs.getString("apellido"));
+                    estudiante.setNombres(rs.getString("nombres"));
+                    estudiante.setApellidos(rs.getString("apellidos"));
                     estudiante.setEmail(rs.getString("email"));
                     estudiante.setCodigo(rs.getDouble("codigo"));
                     estudiante.setActivo(rs.getBoolean("activo"));
@@ -75,11 +74,11 @@ public class EstudianteDAO {
     }
 
     public List<Estudiante> listar(Connection conn) {
-        String sql = "SELECT P.id, P.nombre, P.apellido, P.email, " +
+        String sql = "SELECT P.id, P.nombres, P.apellidos, P.email, " +
                      "E.codigo, E.programa_id, E.activo, E.promedio " +
                      "FROM PERSONA P " +
                      "INNER JOIN ESTUDIANTE E ON P.id = E.id " +
-                     "ORDER BY P.apellido, P.nombre";
+                     "ORDER BY P.apellidos, P.nombres";
 
         List<Estudiante> lista = new ArrayList<>();
         try (PreparedStatement ps = conn.prepareStatement(sql);
@@ -87,8 +86,8 @@ public class EstudianteDAO {
             while (rs.next()) {
                 Estudiante estudiante = new Estudiante();
                 estudiante.setId(rs.getLong("id"));
-                estudiante.setNombres(rs.getString("nombre"));
-                estudiante.setApellidos(rs.getString("apellido"));
+                estudiante.setNombres(rs.getString("nombres"));
+                estudiante.setApellidos(rs.getString("apellidos"));
                 estudiante.setEmail(rs.getString("email"));
                 estudiante.setCodigo(rs.getDouble("codigo"));
                 estudiante.setActivo(rs.getBoolean("activo"));

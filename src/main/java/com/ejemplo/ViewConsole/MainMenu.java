@@ -19,7 +19,7 @@ public class MainMenu implements MenuView {
         while (true) {
             int op = InputUtils.readInt("Seleccione una opción: ");
             switch (op) {
-                /*case 1 -> new FacultadView().start();
+                case 1 -> new FacultadView().start();
                 case 2 -> new ProgramaView().start();
                 case 3 -> new EstudianteView().start();
                 case 4 -> new ProfesorView().start();
@@ -27,7 +27,7 @@ public class MainMenu implements MenuView {
                     System.out.println("Saliendo...");
                     return;
                 }
-                default -> System.out.println("Opción inválida.");*/
+                default -> System.out.println("Opción inválida.");
             }
             System.out.println(); // espacio al volver
             show(); // reimprime menú principal
