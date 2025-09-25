@@ -1,6 +1,4 @@
-package com.ejemplo.Modelos.Universidad;
-
-import com.ejemplo.Modelos.Personas.Estudiante;
+package com.ejemplo.Modelos;
 
 public class Inscripcion {
     private Curso curso;

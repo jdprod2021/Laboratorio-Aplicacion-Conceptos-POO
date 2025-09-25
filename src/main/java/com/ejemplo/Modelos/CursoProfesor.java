@@ -1,7 +1,4 @@
-package com.ejemplo.Modelos.Cursos;
-
-import com.ejemplo.Modelos.Personas.Profesor;
-import com.ejemplo.Modelos.Universidad.Curso;
+package com.ejemplo.Modelos;
 
 public class CursoProfesor {
 

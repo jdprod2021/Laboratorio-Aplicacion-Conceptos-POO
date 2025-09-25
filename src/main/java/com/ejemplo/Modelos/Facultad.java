@@ -1,6 +1,4 @@
-package com.ejemplo.Modelos.Universidad;
-
-import com.ejemplo.Modelos.Personas.Persona;
+package com.ejemplo.Modelos;
 
 public class Facultad {
 

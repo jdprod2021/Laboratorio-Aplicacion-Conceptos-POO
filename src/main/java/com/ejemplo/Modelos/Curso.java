@@ -1,4 +1,4 @@
-package com.ejemplo.Modelos.Universidad;
+package com.ejemplo.Modelos;
 
 public class Curso {
 

@@ -1,4 +1,4 @@
-package com.ejemplo.Modelos.Personas;
+package com.ejemplo.Modelos;
 
 public class Profesor extends Persona{
 

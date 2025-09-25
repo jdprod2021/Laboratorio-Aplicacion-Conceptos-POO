@@ -1,0 +1,501 @@
+@startuml DiagrmaDeClases
+skinparam packageStyle rectangle
+skinparam classAttributeIconSize 0
+
+package Modelos <<folder>>{
+    class Persona #Green {
+        -ID: Double
+        -nombres: String
+        -apellidos: String
+        -email: String
+        +toString(): String
+    }
+
+    class Estudiante #Green{
+        -código: Double
+        -programa: Programa
+        -activo: Boolean
+        -promedio: Double
+        +toString(): String
+    }
+
+    class Profesor #Green {
+        -TipoContrato: String
+        +toString(): String
+    }
+
+    class Facultad #Green{
+        -ID: Double
+        -nombre: String
+        -decano: Persona
+        +toString(): String
+    }
+
+    class Programa #Green {
+        -ID: Double
+        -nombre: String
+        -duracion: Double
+        -registro: Date
+        -facultad: Facultad
+        +toString(): String
+    }
+
+    class Curso #Green{
+        -ID: Integer
+        -nombre: String
+        -programa: Programa
+        -activo: Boolean
+        +toString(): String
+    }
+
+    class Inscripción #Green{
+        -curso: Curso
+        -año: Integer
+        -semestre: Integer
+        -estudiante: Estudiante
+        +toString(): String
+    }
+
+    class CursoProfesor #Green{
+        -profesor: Profesor
+        -año: Integer
+        -semestre: Integer
+        -curso: Curso
+        +toString(): String
+    }
+}
+
+package Servicio <<folder>>{
+    class InscripcionesPersonas {
+        -listado: Persona[...]
+        +inscribir(Persona)
+        +eliminar(Persona)
+        +actualizar(Persona)
+        +guardarInformación(Persona)
+        +cargarDatos()
+    }
+
+    interface Servicios {
+        +imprimirPosición(posicion): String
+        +cantidadActual(): Integer
+        +imprimirListado(): List<String>
+    }
+
+    class CursosInscritos {
+        -listado: Inscripción[...]
+        +inscribirCurso(Inscripción)
+        +eliminar(Inscripción)
+        +actualizar(Inscripción)
+        +guardarInformación(Inscripción)
+        +toString(): String
+        +cargarDatos()
+    }
+
+    class CursosProfesores {
+        -listado : CursoProfesor[...]
+        +inscribir(CursoProfesor)
+        +guardarInformación(CursoProfesor)
+        +toString(): String
+        +cargarDatos()
+    }
+}
+
+package DTOs <<folder>>{
+    package Mappers <<folder>>{
+        class EstudianteMapper {
+            +toEntity(EstudianteSolicitudDTO, Programa) : Estudiante
+            +toDTO(Estudiante, Programa) : EstudianteRespuestaDTO
+        }
+
+        class FacultadMapper {
+            +toEntity(FacultadSolicitudDTO, Persona) : Facultad
+            +toDTO(Facultad) : FacultdadRespuestaDTO 
+        }
+
+        class ProfesorMapper {
+            +toEntity(ProfesorSolicitudDTO) : Profesor
+            +toDTO(Profesor) : ProfesorRespuestaDTO
+        }
+
+        class ProgramaMapper {
+            +toEntity(ProgramaSolicitudDTO, Facultad) : Programa
+            +toDTO(Programa) : ProgramaRespuestaDTO
+        }
+
+        class CursosMapper {
+            +toEntity(CursoSolicitudDTO, Programa) : Cursos
+            +toDTO(Cursos) : CursosRespuestaDTO
+        }
+
+        class InscripcionMapper{
+            +toEntity(InscripcionSolicitudDTO, Curso, Estudiante) : Inscripcion
+            +toDTO(Inscripcion) : InscritoRespuestaDTO
+        }
+    }
+
+    package Respuesta <<folder>>{
+        class EstudianteRespuestaDTO {
+            +ID : long
+            +nombre : String
+            +apellidos : String
+            +email : String
+            +nombrePrograma : String
+            +EstudianteRespuestaDTO(long, String, String, String, String)
+            +toString() : String
+        }
+
+        class FacultdadRespuestaDTO {
+            +ID : long
+            +nombre : String
+            +FacultdadRespuestaDTO(long, String)
+            +toString() : String
+        }
+
+        class ProfesorRespuestaDTO {
+            +ID : long
+            +nombres : String
+            +apellidos : String
+            +email : String
+            +tipoContrato : String
+            +ProfesorRespuestaDTO(long, String, String, String, String)
+            +toString() : String
+        }
+
+        class ProgramaRespuestaDTO {
+            +ID : long
+            +nombre : String
+            +ProfesorRespuestaDTO(long, String)
+            +toString() : String
+        }
+
+        class CursosRespuestaDTO {
+            +ID : long
+            +nombre : String
+            +activo : boolean
+            +CursosRespuestaDTO(long, String, boolean)
+            +toString() : String
+        }
+
+        class InscripcionRespuestaDTO{
+            +curso : String
+            +curso : long
+            +estudiante : String
+            +estudiante : long
+            +año :  integer
+            +semestre : integer
+            +InscritoRespuestaDTO(String, String, integer, integer)
+            +toString() : String
+        }
+    }
+
+    package Solicitud <<folder>>{
+        class EstudianteSolicitudDTO {
+            +nombre : String
+            +apellidos : String
+            +email : String
+            +codigo : long
+            +activo : boolean
+            +promedio : double
+            +programaId : long
+        }
+
+        class FacultadSolicitudDTO {
+            +nombre : String
+            +decanoId : long
+        }
+
+        class ProfesorSolicitudDTO {
+            +nombres : String
+            +apellidos : String
+            +email : String
+            +tipoContrato : String
+        }
+
+        class ProgramaSolicitudDTO {
+            +nombre : String
+            +duracion : double
+            +registro : Date
+            +facultadId : long
+        }
+
+        class CursoSolicitudDTO {
+            +nombre : String
+            +programaId : long
+            +activo : boolean
+        }
+
+        class InscripcionSolicitudDTO{
+            +curso : long
+            +estudiante : long
+            +semestre : integer
+            +año : integer
+        }
+    }
+}
+
+package DAOs <<folder>>{
+
+    package Interfaces <<folder>>{
+
+        interface DAOGeneral<K, T>{
+            +guardar(K)
+            +listar() : List<k>
+            +actualizar(k)
+            +eliminar(T)
+        }
+
+        interface CursoProfesorDAO{
+        }
+
+        interface EstudianteDAO{
+        }
+
+        interface PersonaDAO{
+        }
+
+        interface profesorDAO{
+        }
+
+        interface CursoDAO{
+        }
+
+        interface FacultadDAO{
+        }
+
+        interface InscripcionDAO{
+        }
+
+        interface ProgramaDAO{
+        }
+    }
+
+    package Implementaciones <<folder>>{
+
+        package H2 <<folder>>{
+
+            class CursoProfesorDAOH2{
+            }
+
+            class EstudianteDAOH2{
+            }
+
+            class PersonaDAOH2{
+            }
+            
+            class ProfesorDAOH2{
+            }
+
+            class CursoDAOH2{
+            }
+
+            class FacultadDAOH2{
+            }
+
+            class InscripcionDAOH2{
+            }
+
+            class ProgramaDAOH2{
+            }
+
+        }
+
+        package MySQL <<folder>>{
+
+            class CursoProfesorDAOMySQL{
+            }
+
+            class EstudianteDAOMySQL{
+            }
+
+            class PersonaDAOMySQL{
+            }
+
+            class ProfesorDAOMySQL{
+            }
+
+            class CursoDAOMySQL{
+            }
+
+            class FacultadDAOMySQL{
+            }
+
+            class InscripcionDAOMySQL{
+            }
+
+            class ProgramaDAOMySQL{
+            }
+        }
+
+        package Oracle <<folder>>{
+
+            class CursoProfesorDAOOracle{
+            }
+
+            class EstudianteDAOOracle{
+            }
+
+            class PersonaDAOOracle{
+            }
+
+            class ProfesorDAOOracle{
+            }
+
+            class CursoDAOOracle{
+            }
+            
+            class FacultadDAOOracle{
+            }
+
+            class InscripcionDAOOracle{
+            }
+
+            class ProgramaDAOOracle{
+            }
+        }
+    }
+} 
+
+package Controladores <<folder>>{
+
+    class EstudianteControlador{
+        -estudianteDAO : EstudianteDAO
+        -programaDAO : ProgramaDAO
+        -estudianteMapper : EstudianteMapper
+        +crearEstudiante(EstudianteSolicitudDTO) : String
+        +listarEstudiantes() : List<EstudianteRespuestaDTO>
+        +actualizarEstudiante(long, EstudianteSolicitudDTO) : String
+        +eliminarEstudiante(long) : String    
+    }
+
+    class FacultadControlador{
+        -facultadDAO : FacultadDAO
+        -personaDAO : PersonaDAO
+        -facultadMapper : FacultadMapper
+        +crearFacultad(FacultadSolicitudDTO) : String
+        +listarFacultades() : List<FacultadRespuestaDTO>
+        +actualizarFacultad(long, FacultadSolicitudDTO) : String
+        +eliminarFacultad(long) : String
+    }
+
+    class ProfesorControlador{
+        -profesorDAO : ProfesorDAO
+        -profesorMapper : ProfesorMapper
+        +crearProfesor(ProfesorSolicitudDTO) : String
+        +listarProfesores() : List<ProfesorRespuestaDTO>
+        +actualizarProfesor(long, ProfesorSolicitudDTO) : String
+        +eliminarProfesor(long) : String
+    }
+
+    class ProgramaControlador{
+        -programaDAO : ProgramaDAO
+        -facultadDAO : FacultadDAO
+        -programaMapper : ProgramaMapper
+        +crearPrograma(ProgramaSolicitudDTO) : String
+        +listarProgramas() : List<ProgramaRespuestaDTO>
+        +actualizarPrograma(long, ProgramaSolicitudDTO) : String
+        +eliminarPrograma(long) : String
+    }
+
+    class CursoControlador{
+        -cursoDAO : CursoDAO
+        -programaDAO : ProgramaDAO
+        -cursoMapper : CursosMapper
+        +crearCurso(CursoSolicitudDTO) : String
+        +listarCursos() : List<CursosRespuestaDTO>
+        +actualizarCurso(long, CursoSolicitudDTO) : String
+        +eliminarCurso(long) : String
+    }
+
+    class InscripcionControlador{
+        
+    }
+
+}
+
+package Utils <<folder>>{
+
+    package DB <<folder>>{
+
+        class ConexionDB{
+            +DB()
+            +crearConexion(String) : DataSource
+            -crearConexionH2()
+            -crearConexionMySQL()
+            -crearConexionOracol()
+        }
+    }
+
+    package Config <<folder>>{
+        class AppConfig{
+            -vendor : String
+            -uiMode : String
+            +AppConfig(String, String)
+            -crearDataSource() : DataSource
+            -crearFabricaDAO() : FabricaDAO
+            -crearFabricaControladores() : FabricaControladores
+            +buildMenu() : MenuView
+        }
+    }
+}
+
+package Fabricas <<folder>>{
+
+    package FabricaInterna <<folder>>{
+        
+        abstract FabricaDAO{
+            #dataSource : DataSource
+            #FabricaDAO(DataSource)
+            +{abstract} crearProfesorDAO()
+            +{abstract} crearEstudianteDAO()
+            +{abstract} crearCursoProfesorDAO()
+            +{abstract} crearCursoDAO()
+            +{abstract} crearPersonaDAO()
+            +{abstract} crearFacultdadDAO()
+            +{abstract} crearInscripcionDAO()
+            +{abstract} crearProgramaDAO()
+            +{Static} of(String, DataSource) : FabricaDAO
+        }
+
+        class FabricaDAOH2{
+            +FabricaDAOH2(DataSource)
+        }
+
+        class FabricaDAOMySQL{
+            +FabricaDAOMySQL(DataSource)
+        }
+
+        class FabricaDAOOracol{
+            +FabricaDAOOracol(DataSource)
+        }
+
+        class FabricaControladores{
+            +DAOConfig : FabricaDAO
+            +FabricaControlladores(FabricaDAO)
+            +crearEstudianteControlador() : EstudianteControlador
+            +crearFacultadControlador() : FacultadControlador
+            +crearProfesorControlador() : ProfesorControlador
+            +crearProgramaControlador() : ProgramaControlador
+            +crearCursoControlador() : CursoControlador
+        }
+    }
+    
+}
+
+
+' Relaciones
+Estudiante --|> Persona
+Profesor --|> Persona
+Facultad *-- Persona : "decano"
+InscripcionesPersonas *-- Persona
+Inscripción *-- Estudiante
+Estudiante *-- Programa
+Programa *-- Facultad
+Curso *-- Programa
+Inscripción *-- Curso
+CursoProfesor *-- Curso
+CursoProfesor *-- Profesor
+CursosProfesores *-- CursoProfesor
+CursosInscritos *-- Inscripción
+CursosInscritos ..|> Servicios
+CursosProfesores ..|> Servicios
+@enduml

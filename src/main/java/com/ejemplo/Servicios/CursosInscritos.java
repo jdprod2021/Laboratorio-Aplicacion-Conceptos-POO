@@ -1,19 +1,15 @@
-package com.ejemplo.Repositorios.Cursos;
+package com.ejemplo.Servicios;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ejemplo.DAOs.Universidad.InscripcionDAO;
-import com.ejemplo.Modelos.Universidad.Inscripcion;
-import com.ejemplo.Repositorios.DB;
-import com.ejemplo.Servicios.Servicios;
+import com.ejemplo.Modelos.Inscripcion;
 
 public class CursosInscritos implements Servicios {
 
     private List<Inscripcion> inscripcion;
-    private InscripcionDAO inscripcionDAO = new InscripcionDAO();
 
     public CursosInscritos() {}
     public CursosInscritos(List<Inscripcion> inscripcion) {
