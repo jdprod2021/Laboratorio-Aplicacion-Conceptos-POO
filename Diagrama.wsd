@@ -102,39 +102,39 @@ package Servicio <<folder>>{
 
 package DTOs <<folder>>{
     package Mappers <<folder>>{
-        class EstudianteMapper {
+        class EstudianteMapper #Green{
             +toEntity(EstudianteSolicitudDTO, Programa) : Estudiante
             +toDTO(Estudiante, Programa) : EstudianteRespuestaDTO
         }
 
-        class FacultadMapper {
+        class FacultadMapper #Green{
             +toEntity(FacultadSolicitudDTO, Persona) : Facultad
             +toDTO(Facultad) : FacultdadRespuestaDTO 
         }
 
-        class ProfesorMapper {
+        class ProfesorMapper #Green{
             +toEntity(ProfesorSolicitudDTO) : Profesor
             +toDTO(Profesor) : ProfesorRespuestaDTO
         }
 
-        class ProgramaMapper {
+        class ProgramaMapper #Green{
             +toEntity(ProgramaSolicitudDTO, Facultad) : Programa
             +toDTO(Programa) : ProgramaRespuestaDTO
         }
 
-        class CursosMapper {
+        class CursosMapper #Green{
             +toEntity(CursoSolicitudDTO, Programa) : Cursos
             +toDTO(Cursos) : CursosRespuestaDTO
         }
 
-        class InscripcionMapper{
+        class InscripcionMapper {
             +toEntity(InscripcionSolicitudDTO, Curso, Estudiante) : Inscripcion
             +toDTO(Inscripcion) : InscritoRespuestaDTO
         }
     }
 
     package Respuesta <<folder>>{
-        class EstudianteRespuestaDTO {
+        class EstudianteRespuestaDTO #Green{
             +ID : long
             +nombre : String
             +apellidos : String
@@ -144,14 +144,14 @@ package DTOs <<folder>>{
             +toString() : String
         }
 
-        class FacultdadRespuestaDTO {
+        class FacultdadRespuestaDTO #Green{
             +ID : long
             +nombre : String
             +FacultdadRespuestaDTO(long, String)
             +toString() : String
         }
 
-        class ProfesorRespuestaDTO {
+        class ProfesorRespuestaDTO #Green{
             +ID : long
             +nombres : String
             +apellidos : String
@@ -161,14 +161,14 @@ package DTOs <<folder>>{
             +toString() : String
         }
 
-        class ProgramaRespuestaDTO {
+        class ProgramaRespuestaDTO #Green{
             +ID : long
             +nombre : String
             +ProfesorRespuestaDTO(long, String)
             +toString() : String
         }
 
-        class CursosRespuestaDTO {
+        class CursosRespuestaDTO #Green{
             +ID : long
             +nombre : String
             +activo : boolean
@@ -189,7 +189,7 @@ package DTOs <<folder>>{
     }
 
     package Solicitud <<folder>>{
-        class EstudianteSolicitudDTO {
+        class EstudianteSolicitudDTO #Green{
             +nombre : String
             +apellidos : String
             +email : String
@@ -199,26 +199,26 @@ package DTOs <<folder>>{
             +programaId : long
         }
 
-        class FacultadSolicitudDTO {
+        class FacultadSolicitudDTO #Green{
             +nombre : String
             +decanoId : long
         }
 
-        class ProfesorSolicitudDTO {
+        class ProfesorSolicitudDTO #Green{
             +nombres : String
             +apellidos : String
             +email : String
             +tipoContrato : String
         }
 
-        class ProgramaSolicitudDTO {
+        class ProgramaSolicitudDTO #Green{
             +nombre : String
             +duracion : double
             +registro : Date
             +facultadId : long
         }
 
-        class CursoSolicitudDTO {
+        class CursoSolicitudDTO #Green{
             +nombre : String
             +programaId : long
             +activo : boolean
@@ -237,35 +237,35 @@ package DAOs <<folder>>{
 
     package Interfaces <<folder>>{
 
-        interface DAOGeneral<K, T>{
+        interface DAOGeneral<K, T> #Green{
             +guardar(K)
             +listar() : List<k>
             +actualizar(k)
             +eliminar(T)
         }
 
-        interface CursoProfesorDAO{
+        interface CursoProfesorDAO #Green{
         }
 
-        interface EstudianteDAO{
+        interface EstudianteDAO #Green{
         }
 
-        interface PersonaDAO{
+        interface PersonaDAO #Green{
         }
 
-        interface profesorDAO{
+        interface profesorDAO #Green{
         }
 
-        interface CursoDAO{
+        interface CursoDAO #Green{
         }
 
-        interface FacultadDAO{
+        interface FacultadDAO #Green{
         }
 
-        interface InscripcionDAO{
+        interface InscripcionDAO #Green{
         }
 
-        interface ProgramaDAO{
+        interface ProgramaDAO #Green{
         }
     }
 
@@ -276,25 +276,25 @@ package DAOs <<folder>>{
             class CursoProfesorDAOH2{
             }
 
-            class EstudianteDAOH2{
+            class EstudianteDAOH2 #Green{
             }
 
-            class PersonaDAOH2{
+            class PersonaDAOH2 #Green{
             }
             
-            class ProfesorDAOH2{
+            class ProfesorDAOH2 #Green{
             }
 
-            class CursoDAOH2{
+            class CursoDAOH2 #Green{
             }
 
-            class FacultadDAOH2{
+            class FacultadDAOH2 #Green{
             }
 
             class InscripcionDAOH2{
             }
 
-            class ProgramaDAOH2{
+            class ProgramaDAOH2 #Green{
             }
 
         }
@@ -316,7 +316,7 @@ package DAOs <<folder>>{
             class CursoDAOMySQL{
             }
 
-            class FacultadDAOMySQL{
+            class FacultadDAOMySQL #Green{
             }
 
             class InscripcionDAOMySQL{
@@ -343,7 +343,7 @@ package DAOs <<folder>>{
             class CursoDAOOracle{
             }
             
-            class FacultadDAOOracle{
+            class FacultadDAOOracle #Green{
             }
 
             class InscripcionDAOOracle{
@@ -357,7 +357,7 @@ package DAOs <<folder>>{
 
 package Controladores <<folder>>{
 
-    class EstudianteControlador{
+    class EstudianteControlador #Green{
         -estudianteDAO : EstudianteDAO
         -programaDAO : ProgramaDAO
         -estudianteMapper : EstudianteMapper
@@ -367,7 +367,7 @@ package Controladores <<folder>>{
         +eliminarEstudiante(long) : String    
     }
 
-    class FacultadControlador{
+    class FacultadControlador #Green{
         -facultadDAO : FacultadDAO
         -personaDAO : PersonaDAO
         -facultadMapper : FacultadMapper
@@ -377,7 +377,7 @@ package Controladores <<folder>>{
         +eliminarFacultad(long) : String
     }
 
-    class ProfesorControlador{
+    class ProfesorControlador #Green{
         -profesorDAO : ProfesorDAO
         -profesorMapper : ProfesorMapper
         +crearProfesor(ProfesorSolicitudDTO) : String
@@ -386,7 +386,7 @@ package Controladores <<folder>>{
         +eliminarProfesor(long) : String
     }
 
-    class ProgramaControlador{
+    class ProgramaControlador #Green{
         -programaDAO : ProgramaDAO
         -facultadDAO : FacultadDAO
         -programaMapper : ProgramaMapper
@@ -396,7 +396,7 @@ package Controladores <<folder>>{
         +eliminarPrograma(long) : String
     }
 
-    class CursoControlador{
+    class CursoControlador #Green{
         -cursoDAO : CursoDAO
         -programaDAO : ProgramaDAO
         -cursoMapper : CursosMapper
@@ -416,7 +416,7 @@ package Utils <<folder>>{
 
     package DB <<folder>>{
 
-        class ConexionDB{
+        class ConexionDB #Green{
             +DB()
             +crearConexion(String) : DataSource
             -crearConexionH2()
