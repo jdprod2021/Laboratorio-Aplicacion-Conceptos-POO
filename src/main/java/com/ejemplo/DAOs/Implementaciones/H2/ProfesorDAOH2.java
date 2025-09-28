@@ -10,6 +10,7 @@ import javax.sql.DataSource;
 
 import com.ejemplo.DAOs.Interfaces.ProfesorDAO;
 import com.ejemplo.Modelos.Profesor;
+import com.ejemplo.infra.SqlErrorDetailer;
 
 public class ProfesorDAOH2 implements ProfesorDAO{
 
@@ -32,7 +33,10 @@ public class ProfesorDAOH2 implements ProfesorDAO{
             return entidad;
 
         } catch (Exception e) {
-            throw new RuntimeException("Error al guardar PROFESOR", e);
+            // Incluye operación, SQL y parámetros que intentaste enviar
+            throw SqlErrorDetailer.wrap(e, "INSERT PROFESOR", sql,
+                (long) entidad.getId(),
+                entidad.getTipoContrato());
         }
 
     }
@@ -51,7 +55,7 @@ public class ProfesorDAOH2 implements ProfesorDAO{
                 lista.add(mapRow(rs));
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al listar PROFESORES", e);
+            throw SqlErrorDetailer.wrap(e, "SELECT PROFESORES", sql /* sin params */);
         }
         return lista;
     }
@@ -64,7 +68,8 @@ public class ProfesorDAOH2 implements ProfesorDAO{
             ps.setLong(2, (long)entidad.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar PROFESOR", e);
+            throw SqlErrorDetailer.wrap(e, "UPDATE PROFESOR", sql,
+                entidad.getTipoContrato(), (long) entidad.getId());
         }
     }
 
@@ -75,7 +80,7 @@ public class ProfesorDAOH2 implements ProfesorDAO{
             ps.setLong(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar PROFESOR", e);
+            throw SqlErrorDetailer.wrap(e, "DELETE PROFESOR", delProfesor, id);
         }
     }
 
