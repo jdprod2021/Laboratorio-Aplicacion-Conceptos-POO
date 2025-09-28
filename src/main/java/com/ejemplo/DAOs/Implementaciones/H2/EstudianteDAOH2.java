@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import com.ejemplo.DAOs.Interfaces.EstudianteDAO;
 import com.ejemplo.Modelos.Estudiante;
 import com.ejemplo.Modelos.Programa;
+import com.ejemplo.infra.SqlErrorDetailer;
 
 public class EstudianteDAOH2 implements EstudianteDAO{
 
@@ -47,25 +48,12 @@ public class EstudianteDAOH2 implements EstudianteDAO{
 
         } catch (SQLException e) {
             
-            SQLException next = e.getNextException();
-            
-            String nextInfo = (next == null) ? "—"
-                    : String.format("SQLState=%s, ErrorCode=%d, Msg=%s",
-                        next.getSQLState(), next.getErrorCode(), next.getMessage());
-
-            String detalle = String.format(
-                "Error al guardar ESTUDIANTE. Datos=[id=%d, codigo=%d, programaId=%s, activo=%s, promedio=%.3f]. " +
-                "SQLState=%s, ErrorCode=%d, Msg=%s. SQL=%s. Next=%s",
-                (long) entidad.getId(),
+            throw SqlErrorDetailer.wrap(e, "INSERT ESTUDIANTE", sql,
+                entidad.getId(),
                 (long) entidad.getCodigo(),
-                (programaId == null ? "NULL" : programaId.toString()),
+                programaId,                 // puede ser NULL
                 entidad.isActivo(),
-                entidad.getPromedio(),
-                e.getSQLState(), e.getErrorCode(), e.getMessage(),
-                sql, nextInfo
-            );
-
-            throw new RuntimeException(detalle, e);
+                entidad.getPromedio());
         }
     }
 
@@ -100,7 +88,7 @@ public class EstudianteDAOH2 implements EstudianteDAO{
                 lista.add(estudiante);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al listar ESTUDIANTES", e);
+            throw SqlErrorDetailer.wrap(e, "SELECT ESTUDIANTES", sql);
         }
         return lista;
     }
@@ -125,16 +113,12 @@ public class EstudianteDAOH2 implements EstudianteDAO{
             ps.setLong(5, (long) entidad.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            String detalle = String.format(
-                "Error al actualizar ESTUDIANTE. Datos=[id=%d, codigo=%d, programaId=%s, activo=%s, promedio=%.3f]. SQLState=%s, ErrorCode=%d, Mensaje=%s",
-                (long) entidad.getId(),
+            throw SqlErrorDetailer.wrap(e, "UPDATE ESTUDIANTE", sql,
                 (long) entidad.getCodigo(),
-                (programaId == null ? "NULL" : programaId.toString()),
+                programaId,
                 entidad.isActivo(),
                 entidad.getPromedio(),
-                e.getSQLState(), e.getErrorCode(), e.getMessage()
-            );
-            throw new RuntimeException(detalle, e);
+                entidad.getId());
         }
     }
 
@@ -145,7 +129,7 @@ public class EstudianteDAOH2 implements EstudianteDAO{
             ps.setLong(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar ESTUDIANTE", e);
+            throw SqlErrorDetailer.wrap(e, "DELETE ESTUDIANTE", sql, id);
         }
     }
 

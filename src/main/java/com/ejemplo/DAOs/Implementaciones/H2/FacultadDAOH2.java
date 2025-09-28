@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import com.ejemplo.DAOs.Interfaces.FacultadDAO;
 import com.ejemplo.Modelos.Facultad;
 import com.ejemplo.Modelos.Persona;
+import com.ejemplo.infra.SqlErrorDetailer;
 
 public class FacultadDAOH2 implements FacultadDAO{
 
@@ -39,7 +40,8 @@ public class FacultadDAOH2 implements FacultadDAO{
         
             return entidad;
         } catch (SQLException e) {
-            throw new RuntimeException("Error al guardar FACULTAD", e);
+            throw SqlErrorDetailer.wrap(e, "INSERT FACULTAD", sql,
+            entidad.getNombre(), entidad.getDecano() != null ? entidad.getDecano().getId() : null);
         }
     }
 
@@ -51,7 +53,7 @@ public class FacultadDAOH2 implements FacultadDAO{
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) lista.add(mapRow(rs));
         } catch (SQLException e) {
-            throw new RuntimeException("Error al listar FACULTADES", e);
+            throw SqlErrorDetailer.wrap(e, "SELECT FACULTADES", sql);
         }
         return lista;
     }
@@ -65,7 +67,8 @@ public class FacultadDAOH2 implements FacultadDAO{
             ps.setLong(3, (long)entidad.getID());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar FACULTAD", e);
+            throw SqlErrorDetailer.wrap(e, "UPDATE FACULTAD", sql,
+                entidad.getNombre(), (entidad.getDecano() != null ? entidad.getDecano().getId() : null), entidad.getID());
         }
     }
 
@@ -76,7 +79,7 @@ public class FacultadDAOH2 implements FacultadDAO{
             ps.setLong(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar FACULTAD", e);
+            throw SqlErrorDetailer.wrap(e, "DELETE FACULTAD", sql, id);
         }
     }
 
@@ -93,7 +96,7 @@ public class FacultadDAOH2 implements FacultadDAO{
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al buscar FACULTAD por ID", e);
+            throw SqlErrorDetailer.wrap(e, "SELECT FACULTAD BY ID", sql, id);
         }
     }
 

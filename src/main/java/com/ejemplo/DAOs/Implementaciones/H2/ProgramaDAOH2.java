@@ -12,6 +12,7 @@ import javax.sql.DataSource;
 import com.ejemplo.DAOs.Interfaces.ProgramaDAO;
 import com.ejemplo.Modelos.Facultad;
 import com.ejemplo.Modelos.Programa;
+import com.ejemplo.infra.SqlErrorDetailer;
 
 public class ProgramaDAOH2 implements ProgramaDAO{
 
@@ -23,8 +24,8 @@ public class ProgramaDAOH2 implements ProgramaDAO{
 
     @Override
     public Programa guardar(Programa entidad) {
-        final String sql = "MERGE INTO PROGRAMA (nombre, duracion, registro, facultad_id) " +
-                           "KEY(nombre) VALUES (?, ?, ?, ?)";
+        final String sql = "INSERT INTO PROGRAMA (nombre, duracion, registro, facultad_id) " +
+                           "VALUES (?, ?, ?, ?)";
         try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
             ps.setString(1, entidad.getNombre());
             ps.setDouble(2, entidad.getDuracion());
@@ -43,7 +44,9 @@ public class ProgramaDAOH2 implements ProgramaDAO{
             return entidad;
 
         } catch (SQLException e) {
-            throw new RuntimeException("Error al guardar PROGRAMA", e);
+            Long facId =  (entidad.getFacultad() == null ? null : (long)entidad.getFacultad().getID());
+            throw SqlErrorDetailer.wrap(e, "INSERT PROGRAMA", sql,
+                entidad.getNombre(), entidad.getDuracion(), entidad.getRegistro(), facId);
         }
     }
 
@@ -55,7 +58,7 @@ public class ProgramaDAOH2 implements ProgramaDAO{
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) lista.add(mapRow(rs));
         } catch (SQLException e) {
-            throw new RuntimeException("Error al listar PROGRAMAS", e);
+            throw SqlErrorDetailer.wrap(e, "SELECT PROGRAMAS", sql);
         }
         return lista;
     }
@@ -71,7 +74,9 @@ public class ProgramaDAOH2 implements ProgramaDAO{
             ps.setLong(5, (long)entidad.getID());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar PROGRAMA", e);
+            Long facId = (entidad.getFacultad() == null ? null : (long)entidad.getFacultad().getID());
+            throw SqlErrorDetailer.wrap(e, "UPDATE PROGRAMA", sql,
+                entidad.getNombre(), entidad.getDuracion(), entidad.getRegistro(), facId, entidad.getID());
         }
     }
 
@@ -82,7 +87,7 @@ public class ProgramaDAOH2 implements ProgramaDAO{
             ps.setLong(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar PROGRAMA", e);
+            throw SqlErrorDetailer.wrap(e, "DELETE PROGRAMA", sql, id);
         }
     }
 
@@ -100,7 +105,7 @@ public class ProgramaDAOH2 implements ProgramaDAO{
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al buscar PROGRAMA por nombre", e);
+            throw SqlErrorDetailer.wrap(e, "SELECT PROGRAMA BY ID", sql, id);
         }
         return programa;
     }
