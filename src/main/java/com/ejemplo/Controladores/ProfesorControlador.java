@@ -1,10 +1,12 @@
 package com.ejemplo.Controladores;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ejemplo.DAOs.Interfaces.PersonaDAO;
 import com.ejemplo.DAOs.Interfaces.ProfesorDAO;
 import com.ejemplo.DTOs.Mappers.ProfesorMapper;
+import com.ejemplo.DTOs.Respuesta.ProfesorRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.ProfesorSolicitudDTO;
 import com.ejemplo.Modelos.Persona;
 import com.ejemplo.Modelos.Profesor;
@@ -36,8 +38,16 @@ public class ProfesorControlador {
         profesorDAO.guardar(profesor);
     }
 
-    public List<Profesor> listarProfesores() {
-        return profesorDAO.listar();
+    public List<ProfesorRespuestaDTO> listarProfesores() {
+
+        List<Profesor> profesores = profesorDAO.listar();
+        List<ProfesorRespuestaDTO> respuestas = new ArrayList<>();
+
+        for (Profesor profesor : profesores) {
+            respuestas.add(ProfesorMapper.toDTO(profesor));
+        }
+
+        return respuestas;
     }
 
     public void actualizarProfesor(long id, ProfesorSolicitudDTO profesorSolicitudDTO) {

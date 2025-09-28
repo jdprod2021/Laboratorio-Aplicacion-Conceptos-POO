@@ -1,10 +1,12 @@
 package com.ejemplo.Controladores;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ejemplo.DAOs.Interfaces.FacultadDAO;
 import com.ejemplo.DAOs.Interfaces.PersonaDAO;
 import com.ejemplo.DTOs.Mappers.FacultadMapper;
+import com.ejemplo.DTOs.Respuesta.FacultadRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.FacultadSolicitudDTO;
 import com.ejemplo.Modelos.Facultad;
 import com.ejemplo.Modelos.Persona;
@@ -27,8 +29,15 @@ public class FacultadControlador {
         }
     }
 
-    public List<Facultad> listarFacultades() {
-        return facultadDAO.listar();
+    public List<FacultadRespuestaDTO> listarFacultades() {
+
+        List<Facultad> facultades = facultadDAO.listar();
+        List<FacultadRespuestaDTO> respuestas = new ArrayList<>();
+
+        for (Facultad facultad : facultades) {
+            respuestas.add(FacultadMapper.toDTO(facultad));
+        }
+        return respuestas;
     }
 
     public void actualizarFacultad(long id, FacultadSolicitudDTO datosDeFacultad) {

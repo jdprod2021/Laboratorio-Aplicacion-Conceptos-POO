@@ -1,10 +1,12 @@
 package com.ejemplo.Controladores;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ejemplo.DAOs.Interfaces.FacultadDAO;
 import com.ejemplo.DAOs.Interfaces.ProgramaDAO;
 import com.ejemplo.DTOs.Mappers.ProgramaMapper;
+import com.ejemplo.DTOs.Respuesta.ProgramaRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.ProgramaSolicitudDTO;
 import com.ejemplo.Modelos.Facultad;
 import com.ejemplo.Modelos.Programa;
@@ -28,8 +30,16 @@ public class ProgramaControlador {
         }
     }
 
-    public List<Programa> listarProgramas() {
-        return programaDAO.listar();
+    public List<ProgramaRespuestaDTO> listarProgramas() {
+        
+        List<Programa> programas = programaDAO.listar();
+        List<ProgramaRespuestaDTO> respuestas = new ArrayList<>();
+
+        for (Programa programa : programas) {
+            respuestas.add(ProgramaMapper.toDTO(programa));
+        }
+
+        return respuestas;
     }
 
     public void actualizarPrograma(long id, ProgramaSolicitudDTO datosDePrograma) {

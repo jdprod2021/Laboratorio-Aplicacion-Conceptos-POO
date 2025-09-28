@@ -1,5 +1,6 @@
 package com.ejemplo.Controladores;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.ejemplo.DAOs.Interfaces.EstudianteDAO;
@@ -43,7 +44,15 @@ public class EstudianteControlador {
     }
 
     public List<Estudiante> listarEstudiantes() {
-        return estudianteDAO.listar();
+
+        List<Estudiante> estudiantes = estudianteDAO.listar();
+        List<Estudiante> respuestas = new ArrayList<>();
+
+        for (Estudiante estudiante : estudiantes) {
+            respuestas.add(estudiante);
+        }
+
+        return respuestas;
     }
 
     public void actualizarEstudiante(long id, EstudianteSolicitudDTO datosDeEstudiante) {
