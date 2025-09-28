@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 
 import com.ejemplo.DAOs.Interfaces.PersonaDAO;
 import com.ejemplo.Modelos.Persona;
+import com.ejemplo.infra.SqlErrorDetailer;
 
 public class PersonaDAOH2 implements PersonaDAO{
     private final DataSource dataSource;
@@ -40,12 +41,8 @@ public class PersonaDAOH2 implements PersonaDAO{
             return entidad;
 
         } catch (SQLException e) {
-            String detalle = String.format(
-                "Error al guardar PERSONA. Datos=[nombres=%s, apellidos=%s, email=%s]. SQLState=%s, ErrorCode=%d, Mensaje=%s",
-                entidad.getNombres(), entidad.getApellidos(), entidad.getEmail(),
-                e.getSQLState(), e.getErrorCode(), e.getMessage()
-            );
-            throw new RuntimeException(detalle, e);
+            throw SqlErrorDetailer.wrap(e, "INSERT PERSONA", sql,
+                entidad.getNombres(), entidad.getApellidos(), entidad.getEmail());
         }
     }
 
@@ -65,7 +62,7 @@ public class PersonaDAOH2 implements PersonaDAO{
                 lista.add(persona);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al listar PERSONAS", e);
+            throw SqlErrorDetailer.wrap(e, "SELECT PERSONAS", sql);
         }
         return lista;
     }
@@ -80,12 +77,8 @@ public class PersonaDAOH2 implements PersonaDAO{
             ps.setLong(4, (long)entidad.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            String detalle = String.format(
-                "Error al guardar PERSONA. Datos=[ID = %d, nombres=%s, apellidos=%s, email=%s]. SQLState=%s, ErrorCode=%d, Mensaje=%s",
-                entidad.getId(), entidad.getNombres(), entidad.getApellidos(), entidad.getEmail(),
-                e.getSQLState(), e.getErrorCode(), e.getMessage()
-            );
-            throw new RuntimeException(detalle, e);
+            throw SqlErrorDetailer.wrap(e, "UPDATE PERSONA", sql,
+                entidad.getNombres(), entidad.getApellidos(), entidad.getEmail(), entidad.getId());
         }
     }
 
@@ -96,7 +89,7 @@ public class PersonaDAOH2 implements PersonaDAO{
             ps.setLong(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar PERSONA", e);
+            throw SqlErrorDetailer.wrap(e, "DELETE PERSONA", sql, id);
         }
     }
 
@@ -118,7 +111,7 @@ public class PersonaDAOH2 implements PersonaDAO{
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al buscar PERSONA por correo", e);
+            throw SqlErrorDetailer.wrap(e, "SELECT PERSONA BY EMAIL", sql, correo);
         }
     }
 
@@ -140,7 +133,7 @@ public class PersonaDAOH2 implements PersonaDAO{
                 }
             }
         } catch (SQLException e) {
-            throw new RuntimeException("Error al buscar PERSONA por ID", e);
+            throw SqlErrorDetailer.wrap(e, "SELECT PERSONA BY ID", sql, id);
         }
     }
 }

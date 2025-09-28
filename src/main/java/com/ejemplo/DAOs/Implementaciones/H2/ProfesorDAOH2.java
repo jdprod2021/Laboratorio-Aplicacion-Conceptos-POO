@@ -23,7 +23,7 @@ public class ProfesorDAOH2 implements ProfesorDAO{
     @Override
     public Profesor guardar(Profesor entidad) {
 
-        String sql = "INSERT INTO PROFESOR (id, tipoContrato) VALUES (?, ?)";
+        String sql = "INSERT INTO PROFESOR (id, tipo_contrato) VALUES (?, ?)";
 
         try (var ps = dataSource.getConnection().prepareStatement(sql)) {
             ps.setLong(1, (long)entidad.getId());

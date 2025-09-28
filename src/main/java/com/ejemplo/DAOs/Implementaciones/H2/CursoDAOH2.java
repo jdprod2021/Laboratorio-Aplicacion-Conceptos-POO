@@ -11,6 +11,7 @@ import javax.sql.DataSource;
 import com.ejemplo.DAOs.Interfaces.CursoDAO;
 import com.ejemplo.Modelos.Curso;
 import com.ejemplo.Modelos.Programa;
+import com.ejemplo.infra.SqlErrorDetailer;
 
 public class CursoDAOH2 implements CursoDAO{
     
@@ -38,7 +39,10 @@ public class CursoDAOH2 implements CursoDAO{
 
             return entidad;
         } catch (SQLException e) {
-            throw new RuntimeException("Error al guardar CURSO", e);
+            throw SqlErrorDetailer.wrap(e, "INSERT CURSO", sql,
+                entidad.getNombre(),
+                (entidad.getPrograma() == null ? null : entidad.getPrograma().getID()),
+                entidad.isActivo());
         }
         
     }
@@ -66,7 +70,11 @@ public class CursoDAOH2 implements CursoDAO{
             ps.setLong(4, (long)entidad.getId());
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al actualizar CURSO", e);
+            throw SqlErrorDetailer.wrap(e, "UPDATE CURSO", sql,
+                entidad.getNombre(),
+                (entidad.getPrograma() == null ? null : entidad.getPrograma().getID()),
+                entidad.isActivo(),
+                entidad.getId());
         }
     }
 
@@ -77,7 +85,7 @@ public class CursoDAOH2 implements CursoDAO{
             ps.setLong(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("Error al eliminar CURSO", e);
+            throw SqlErrorDetailer.wrap(e, "DELETE CURSO", sql, id);
         }
     }
 
