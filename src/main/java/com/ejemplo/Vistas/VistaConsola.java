@@ -1,16 +1,17 @@
 package com.ejemplo.Vistas;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Scanner;
 
-import com.ejemplo.Controladores.CursoControlador;
-import com.ejemplo.Controladores.EstudianteControlador;
-import com.ejemplo.Controladores.FacultadControlador;
-import com.ejemplo.Controladores.ProfesorControlador;
-import com.ejemplo.Controladores.ProgramaControlador;
-import com.ejemplo.DTOs.Solicitud.ProfesorSolicitudDTO;
+import com.ejemplo.Controladores.*;
+import com.ejemplo.DTOs.Mappers.ProfesorMapper;
+import com.ejemplo.DTOs.Respuesta.ProfesorRespuestaDTO;
+import com.ejemplo.DTOs.Solicitud.*;
 import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
+import com.ejemplo.Modelos.Estudiante;
 import com.ejemplo.Modelos.Profesor;
+import com.ejemplo.Modelos.Programa;
 
 /**
  * Implementación de vista para interfaz de consola
@@ -52,6 +53,7 @@ public class VistaConsola implements InterfaceVista {
                 procesarOpcionPrincipal(opcion);
             } catch (Exception e) {
                 mostrarError("Error inesperado: " + e.getMessage());
+                e.printStackTrace();
                 pausar();
             }
         }
@@ -298,20 +300,15 @@ public class VistaConsola implements InterfaceVista {
                 System.out.println("📊 Total de profesores: " + profesores.size());
                 System.out.println();
 
-                // Encabezado de la tabla
-                System.out.printf("%-5s %-20s %-20s %-30s %-15s%n",
-                        "ID", "NOMBRES", "APELLIDOS", "EMAIL", "TIPO CONTRATO");
-                System.out.println("-".repeat(90));
+                // Mostrar cada profesor usando el DTO y toString()
+                for (int i = 0; i < profesores.size(); i++) {
+                    Profesor profesor = profesores.get(i);
 
-                // Datos de los profesores
-                for (Profesor profesor : profesores) {
-                    System.out.printf("%-5d %-20s %-20s %-30s %-15s%n",
-                            (int)profesor.getId(), // Cast double a int para mostrar
-                            profesor.getNombres() != null ? profesor.getNombres() : "N/A",
-                            profesor.getApellidos() != null ? profesor.getApellidos() : "N/A",
-                            profesor.getEmail() != null ? profesor.getEmail() : "N/A",
-                            profesor.getTipoContrato() != null ? profesor.getTipoContrato() : "N/A"
-                    );
+                    // ✅ Convertir a DTO usando el mapper
+                    ProfesorRespuestaDTO profesorDTO = ProfesorMapper.toDTO(profesor);
+
+                    // ✅ Usar toString() del DTO para mostrar
+                    System.out.println((i + 1) + ". " + profesorDTO.toString());
                 }
             }
 
@@ -407,26 +404,322 @@ public class VistaConsola implements InterfaceVista {
     // ===============================
 
     private void menuGestionFacultades() {
-        mostrarMensaje("🚧 Menú de Facultades - En construcción");
-        mostrarMensaje("El controlador está disponible y configurado.");
+        FacultadControlador facultadControlador = fabricaControladores.crearControladorFacultad();
+
+        boolean volver = false;
+        while (!volver) {
+            System.out.println("\n===== MENÚ FACULTADES =====");
+            System.out.println("1. Crear facultad");
+            System.out.println("2. Listar facultades");
+            System.out.println("3. Actualizar facultad");
+            System.out.println("4. Eliminar facultad");
+            System.out.println("0. Volver al menú principal");
+            System.out.print("👉 Seleccione una opción: ");
+
+            int opcion = scanner.nextInt();
+            scanner.nextLine(); // limpiar buffer
+
+            switch (opcion) {
+                case 1:
+                    System.out.print("Nombre de la facultad: ");
+                    String nombre = scanner.nextLine();
+                    System.out.print("ID del decano (persona): ");
+                    long decanoId = scanner.nextLong();
+                    scanner.nextLine();
+
+                    FacultadSolicitudDTO facultadDTO = new FacultadSolicitudDTO(nombre, decanoId);
+                    facultadControlador.crearFacultad(facultadDTO);
+                    System.out.println("✅ Facultad creada con éxito.");
+                    break;
+
+                case 2:
+                    System.out.println("\n📋 LISTA DE FACULTADES:");
+                    facultadControlador.listarFacultades()
+                            .forEach(System.out::println);
+                    break;
+
+                case 3:
+                    System.out.print("Ingrese ID de la facultad a actualizar: ");
+                    long idActualizar = scanner.nextLong();
+                    scanner.nextLine();
+
+                    System.out.print("Nuevo nombre: ");
+                    String nuevoNombre = scanner.nextLine();
+                    System.out.print("Nuevo ID del decano: ");
+                    long nuevoDecanoId = scanner.nextLong();
+                    scanner.nextLine();
+
+                    FacultadSolicitudDTO actSolicitud = new FacultadSolicitudDTO(nuevoNombre, nuevoDecanoId);
+                    facultadControlador.actualizarFacultad(idActualizar, actSolicitud);
+                    System.out.println("✅ Facultad actualizada.");
+                    break;
+
+                case 4:
+                    System.out.print("Ingrese ID de la facultad a eliminar: ");
+                    long idEliminar = scanner.nextLong();
+                    scanner.nextLine();
+
+                    facultadControlador.eliminarFacultad(idEliminar);
+                    System.out.println("🗑️ Facultad eliminada.");
+                    break;
+
+                case 0:
+                    volver = true;
+                    break;
+
+                default:
+                    System.out.println("❌ Opción inválida.");
+            }
+        }
         pausar();
     }
 
     private void menuGestionProgramas() {
-        mostrarMensaje("🚧 Menú de Programas - En construcción");
-        mostrarMensaje("El controlador está disponible y configurado.");
+            ProgramaControlador controlador = fabricaControladores.crearControladorPrograma();
+
+            boolean volver = false;
+            while (!volver) {
+                System.out.println("\n===== MENÚ PROGRAMAS =====");
+                System.out.println("1. Crear programa");
+                System.out.println("2. Listar programas");
+                System.out.println("3. Actualizar programa");
+                System.out.println("4. Eliminar programa");
+                System.out.println("0. Volver al menú principal");
+                System.out.print("👉 Seleccione una opción: ");
+
+                int opcion = scanner.nextInt();
+                scanner.nextLine();
+
+                switch (opcion) {
+                    case 1:
+                        System.out.print("Nombre: ");
+                        String nombre = scanner.nextLine();
+                        System.out.print("Duración (años): ");
+                        double duracion = scanner.nextDouble();
+                        scanner.nextLine();
+                        System.out.print("ID de la facultad: ");
+                        long facultadId = scanner.nextLong();
+                        scanner.nextLine();
+
+                        Date registro = new Date(System.currentTimeMillis());
+                        ProgramaSolicitudDTO solicitud = new ProgramaSolicitudDTO(nombre, duracion, registro, facultadId);
+                        controlador.crearPrograma(solicitud);
+                        System.out.println("✅ Programa creado con éxito.");
+                        break;
+
+                    case 2:
+                        List<Programa> programas = controlador.listarProgramas();
+                        System.out.println("\n📋 LISTA DE PROGRAMAS:");
+                        for (Programa p : programas) {
+                            System.out.println(p);
+                        }
+                        break;
+
+                    case 3:
+                        System.out.print("Ingrese ID del programa a actualizar: ");
+                        long idActualizar = scanner.nextLong();
+                        scanner.nextLine();
+
+                        System.out.print("Nombre: ");
+                        String nuevoNombre = scanner.nextLine();
+                        System.out.print("Duración (años): ");
+                        double nuevaDuracion = scanner.nextDouble();
+                        scanner.nextLine();
+                        System.out.print("ID de la facultad: ");
+                        long nuevaFacultadId = scanner.nextLong();
+                        scanner.nextLine();
+
+                        Date nuevoRegistro = new Date(System.currentTimeMillis());
+                        ProgramaSolicitudDTO actSolicitud = new ProgramaSolicitudDTO(nuevoNombre, nuevaDuracion, nuevoRegistro, nuevaFacultadId);
+                        controlador.actualizarPrograma(idActualizar, actSolicitud);
+                        System.out.println("✅ Programa actualizado.");
+                        break;
+
+                    case 4:
+                        System.out.print("Ingrese ID del programa a eliminar: ");
+                        long idEliminar = scanner.nextLong();
+                        scanner.nextLine();
+
+                        controlador.eliminarPrograma(idEliminar);
+                        System.out.println("🗑️ Programa eliminado.");
+                        break;
+
+                    case 0:
+                        volver = true;
+                        break;
+
+                    default:
+                        System.out.println("❌ Opción inválida.");
+                }
+            }
         pausar();
     }
 
     private void menuGestionCursos() {
-        mostrarMensaje("🚧 Menú de Cursos - En construcción");
-        mostrarMensaje("El controlador está disponible y configurado.");
-        pausar();
+        CursoControlador controlador = fabricaControladores.crearControladorCurso();
+
+        boolean volver = false;
+        while (!volver) {
+            System.out.println("\n===== MENÚ CURSOS =====");
+            System.out.println("1. Crear curso");
+            System.out.println("2. Listar cursos");
+            System.out.println("3. Actualizar curso");
+            System.out.println("4. Eliminar curso");
+            System.out.println("0. Volver al menú principal");
+            System.out.print("👉 Seleccione una opción: ");
+
+            int opcion = scanner.nextInt();
+            scanner.nextLine(); // limpiar buffer
+
+            switch (opcion) {
+                case 1:
+                    System.out.print("Nombre del curso: ");
+                    String nombre = scanner.nextLine();
+                    System.out.print("ID del programa: ");
+                    long programaId = scanner.nextLong();
+                    scanner.nextLine();
+                    System.out.print("¿Activo? (true/false): ");
+                    boolean activo = Boolean.parseBoolean(scanner.nextLine().trim());
+
+                    CursoSolicitudDTO solicitud = new CursoSolicitudDTO(nombre, programaId, activo);
+                    controlador.crearCurso(solicitud);
+                    System.out.println("✅ Curso creado con éxito.");
+                    break;
+
+                case 2:
+                    System.out.println("\n📋 LISTA DE CURSOS:");
+                    controlador.listarCursos()
+                            .forEach(System.out::println);
+                    break;
+
+                case 3:
+                    System.out.print("Ingrese ID del curso a actualizar: ");
+                    long idActualizar = scanner.nextLong();
+                    scanner.nextLine();
+
+                    System.out.print("Nuevo nombre: ");
+                    String nuevoNombre = scanner.nextLine();
+                    System.out.print("Nuevo ID del programa: ");
+                    long nuevoProgramaId = scanner.nextLong();
+                    scanner.nextLine();
+                    System.out.print("¿Activo? (true/false): ");
+                    boolean nuevoActivo = Boolean.parseBoolean(scanner.nextLine().trim());
+
+                    CursoSolicitudDTO actSolicitud = new CursoSolicitudDTO(nuevoNombre, nuevoProgramaId, nuevoActivo);
+                    controlador.actualizarCurso(idActualizar, actSolicitud);
+                    System.out.println("✅ Curso actualizado.");
+                    break;
+
+                case 4:
+                    System.out.print("Ingrese ID del curso a eliminar: ");
+                    long idEliminar = scanner.nextLong();
+                    scanner.nextLine();
+
+                    controlador.eliminarCurso(idEliminar);
+                    System.out.println("🗑️ Curso eliminado.");
+                    break;
+
+                case 0:
+                    volver = true;
+                    break;
+
+                default:
+                    System.out.println("❌ Opción inválida.");
+            }
+        }
     }
 
     private void menuGestionEstudiantes() {
-        mostrarMensaje("🚧 Menú de Estudiantes - En construcción");
-        mostrarMensaje("El controlador está disponible y configurado.");
+        EstudianteControlador controlador = fabricaControladores.crearControladorEstudiante();
+
+        boolean volver = false;
+        while (!volver) {
+            System.out.println("\n===== MENÚ ESTUDIANTES =====");
+            System.out.println("1. Crear estudiante");
+            System.out.println("2. Listar estudiantes");
+            System.out.println("3. Actualizar estudiante");
+            System.out.println("4. Eliminar estudiante");
+            System.out.println("0. Volver al menú principal");
+            System.out.print("👉 Seleccione una opción: ");
+
+            int opcion = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (opcion) {
+                case 1:
+                    System.out.print("Nombres: ");
+                    String nombres = scanner.nextLine();
+                    System.out.print("Apellidos: ");
+                    String apellidos = scanner.nextLine();
+                    System.out.print("Email: ");
+                    String email = scanner.nextLine();
+                    System.out.print("Edad: ");
+                    long edad = Long.parseLong(scanner.nextLine());
+                    System.out.print("¿Está activo? (true/false): ");
+                    boolean activo = Boolean.parseBoolean(scanner.nextLine().trim());
+                    System.out.print("Promedio: ");
+                    double promedio = Double.parseDouble(scanner.nextLine());
+                    System.out.print("Semestre: ");
+                    long semestre = Long.parseLong(scanner.nextLine());
+
+                    EstudianteSolicitudDTO solicitud = new EstudianteSolicitudDTO(nombres, apellidos, email, edad, activo, promedio, semestre);
+                    controlador.crearEstudiante(solicitud);
+                    System.out.println("✅ Estudiante creado con éxito.");
+                    break;
+
+                case 2:
+                    List<Estudiante> estudiantes = controlador.listarEstudiantes();
+                    System.out.println("\n📋 LISTA DE ESTUDIANTES:");
+                    for (Estudiante e : estudiantes) {
+                        System.out.println(e);
+                    }
+                    break;
+
+                case 3:
+                    System.out.print("Ingrese ID del estudiante a actualizar: ");
+                    long idActualizar = scanner.nextLong();
+                    scanner.nextLine();
+
+                    System.out.print("Nombres: ");
+                    String n = scanner.nextLine();
+                    System.out.print("Apellidos: ");
+                    String a = scanner.nextLine();
+                    System.out.print("Email: ");
+                    String em = scanner.nextLine();
+                    System.out.print("Carrera: ");
+                    String ca = scanner.nextLine();
+                    System.out.print("Edad: ");
+                    long edadActualizar = scanner.nextLong();
+                    System.out.print("¿Está activo? (true/false): ");
+                    boolean estaActivo = scanner.nextBoolean();
+                    System.out.print("Promedio: ");
+                    double promedioActualizado = scanner.nextDouble();
+                    System.out.print("Semestre: ");
+                    long semestreActualizado = scanner.nextLong();
+                    scanner.nextLine(); // Limpiar buffer
+
+                    EstudianteSolicitudDTO actSolicitud = new EstudianteSolicitudDTO(n, a, em, edadActualizar,  estaActivo, promedioActualizado, semestreActualizado);
+                    controlador.actualizarEstudiante(idActualizar, actSolicitud);
+                    System.out.println("✅ Estudiante actualizado.");
+                    break;
+
+                case 4:
+                    System.out.print("Ingrese ID del estudiante a eliminar: ");
+                    long idEliminar = scanner.nextLong();
+                    scanner.nextLine();
+
+                    controlador.eliminarEstudiante(idEliminar);
+                    System.out.println("🗑️ Estudiante eliminado.");
+                    break;
+
+                case 0:
+                    volver = true;
+                    break;
+
+                default:
+                    System.out.println("❌ Opción inválida.");
+            }
+        }
         pausar();
     }
 }

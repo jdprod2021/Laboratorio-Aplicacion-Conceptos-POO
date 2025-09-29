@@ -8,6 +8,8 @@ import com.ejemplo.Controladores.EstudianteControlador;
 import com.ejemplo.Controladores.FacultadControlador;
 import com.ejemplo.Controladores.ProfesorControlador;
 import com.ejemplo.Controladores.ProgramaControlador;
+import com.ejemplo.DTOs.Mappers.ProfesorMapper;
+import com.ejemplo.DTOs.Respuesta.ProfesorRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.ProfesorSolicitudDTO;
 import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
 import com.ejemplo.Modelos.Profesor;
@@ -327,13 +329,13 @@ public class VistaGUI extends Application implements InterfaceVista {
         btnActualizar.getStyleClass().add("action-button");
         btnEliminar.getStyleClass().add("danger-button");
 
-        // Tabla de profesores
-        TableView<Profesor> tablaProfesores = crearTablaProfesores();
+        // Tabla de profesores (ahora usa DTOs)
+        TableView<ProfesorRespuestaDTO> tablaProfesores = crearTablaProfesores();
 
         // Configurar acciones de botones
         btnCrear.setOnAction(e -> mostrarFormularioCrearProfesor());
         btnActualizar.setOnAction(e -> {
-            Profesor seleccionado = tablaProfesores.getSelectionModel().getSelectedItem();
+            ProfesorRespuestaDTO seleccionado = tablaProfesores.getSelectionModel().getSelectedItem();
             if (seleccionado != null) {
                 mostrarFormularioActualizarProfesor(seleccionado);
             } else {
@@ -341,7 +343,7 @@ public class VistaGUI extends Application implements InterfaceVista {
             }
         });
         btnEliminar.setOnAction(e -> {
-            Profesor seleccionado = tablaProfesores.getSelectionModel().getSelectedItem();
+            ProfesorRespuestaDTO seleccionado = tablaProfesores.getSelectionModel().getSelectedItem();
             if (seleccionado != null) {
                 eliminarProfesorConConfirmacion(seleccionado, tablaProfesores);
             } else {
@@ -361,41 +363,29 @@ public class VistaGUI extends Application implements InterfaceVista {
         layoutPrincipal.setCenter(panelPrincipal);
     }
 
-    private TableView<Profesor> crearTablaProfesores() {
-        TableView<Profesor> tabla = new TableView<>();
+    private TableView<ProfesorRespuestaDTO> crearTablaProfesores() {
+        TableView<ProfesorRespuestaDTO> tabla = new TableView<>();
         tabla.setPrefHeight(400);
 
-        // Columnas
-        TableColumn<Profesor, Integer> colId = new TableColumn<>("ID");
-        colId.setCellValueFactory(cellData -> {
-            int id = (int) cellData.getValue().getId(); // Cast double a int
-            return new javafx.beans.property.SimpleObjectProperty<>(id);
-        });
+        // Columnas usando los campos del DTO
+        TableColumn<ProfesorRespuestaDTO, Long> colId = new TableColumn<>("ID");
+        colId.setCellValueFactory(new PropertyValueFactory<>("ID"));
         colId.setPrefWidth(50);
 
-        TableColumn<Profesor, String> colNombres = new TableColumn<>("Nombres");
-        colNombres.setCellValueFactory(cellData -> {
-            String nombres = cellData.getValue().getNombres();
-            return new javafx.beans.property.SimpleStringProperty(nombres != null ? nombres : "N/A");
-        });
+        TableColumn<ProfesorRespuestaDTO, String> colNombres = new TableColumn<>("Nombres");
+        colNombres.setCellValueFactory(new PropertyValueFactory<>("nombres"));
         colNombres.setPrefWidth(150);
 
-        TableColumn<Profesor, String> colApellidos = new TableColumn<>("Apellidos");
-        colApellidos.setCellValueFactory(cellData -> {
-            String apellidos = cellData.getValue().getApellidos();
-            return new javafx.beans.property.SimpleStringProperty(apellidos != null ? apellidos : "N/A");
-        });
+        TableColumn<ProfesorRespuestaDTO, String> colApellidos = new TableColumn<>("Apellidos");
+        colApellidos.setCellValueFactory(new PropertyValueFactory<>("apellidos"));
         colApellidos.setPrefWidth(150);
 
-        TableColumn<Profesor, String> colEmail = new TableColumn<>("Email");
-        colEmail.setCellValueFactory(cellData -> {
-            String email = cellData.getValue().getEmail();
-            return new javafx.beans.property.SimpleStringProperty(email != null ? email : "N/A");
-        });
+        TableColumn<ProfesorRespuestaDTO, String> colEmail = new TableColumn<>("Email");
+        colEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         colEmail.setPrefWidth(200);
 
-        TableColumn<Profesor, String> colTipoContrato = new TableColumn<>("Tipo Contrato");
-        colTipoContrato.setCellValueFactory(new PropertyValueFactory<>("tipoContrato"));
+        TableColumn<ProfesorRespuestaDTO, String> colTipoContrato = new TableColumn<>("Tipo Contrato");
+        colTipoContrato.setCellValueFactory(new PropertyValueFactory<>("TipoContrato"));
         colTipoContrato.setPrefWidth(120);
 
         tabla.getColumns().addAll(colId, colNombres, colApellidos, colEmail, colTipoContrato);
@@ -403,12 +393,19 @@ public class VistaGUI extends Application implements InterfaceVista {
         return tabla;
     }
 
-    private void cargarDatosProfesores(TableView<Profesor> tabla) {
+    private void cargarDatosProfesores(TableView<ProfesorRespuestaDTO> tabla) {
         try {
             // ✅ CORRECTO: Crear controlador solo cuando se necesita
             ProfesorControlador profesorControlador = fabricaControladores.crearControladorProfesor();
             List<Profesor> profesores = profesorControlador.listarProfesores();
-            ObservableList<Profesor> datosTabla = FXCollections.observableArrayList(profesores);
+
+            // ✅ Convertir entidades a DTOs usando el mapper
+            ObservableList<ProfesorRespuestaDTO> datosTabla = FXCollections.observableArrayList();
+            for (Profesor profesor : profesores) {
+                ProfesorRespuestaDTO dto = ProfesorMapper.toDTO(profesor);
+                datosTabla.add(dto);
+            }
+
             tabla.setItems(datosTabla);
         } catch (Exception e) {
             mostrarError("No se pudieron cargar los profesores: " + e.getMessage());
@@ -490,7 +487,7 @@ public class VistaGUI extends Application implements InterfaceVista {
         });
     }
 
-    private void mostrarFormularioActualizarProfesor(Profesor profesor) {
+    private void mostrarFormularioActualizarProfesor(ProfesorRespuestaDTO profesorDTO) {
         // Crear diálogo personalizado
         Dialog<ProfesorSolicitudDTO> dialogo = new Dialog<>();
         dialogo.setTitle("Actualizar Profesor");
@@ -506,17 +503,17 @@ public class VistaGUI extends Application implements InterfaceVista {
         formulario.setVgap(10);
         formulario.setPadding(new Insets(20, 150, 10, 10));
 
-        // Campos pre-cargados con datos actuales
+        // Campos pre-cargados con datos actuales del DTO
         TextField txtNombres = new TextField();
         TextField txtApellidos = new TextField();
         TextField txtEmail = new TextField();
         TextField txtTipoContrato = new TextField();
 
-        // Pre-cargar datos actuales
-        txtNombres.setText(profesor.getNombres() != null ? profesor.getNombres() : "");
-        txtApellidos.setText(profesor.getApellidos() != null ? profesor.getApellidos() : "");
-        txtEmail.setText(profesor.getEmail() != null ? profesor.getEmail() : "");
-        txtTipoContrato.setText(profesor.getTipoContrato() != null ? profesor.getTipoContrato() : "");
+        // ✅ Pre-cargar datos desde el DTO
+        txtNombres.setText(profesorDTO.nombres != null ? profesorDTO.nombres : "");
+        txtApellidos.setText(profesorDTO.apellidos != null ? profesorDTO.apellidos : "");
+        txtEmail.setText(profesorDTO.email != null ? profesorDTO.email : "");
+        txtTipoContrato.setText(profesorDTO.TipoContrato != null ? profesorDTO.TipoContrato : "");
 
         txtNombres.setPromptText("Nombres del profesor");
         txtApellidos.setPromptText("Apellidos del profesor");
@@ -559,11 +556,11 @@ public class VistaGUI extends Application implements InterfaceVista {
         // Mostrar diálogo y procesar resultado
         Optional<ProfesorSolicitudDTO> resultado = dialogo.showAndWait();
 
-        resultado.ifPresent(profesorDTO -> {
+        resultado.ifPresent(solicitudDTO -> {
             try {
                 // ✅ CORRECTO: Crear controlador solo cuando se necesita
                 ProfesorControlador profesorControlador = fabricaControladores.crearControladorProfesor();
-                profesorControlador.actualizarProfesor((long)profesor.getId(), profesorDTO);
+                profesorControlador.actualizarProfesor(profesorDTO.ID, solicitudDTO);
                 mostrarMensaje("✅ Profesor actualizado exitosamente!");
                 mostrarGestionProfesores(); // Refrescar vista
             } catch (Exception e) {
@@ -572,20 +569,14 @@ public class VistaGUI extends Application implements InterfaceVista {
         });
     }
 
-    private void eliminarProfesorConConfirmacion(Profesor profesor, TableView<Profesor> tabla) {
+    private void eliminarProfesorConConfirmacion(ProfesorRespuestaDTO profesorDTO, TableView<ProfesorRespuestaDTO> tabla) {
         Alert confirmacion = new Alert(Alert.AlertType.CONFIRMATION);
         confirmacion.setTitle("Confirmar Eliminación");
         confirmacion.setHeaderText("¿Está seguro de eliminar este profesor?");
 
-        String nombreCompleto = "ID: " + (int)profesor.getId();
-        String nombres = profesor.getNombres();
-        String apellidos = profesor.getApellidos();
-
-        if (nombres != null && apellidos != null) {
-            nombreCompleto += " - " + nombres + " " + apellidos;
-        }
-
-        confirmacion.setContentText("Profesor: " + nombreCompleto);
+        // ✅ Usar toString() del DTO para mostrar la información
+        String infoProfesor = "Profesor: " + profesorDTO.toString();
+        confirmacion.setContentText(infoProfesor);
 
         Optional<ButtonType> resultado = confirmacion.showAndWait();
 
@@ -593,7 +584,7 @@ public class VistaGUI extends Application implements InterfaceVista {
             try {
                 // ✅ CORRECTO: Crear controlador solo cuando se necesita
                 ProfesorControlador profesorControlador = fabricaControladores.crearControladorProfesor();
-                profesorControlador.eliminarProfesor((long)profesor.getId());
+                profesorControlador.eliminarProfesor(profesorDTO.ID);
                 mostrarMensaje("✅ Profesor eliminado exitosamente!");
                 cargarDatosProfesores(tabla); // Refrescar tabla
             } catch (Exception e) {

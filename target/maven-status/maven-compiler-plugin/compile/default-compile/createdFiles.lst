@@ -24,6 +24,7 @@ com\ejemplo\Controladores\ProgramaControlador.class
 com\ejemplo\DTOs\Solicitud\EstudianteSolicitudDTO.class
 com\ejemplo\DAOs\Implementaciones\H2\ProfesorDAOH2.class
 com\ejemplo\DAOs\Implementaciones\Oracle\FacultadDAOOracle.class
+com\ejemplo\infra\SqlErrorDetailer.class
 com\ejemplo\DAOs\Implementaciones\H2\PersonaDAOH2.class
 com\ejemplo\Controladores\CursoControlador.class
 com\ejemplo\DAOs\Interfaces\DAOGeneral.class

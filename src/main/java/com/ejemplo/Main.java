@@ -27,16 +27,7 @@ public class Main {
         System.out.println("🔗 PASO 1: Verificando conexión a base de datos...");
         System.out.println();
 
-        boolean conexionExitosa = probarConexionBaseDatos();
 
-        if (!conexionExitosa) {
-            System.err.println("❌ No se puede continuar sin conexión a BD.");
-            System.err.println("   Revisa el archivo config.properties");
-            System.exit(1);
-        }
-
-        System.out.println("✅ Conexión a base de datos verificada!");
-        System.out.println();
 
         // ========================================
         // PASO 2: INICIALIZAR APLICACIÓN CON FACTORY EXTERNA
@@ -67,30 +58,7 @@ public class Main {
     /**
      * Prueba la conexión a base de datos (código del backend)
      */
-    private static boolean probarConexionBaseDatos() {
 
-        // Usar H2 por defecto para development
-        String vendor = "H2"; // Cambia a "MYSQL" o "ORACLE" según tu config
-
-        try {
-            ConexionDB conexionDB = new ConexionDB(vendor);
-
-            try (Connection conn = conexionDB.crearConexion().getConnection()) {
-                System.out.println("   ✅ Conexión exitosa a " + vendor + "!");
-                System.out.println("   🔒 Conexión cerrada.");
-                return true;
-
-            } catch (SQLException e) {
-                System.err.println("   ❌ Error SQL: " + e.getMessage());
-                return false;
-            }
-
-        } catch (Exception e) {
-            System.err.println("   ❌ Error al intentar conectar: " + e.getMessage());
-            e.printStackTrace();
-            return false;
-        }
-    }
 
     /**
      * Banner inicial del sistema integrado
@@ -102,7 +70,7 @@ public class Main {
         System.out.println("║        🎓 SISTEMA DE GESTIÓN ACADÉMICA - VERSIÓN COMPLETA 🎓    ║");
         System.out.println("║                                                                  ║");
         System.out.println("║  ┌──────────────────────────────────────────────────────────┐   ║");
-        System.out.println("║  │  🔗 Verificación de Conexión BD                        │   ║");
+        System.out.println("║  │  🔗 Prueba de Conexión BD (Backend)                    │   ║");
         System.out.println("║  │  🏭 Factory Externa (Tu implementación)                │   ║");
         System.out.println("║  │  🎨 Selección de Interfaz (Consola/GUI)               │   ║");
         System.out.println("║  │  🎛️  Sistema Completo Integrado                        │   ║");

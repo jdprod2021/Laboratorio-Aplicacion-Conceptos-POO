@@ -6,6 +6,7 @@ C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratori
 C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratorio-Aplicacion-Conceptos-POO\src\main\java\com\ejemplo\DAOs\Implementaciones\H2\ProgramaDAOH2.java
 C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratorio-Aplicacion-Conceptos-POO\src\main\java\com\ejemplo\DAOs\Implementaciones\Oracle\FacultadDAOOracle.java
 C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratorio-Aplicacion-Conceptos-POO\src\main\java\com\ejemplo\DAOs\Implementaciones\MySQL\PersonaDAOMySQL.java
+C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratorio-Aplicacion-Conceptos-POO\src\main\java\com\ejemplo\Utils\InputUtils.java
 C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratorio-Aplicacion-Conceptos-POO\src\main\java\com\ejemplo\DAOs\Interfaces\DAOGeneral.java
 C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratorio-Aplicacion-Conceptos-POO\src\main\java\com\ejemplo\DTOs\Solicitud\FacultadSolicitudDTO.java
 C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratorio-Aplicacion-Conceptos-POO\src\main\java\com\ejemplo\DAOs\Implementaciones\H2\EstudianteDAOH2.java
@@ -64,6 +65,7 @@ C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratori
 C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratorio-Aplicacion-Conceptos-POO\src\main\java\com\ejemplo\DAOs\Implementaciones\MySQL\EstudianteDAOMySQL.java
 C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratorio-Aplicacion-Conceptos-POO\src\main\java\com\ejemplo\DTOs\Solicitud\ProfesorSolicitudDTO.java
 C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratorio-Aplicacion-Conceptos-POO\src\main\java\com\ejemplo\DAOs\Implementaciones\Oracle\PersonaDAOOracle.java
+C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratorio-Aplicacion-Conceptos-POO\src\main\java\com\ejemplo\infra\SqlErrorDetailer.java
 C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratorio-Aplicacion-Conceptos-POO\src\main\java\com\ejemplo\Controladores\CursoControlador.java
 C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratorio-Aplicacion-Conceptos-POO\src\main\java\com\ejemplo\Fabricas\FabricaInterna\FabricaDAOH2.java
 C:\Users\josed\OneDrive\Documentos\TECNOLOGIAS AVANZADAS\Laboratorios\Laboratorio-Aplicacion-Conceptos-POO\src\main\java\com\ejemplo\DTOs\Solicitud\CursoSolicitudDTO.java
