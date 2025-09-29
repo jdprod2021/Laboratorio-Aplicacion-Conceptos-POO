@@ -1,10 +1,6 @@
 package com.ejemplo;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-
 import com.ejemplo.Fabricas.FabricaExterna.FactoryExterna;
-import com.ejemplo.Utils.DB.ConexionDB;
 import com.ejemplo.Vistas.InterfaceVista;
 
 /**
@@ -67,16 +63,16 @@ public class Main {
         System.out.println();
         System.out.println("╔══════════════════════════════════════════════════════════════════╗");
         System.out.println("║                                                                  ║");
-        System.out.println("║        🎓 SISTEMA DE GESTIÓN ACADÉMICA - VERSIÓN COMPLETA 🎓    ║");
+        System.out.println("║        🎓 SISTEMA DE GESTIÓN ACADÉMICA - VERSIÓN COMPLETA 🎓     ║");
         System.out.println("║                                                                  ║");
-        System.out.println("║  ┌──────────────────────────────────────────────────────────┐   ║");
-        System.out.println("║  │  🔗 Prueba de Conexión BD (Backend)                    │   ║");
-        System.out.println("║  │  🏭 Factory Externa (Tu implementación)                │   ║");
-        System.out.println("║  │  🎨 Selección de Interfaz (Consola/GUI)               │   ║");
-        System.out.println("║  │  🎛️  Sistema Completo Integrado                        │   ║");
-        System.out.println("║  └──────────────────────────────────────────────────────────┘   ║");
+        System.out.println("║  ┌──────────────────────────────────────────────────────────┐    ║");
+        System.out.println("║  │  🔗 Prueba de Conexión BD (Backend)                      │    ║");
+        System.out.println("║  │  🏭 Factory Externa (Tu implementación)                  │    ║");
+        System.out.println("║  │  🎨 Selección de Interfaz (Consola/GUI)                  │    ║");
+        System.out.println("║  │  🎛️  Sistema Completo Integrado                           │    ║");
+        System.out.println("║  └──────────────────────────────────────────────────────────┘    ║");
         System.out.println("║                                                                  ║");
-        System.out.println("║           ⚡ Inicialización en 3 pasos ⚡                       ║");
+        System.out.println("║           ⚡ Inicialización en 3 pasos ⚡                        ║");
         System.out.println("║                                                                  ║");
         System.out.println("╚══════════════════════════════════════════════════════════════════╝");
         System.out.println();

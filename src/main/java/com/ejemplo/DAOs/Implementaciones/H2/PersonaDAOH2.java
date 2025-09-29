@@ -3,6 +3,7 @@ package com.ejemplo.DAOs.Implementaciones.H2;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,19 +25,20 @@ public class PersonaDAOH2 implements PersonaDAO{
     public Persona guardar(Persona entidad) {
         String sql = "INSERT INTO PERSONA (nombres, apellidos, email) " +
                      "VALUES (?, ?, ?)";
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, entidad.getNombres());
             ps.setString(2, entidad.getApellidos());
             ps.setString(3, entidad.getEmail());
-            ps.executeUpdate();
+            int updated = ps.executeUpdate();
+        if (updated != 1) {
+            throw new SQLException("No se insertó PERSONA (updated=" + updated + ")");
+        }
 
-            // Obtener la clave generada
-            try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    // Asignar el id generado a la entidad
-                    entidad.setId(generatedKeys.getLong(1)); // Asumiendo que el id es un Long
-                }
-            }
+        try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+            if (generatedKeys.next()) {
+                entidad.setId(generatedKeys.getLong(1)); // ← ahora sí se asigna el ID real
+            } 
+        }
 
             return entidad;
 

@@ -31,7 +31,8 @@ public class ProfesorControlador {
             persona.setApellidos(profesorSolicitudDTO.apellidos);
             persona.setEmail(profesorSolicitudDTO.email);
             persona = personaDAO.guardar(persona);
-            
+        }else{
+            throw new RuntimeException("Ya existe una persona con el correo: " + profesorSolicitudDTO.email);
         }
 
         Profesor profesor = ProfesorMapper.toEntity(profesorSolicitudDTO, (long) persona.getId());

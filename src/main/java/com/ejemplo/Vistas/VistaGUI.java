@@ -397,13 +397,12 @@ public class VistaGUI extends Application implements InterfaceVista {
         try {
             // ✅ CORRECTO: Crear controlador solo cuando se necesita
             ProfesorControlador profesorControlador = fabricaControladores.crearControladorProfesor();
-            List<Profesor> profesores = profesorControlador.listarProfesores();
+            List<ProfesorRespuestaDTO> profesores = profesorControlador.listarProfesores();
 
             // ✅ Convertir entidades a DTOs usando el mapper
             ObservableList<ProfesorRespuestaDTO> datosTabla = FXCollections.observableArrayList();
-            for (Profesor profesor : profesores) {
-                ProfesorRespuestaDTO dto = ProfesorMapper.toDTO(profesor);
-                datosTabla.add(dto);
+            for (ProfesorRespuestaDTO profesor : profesores) {
+                datosTabla.add(profesor);
             }
 
             tabla.setItems(datosTabla);

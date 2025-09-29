@@ -5,13 +5,11 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.ejemplo.Controladores.*;
-import com.ejemplo.DTOs.Mappers.ProfesorMapper;
 import com.ejemplo.DTOs.Respuesta.ProfesorRespuestaDTO;
+import com.ejemplo.DTOs.Respuesta.ProgramaRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.*;
 import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
 import com.ejemplo.Modelos.Estudiante;
-import com.ejemplo.Modelos.Profesor;
-import com.ejemplo.Modelos.Programa;
 
 /**
  * Implementación de vista para interfaz de consola
@@ -66,12 +64,12 @@ public class VistaConsola implements InterfaceVista {
         System.out.println("║                    🎓 SISTEMA ACADÉMICO 🎓                    ║");
         System.out.println("║                        MENÚ PRINCIPAL                         ║");
         System.out.println("╠═══════════════════════════════════════════════════════════════╣");
-        System.out.println("║  1. 👨‍🏫 Gestión de Profesores                                 ║");
+        System.out.println("║  1. 👨‍🏫 Gestión de Profesores                                ║");
         System.out.println("║  2. 🏛️  Gestión de Facultades                                  ║");
         System.out.println("║  3. 📚 Gestión de Programas                                   ║");
         System.out.println("║  4. 📖 Gestión de Cursos                                      ║");
         System.out.println("║  5. 🎓 Gestión de Estudiantes                                 ║");
-        System.out.println("║  0. 🚪 Salir                                                   ║");
+        System.out.println("║  0. 🚪 Salir                                                  ║");
         System.out.println("╚═══════════════════════════════════════════════════════════════╝");
         System.out.print("👉 Seleccione una opción: ");
     }
@@ -100,9 +98,9 @@ public class VistaConsola implements InterfaceVista {
 
     private void mostrarBanner() {
         System.out.println("╔═══════════════════════════════════════════════════════════════╗");
-        System.out.println("║  🎓 SISTEMA DE GESTIÓN ACADÉMICA - INTERFAZ DE CONSOLA 🎓    ║");
+        System.out.println("║  🎓 SISTEMA DE GESTIÓN ACADÉMICA - INTERFAZ DE CONSOLA 🎓     ║");
         System.out.println("║                                                               ║");
-        System.out.println("║  Desarrollado con patrón Factory para máxima flexibilidad    ║");
+        System.out.println("║  Desarrollado con patrón Factory para máxima flexibilidad     ║");
         System.out.println("╚═══════════════════════════════════════════════════════════════╝");
         System.out.println();
     }
@@ -194,12 +192,12 @@ public class VistaConsola implements InterfaceVista {
         while (enMenuProfesores) {
             limpiarPantalla();
             System.out.println("╔════════════════════════════════════════════════════════╗");
-            System.out.println("║                👨‍🏫 GESTIÓN DE PROFESORES 👨‍🏫                ║");
+            System.out.println("║                👨‍🏫 GESTIÓN DE PROFESORES 👨‍🏫             ║");
             System.out.println("╠════════════════════════════════════════════════════════╣");
-            System.out.println("║  1. ➕ Crear Profesor                                   ║");
+            System.out.println("║  1. ➕ Crear Profesor                                  ║");
             System.out.println("║  2. 📋 Listar Profesores                               ║");
-            System.out.println("║  3. ✏️  Actualizar Profesor                             ║");
-            System.out.println("║  4. 🗑️  Eliminar Profesor                               ║");
+            System.out.println("║  3. ✏️  Actualizar Profesor                            ║");
+            System.out.println("║  4. 🗑️  Eliminar Profesor                              ║");
             System.out.println("║  0. 🔙 Volver al Menú Principal                        ║");
             System.out.println("╚════════════════════════════════════════════════════════╝");
             System.out.print("👉 Seleccione una opción: ");
@@ -292,7 +290,7 @@ public class VistaConsola implements InterfaceVista {
         try {
             // ✅ CORRECTO: Crear controlador solo cuando se necesita
             ProfesorControlador profesorControlador = fabricaControladores.crearControladorProfesor();
-            List<Profesor> profesores = profesorControlador.listarProfesores();
+            List<ProfesorRespuestaDTO> profesores = profesorControlador.listarProfesores();
 
             if (profesores.isEmpty()) {
                 System.out.println("🔍 No hay profesores registrados.");
@@ -302,13 +300,10 @@ public class VistaConsola implements InterfaceVista {
 
                 // Mostrar cada profesor usando el DTO y toString()
                 for (int i = 0; i < profesores.size(); i++) {
-                    Profesor profesor = profesores.get(i);
-
-                    // ✅ Convertir a DTO usando el mapper
-                    ProfesorRespuestaDTO profesorDTO = ProfesorMapper.toDTO(profesor);
+                    ProfesorRespuestaDTO profesor = profesores.get(i);
 
                     // ✅ Usar toString() del DTO para mostrar
-                    System.out.println((i + 1) + ". " + profesorDTO.toString());
+                    System.out.println((i + 1) + ". " + profesor.toString());
                 }
             }
 
@@ -508,10 +503,10 @@ public class VistaConsola implements InterfaceVista {
                         break;
 
                     case 2:
-                        List<Programa> programas = controlador.listarProgramas();
+                        List<ProgramaRespuestaDTO> programas = controlador.listarProgramas();
                         System.out.println("\n📋 LISTA DE PROGRAMAS:");
-                        for (Programa p : programas) {
-                            System.out.println(p);
+                        for (ProgramaRespuestaDTO p : programas) {
+                            System.out.println(p.toString());
                         }
                         break;
 
