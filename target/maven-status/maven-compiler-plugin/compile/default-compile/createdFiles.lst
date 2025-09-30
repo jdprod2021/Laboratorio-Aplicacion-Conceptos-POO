@@ -20,13 +20,16 @@ com\ejemplo\Main.class
 com\ejemplo\Modelos\Programa.class
 com\ejemplo\DAOs\Implementaciones\Oracle\ProgramaDAOOracle.class
 com\ejemplo\DTOs\Solicitud\ProgramaSolicitudDTO.class
+com\ejemplo\Vistas\UtilsVistaConsola.class
 com\ejemplo\Controladores\ProgramaControlador.class
 com\ejemplo\DTOs\Solicitud\EstudianteSolicitudDTO.class
 com\ejemplo\DAOs\Implementaciones\H2\ProfesorDAOH2.class
 com\ejemplo\DAOs\Implementaciones\Oracle\FacultadDAOOracle.class
+com\ejemplo\Vistas\VistaConsolaProfesor.class
 com\ejemplo\infra\SqlErrorDetailer.class
 com\ejemplo\DAOs\Implementaciones\H2\PersonaDAOH2.class
 com\ejemplo\Controladores\CursoControlador.class
+com\ejemplo\Vistas\VistaConsolaEstudiante.class
 com\ejemplo\DAOs\Interfaces\DAOGeneral.class
 com\ejemplo\DbSmokeTest.class
 com\ejemplo\Modelos\Estudiante.class
