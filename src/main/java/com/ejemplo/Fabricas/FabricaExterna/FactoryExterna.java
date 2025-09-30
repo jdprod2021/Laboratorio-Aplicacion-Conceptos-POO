@@ -6,7 +6,7 @@ import com.ejemplo.Utils.Config.AppConfig;
 import com.ejemplo.Vistas.InterfaceVista;
 import com.ejemplo.Vistas.TipoVista;
 import com.ejemplo.Vistas.VistaConsola;
-import com.ejemplo.Vistas.VistaGUI;
+//import com.ejemplo.Vistas.VistaGUI;
 import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
 
 /**
@@ -47,7 +47,7 @@ public class FactoryExterna {
 
             case GUI:
                 System.out.println("🏭 Factory Externa: Creando Vista GUI...");
-                vista = new VistaGUI();
+                vista = new VistaConsola();
                 break;
 
             default:
