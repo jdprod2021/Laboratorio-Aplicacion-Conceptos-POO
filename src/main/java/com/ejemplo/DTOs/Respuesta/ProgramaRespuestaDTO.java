@@ -1,19 +1,33 @@
 package com.ejemplo.DTOs.Respuesta;
 
 public class ProgramaRespuestaDTO {
-    
-    public long ID;
-    public String nombre;
 
-    public ProgramaRespuestaDTO(long ID, String nombre) {
+    private long ID;
+    private String nombre;
+    private double duracion;
+
+    public ProgramaRespuestaDTO(long ID, String nombre, double duracion) {
         this.ID = ID;
         this.nombre = nombre;
+        this.duracion = duracion;
     }
 
     @Override
     public String toString() {
         return "ID=" + ID +
-                ", nombre='" + nombre + '\'';
+                ", nombre='" + nombre + '\'' +
+                ", duracion=" + duracion;
+    }
+
+    public long getID() {
+        return ID;
+    }
+    public String getNombre() {
+        return nombre;
+    }
+
+    public double getDuracion() {
+        return duracion;
     }
 
 }

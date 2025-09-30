@@ -1,8 +1,10 @@
 package com.ejemplo.DAOs.Implementaciones.H2;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,7 +26,8 @@ public class CursoDAOH2 implements CursoDAO{
     @Override
     public Curso guardar(Curso entidad) {
         final String sql = "INSERT INTO CURSO (nombre, programa_id, activo) VALUES (?, ?, ?)";
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, entidad.getNombre());
             ps.setLong(2, (long)(entidad.getPrograma() != null ? entidad.getPrograma().getID() : 0L));
             ps.setBoolean(3, entidad.isActivo());
@@ -51,7 +54,8 @@ public class CursoDAOH2 implements CursoDAO{
     public List<Curso> listar(){
         final String sql = "SELECT id, nombre, programa_id, activo FROM CURSO ORDER BY nombre";
         List<Curso> lista = new ArrayList<>();
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql);
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) lista.add(mapRow(rs));
         } catch (SQLException e) {
@@ -63,7 +67,8 @@ public class CursoDAOH2 implements CursoDAO{
     @Override
     public void actualizar(Curso entidad) {
         final String sql = "UPDATE CURSO SET nombre = ?, programa_id = ?, activo = ? WHERE id = ?";
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, entidad.getNombre());
             ps.setLong(2, (long)(entidad.getPrograma() != null ? entidad.getPrograma().getID() : 0L));
             ps.setBoolean(3, entidad.isActivo());
@@ -81,7 +86,8 @@ public class CursoDAOH2 implements CursoDAO{
     @Override
     public void eliminar(Long id) {
         final String sql = "DELETE FROM CURSO WHERE id = ?";
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {

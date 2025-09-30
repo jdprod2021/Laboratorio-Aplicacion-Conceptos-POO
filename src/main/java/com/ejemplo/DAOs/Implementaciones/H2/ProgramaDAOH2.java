@@ -1,8 +1,10 @@
 package com.ejemplo.DAOs.Implementaciones.H2;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -26,7 +28,8 @@ public class ProgramaDAOH2 implements ProgramaDAO{
     public Programa guardar(Programa entidad) {
         final String sql = "INSERT INTO PROGRAMA (nombre, duracion, registro, facultad_id) " +
                            "VALUES (?, ?, ?, ?)";
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, entidad.getNombre());
             ps.setDouble(2, entidad.getDuracion());
             ps.setDate(3, new java.sql.Date(entidad.getRegistro().getTime()));
@@ -54,7 +57,8 @@ public class ProgramaDAOH2 implements ProgramaDAO{
     public List<Programa> listar() {
         final String sql = "SELECT id, nombre, duracion, registro, facultad_id FROM PROGRAMA ORDER BY nombre";
         List<Programa> lista = new ArrayList<>();
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql);
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) lista.add(mapRow(rs));
         } catch (SQLException e) {
@@ -66,7 +70,8 @@ public class ProgramaDAOH2 implements ProgramaDAO{
     @Override
     public void actualizar(Programa entidad) {
         final String sql = "UPDATE PROGRAMA SET nombre = ?, duracion = ?, registro = ?, facultad_id = ? WHERE id = ?";
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, entidad.getNombre());
             ps.setDouble(2, entidad.getDuracion());
             ps.setDate(3, new java.sql.Date(entidad.getRegistro().getTime()));
@@ -83,7 +88,8 @@ public class ProgramaDAOH2 implements ProgramaDAO{
     @Override
     public void eliminar(Long id) {
         final String sql = "DELETE FROM PROGRAMA WHERE id = ?";
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -97,7 +103,8 @@ public class ProgramaDAOH2 implements ProgramaDAO{
 
         Optional<Programa> programa = Optional.empty();
 
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
