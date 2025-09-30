@@ -509,10 +509,10 @@ public class VistaGUI extends Application implements InterfaceVista {
         TextField txtTipoContrato = new TextField();
 
         // ✅ Pre-cargar datos desde el DTO
-        txtNombres.setText(profesorDTO.nombres != null ? profesorDTO.nombres : "");
-        txtApellidos.setText(profesorDTO.apellidos != null ? profesorDTO.apellidos : "");
-        txtEmail.setText(profesorDTO.email != null ? profesorDTO.email : "");
-        txtTipoContrato.setText(profesorDTO.TipoContrato != null ? profesorDTO.TipoContrato : "");
+        //txtNombres.setText(profesorDTO.nombres != null ? profesorDTO.nombres : "");
+        //txtApellidos.setText(profesorDTO.apellidos != null ? profesorDTO.apellidos : "");
+        //txtEmail.setText(profesorDTO.email != null ? profesorDTO.email : "");
+        //txtTipoContrato.setText(profesorDTO.TipoContrato != null ? profesorDTO.TipoContrato : "");
 
         txtNombres.setPromptText("Nombres del profesor");
         txtApellidos.setPromptText("Apellidos del profesor");
@@ -559,7 +559,7 @@ public class VistaGUI extends Application implements InterfaceVista {
             try {
                 // ✅ CORRECTO: Crear controlador solo cuando se necesita
                 ProfesorControlador profesorControlador = fabricaControladores.crearControladorProfesor();
-                profesorControlador.actualizarProfesor(profesorDTO.ID, solicitudDTO);
+                //profesorControlador.actualizarProfesor(profesorDTO.ID, solicitudDTO);
                 mostrarMensaje("✅ Profesor actualizado exitosamente!");
                 mostrarGestionProfesores(); // Refrescar vista
             } catch (Exception e) {
@@ -583,7 +583,7 @@ public class VistaGUI extends Application implements InterfaceVista {
             try {
                 // ✅ CORRECTO: Crear controlador solo cuando se necesita
                 ProfesorControlador profesorControlador = fabricaControladores.crearControladorProfesor();
-                profesorControlador.eliminarProfesor(profesorDTO.ID);
+                //profesorControlador.eliminarProfesor(profesorDTO.ID);
                 mostrarMensaje("✅ Profesor eliminado exitosamente!");
                 cargarDatosProfesores(tabla); // Refrescar tabla
             } catch (Exception e) {

@@ -84,7 +84,6 @@ public class EstudianteDAOH2 implements EstudianteDAO{
 
                 long programaId = rs.getLong("programa_id");
 
-                System.out.println("❌ programaId=" + programaId);
                 if (programaId != 0) {
                     Programa programa = new Programa();
                     programa.setID(programaId);
