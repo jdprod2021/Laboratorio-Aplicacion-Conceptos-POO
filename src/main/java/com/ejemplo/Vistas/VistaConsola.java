@@ -86,7 +86,7 @@ public class VistaConsola extends UtilsVistaConsola implements InterfaceVista {
     private void procesarOpcionPrincipal(int opcion) {
         switch (opcion) {
             case 1:
-                new VistaConsolaProfesor(fabricaControladores, scanner).mostrarMenu();
+                new VistaConsolaProfesor(fabricaControladores.crearControladorProfesor(), scanner).mostrarMenu();
                 break;
             case 2:
                 new VistaConsolaFacultades(fabricaControladores, scanner).mostrarMenu();
