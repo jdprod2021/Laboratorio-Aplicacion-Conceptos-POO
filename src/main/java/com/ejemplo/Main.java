@@ -14,23 +14,8 @@ public class Main {
 
     public static void main(String[] args) {
 
-        mostrarBannerInicial();
-
-        // ========================================
-        // PASO 1: PROBAR CONEXIÓN A BASE DE DATOS
-        // ========================================
-
-        System.out.println("🔗 PASO 1: Verificando conexión a base de datos...");
-        System.out.println();
 
 
-
-        // ========================================
-        // PASO 2: INICIALIZAR APLICACIÓN CON FACTORY EXTERNA
-        // ========================================
-
-        System.out.println("🏭 PASO 2: Inicializando Factory Externa...");
-        System.out.println();
 
         try {
 
@@ -51,32 +36,6 @@ public class Main {
         System.out.println("🏁 Aplicación finalizada correctamente.");
     }
 
-    /**
-     * Prueba la conexión a base de datos (código del backend)
-     */
-
-
-    /**
-     * Banner inicial del sistema integrado
-     */
-    private static void mostrarBannerInicial() {
-        System.out.println();
-        System.out.println("╔══════════════════════════════════════════════════════════════════╗");
-        System.out.println("║                                                                  ║");
-        System.out.println("║        🎓 SISTEMA DE GESTIÓN ACADÉMICA - VERSIÓN COMPLETA 🎓     ║");
-        System.out.println("║                                                                  ║");
-        System.out.println("║  ┌──────────────────────────────────────────────────────────┐    ║");
-        System.out.println("║  │  🔗 Prueba de Conexión BD (Backend)                      │    ║");
-        System.out.println("║  │  🏭 Factory Externa (Tu implementación)                  │    ║");
-        System.out.println("║  │  🎨 Selección de Interfaz (Consola/GUI)                  │    ║");
-        System.out.println("║  │  🎛️  Sistema Completo Integrado                           │    ║");
-        System.out.println("║  └──────────────────────────────────────────────────────────┘    ║");
-        System.out.println("║                                                                  ║");
-        System.out.println("║           ⚡ Inicialización en 3 pasos ⚡                        ║");
-        System.out.println("║                                                                  ║");
-        System.out.println("╚══════════════════════════════════════════════════════════════════╝");
-        System.out.println();
-    }
 
     /**
      * Método para forzar tipo de BD específico

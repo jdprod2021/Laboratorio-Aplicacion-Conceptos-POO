@@ -44,4 +44,24 @@ public abstract class UtilsVistaConsola {
             System.out.println();
         }
     }
+    protected void mostrarBanner(String titulo) {
+        System.out.println("╔═══════════════════════════════════════════════════════════════╗");
+        System.out.println("║  🎓 " + titulo + " 🎓     ║");
+        System.out.println("║                                                               ║");
+        System.out.println("║  Desarrollado con patrón Factory para máxima flexibilidad     ║");
+        System.out.println("╚═══════════════════════════════════════════════════════════════╝");
+        System.out.println();
+    }
+
+    protected int leerOpcionMenu() {
+        try {
+            int opcion = Integer.parseInt(scanner.nextLine().trim());
+            return opcion;
+        } catch (NumberFormatException e) {
+            mostrarError("Por favor ingrese un número válido.");
+            pausar();
+            return -1;
+        }
+    }
+    
 }

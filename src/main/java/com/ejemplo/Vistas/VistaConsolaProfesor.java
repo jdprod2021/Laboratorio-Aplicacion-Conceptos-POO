@@ -72,7 +72,9 @@ public class VistaConsolaProfesor extends UtilsVistaConsola {
         System.out.println("📋 LISTA DE PROFESORES");
 
         try {
+
             ProfesorControlador controlador = fabrica.crearControladorProfesor();
+            controlador.listarProfesores();
             List<ProfesorRespuestaDTO> lista = controlador.listarProfesores();
 
             if (lista.isEmpty()) {

@@ -22,12 +22,14 @@ com\ejemplo\DAOs\Implementaciones\Oracle\ProgramaDAOOracle.class
 com\ejemplo\DTOs\Solicitud\ProgramaSolicitudDTO.class
 com\ejemplo\Vistas\UtilsVistaConsola.class
 com\ejemplo\Controladores\ProgramaControlador.class
+com\ejemplo\Vistas\VistaConsolaPrograma.class
 com\ejemplo\DTOs\Solicitud\EstudianteSolicitudDTO.class
 com\ejemplo\DAOs\Implementaciones\H2\ProfesorDAOH2.class
 com\ejemplo\DAOs\Implementaciones\Oracle\FacultadDAOOracle.class
 com\ejemplo\Vistas\VistaConsolaProfesor.class
 com\ejemplo\infra\SqlErrorDetailer.class
 com\ejemplo\DAOs\Implementaciones\H2\PersonaDAOH2.class
+com\ejemplo\Vistas\VistaConsolaCursos.class
 com\ejemplo\Controladores\CursoControlador.class
 com\ejemplo\Vistas\VistaConsolaEstudiante.class
 com\ejemplo\DAOs\Interfaces\DAOGeneral.class
@@ -38,6 +40,7 @@ com\ejemplo\DAOs\Interfaces\ProfesorDAO.class
 com\ejemplo\Fabricas\FabricaExterna\FactoryExterna$1.class
 com\ejemplo\DTOs\Mappers\EstudianteMapper.class
 com\ejemplo\DAOs\Implementaciones\Oracle\CursoDAOOracle.class
+com\ejemplo\Vistas\VistaConsolaFacultades.class
 com\ejemplo\Modelos\Persona.class
 com\ejemplo\DAOs\Implementaciones\H2\ProgramaDAOH2.class
 com\ejemplo\Controladores\EstudianteControlador.class
