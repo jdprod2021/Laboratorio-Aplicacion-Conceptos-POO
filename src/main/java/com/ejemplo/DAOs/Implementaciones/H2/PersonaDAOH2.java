@@ -1,5 +1,6 @@
 package com.ejemplo.DAOs.Implementaciones.H2;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,7 +26,8 @@ public class PersonaDAOH2 implements PersonaDAO{
     public Persona guardar(Persona entidad) {
         String sql = "INSERT INTO PERSONA (nombres, apellidos, email) " +
                      "VALUES (?, ?, ?)";
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setString(1, entidad.getNombres());
             ps.setString(2, entidad.getApellidos());
             ps.setString(3, entidad.getEmail());
@@ -53,7 +55,8 @@ public class PersonaDAOH2 implements PersonaDAO{
         String sql = "SELECT id, nombres, apellidos, email FROM PERSONA ORDER BY apellidos, nombres";
         List<Persona> lista = new ArrayList<>();
 
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql);
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Persona persona = new Persona();
@@ -72,7 +75,8 @@ public class PersonaDAOH2 implements PersonaDAO{
     @Override
     public void actualizar(Persona entidad) {
         String sql = "UPDATE PERSONA SET nombres=?, apellidos=?, email=? WHERE id=?";
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, entidad.getNombres());
             ps.setString(2, entidad.getApellidos());
             ps.setString(3, entidad.getEmail());
@@ -87,7 +91,8 @@ public class PersonaDAOH2 implements PersonaDAO{
     @Override
     public void eliminar(Long id) {
         String sql = "DELETE FROM PERSONA WHERE id=?";
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -98,7 +103,8 @@ public class PersonaDAOH2 implements PersonaDAO{
     @Override
     public Optional<Persona> buscarPorCorreo(String correo){
         String sql = "SELECT id, nombres, apellidos, email FROM PERSONA WHERE email = ?";
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, correo);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
@@ -120,7 +126,8 @@ public class PersonaDAOH2 implements PersonaDAO{
     @Override
     public Optional<Persona> buscarPorId(Long id){
         String sql = "SELECT id, nombres, apellidos, email FROM PERSONA WHERE id = ?";
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {

@@ -1,8 +1,10 @@
 package com.ejemplo.DAOs.Implementaciones.H2;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +27,8 @@ public class ProfesorDAOH2 implements ProfesorDAO{
 
         String sql = "INSERT INTO PROFESOR (id, tipo_contrato) VALUES (?, ?)";
 
-        try (var ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             ps.setLong(1, (long)entidad.getId());
             ps.setString(2, entidad.getTipoContrato());
             ps.executeUpdate();
@@ -49,7 +52,8 @@ public class ProfesorDAOH2 implements ProfesorDAO{
             "ORDER BY P.apellidos, P.nombres";
 
         List<Profesor> lista = new ArrayList<>();
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql);
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 lista.add(mapRow(rs));
@@ -63,7 +67,8 @@ public class ProfesorDAOH2 implements ProfesorDAO{
     @Override
     public void actualizar(Profesor entidad) {
         final String sql = "UPDATE PROFESOR SET tipo_contrato = ? WHERE id = ?";
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setString(1, entidad.getTipoContrato());
             ps.setLong(2, (long)entidad.getId());
             ps.executeUpdate();
@@ -76,7 +81,8 @@ public class ProfesorDAOH2 implements ProfesorDAO{
     @Override
     public void eliminar(Long id) {
         final String delProfesor = "DELETE FROM PROFESOR WHERE id = ?";
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(delProfesor)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(delProfesor)) {
             ps.setLong(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {

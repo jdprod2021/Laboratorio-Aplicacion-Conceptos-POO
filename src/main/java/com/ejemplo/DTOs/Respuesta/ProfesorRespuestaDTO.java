@@ -2,11 +2,11 @@ package com.ejemplo.DTOs.Respuesta;
 
 public class ProfesorRespuestaDTO {
 
-    public long ID;
-    public String nombres;
-    public String apellidos;
-    public String email;
-    public String TipoContrato;
+    private long ID;
+    private String nombres;
+    private String apellidos;
+    private String email;
+    private String TipoContrato;
 
     public ProfesorRespuestaDTO(long ID, String nombres, String apellidos, String email, String TipoContrato) {
         this.ID = ID;
@@ -23,5 +23,25 @@ public class ProfesorRespuestaDTO {
                 ", apellidos='" + apellidos + '\'' +
                 ", email='" + email + '\'' +
                 ", TipoContrato='" + TipoContrato + '\'';
+    }
+
+    public long getID() {
+        return ID;
+    }
+    
+    public String getNombres() {
+        return nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getTipoContrato() {
+        return TipoContrato;
     }
 }

@@ -1,8 +1,10 @@
 package com.ejemplo.DAOs.Implementaciones.H2;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +33,8 @@ public class EstudianteDAOH2 implements EstudianteDAO{
             ? (long) entidad.getPrograma().getID()
             : null;
 
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
             ps.setLong(1, (long) entidad.getId());              // FK a PERSONA(id)
             ps.setLong(2, (long) entidad.getCodigo());          // UNIQUE (uq_estudiante_codigo)
@@ -66,7 +69,8 @@ public class EstudianteDAOH2 implements EstudianteDAO{
                      "ORDER BY P.apellidos, P.nombres";
 
         List<Estudiante> lista = new ArrayList<>();
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql);
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 Estudiante estudiante = new Estudiante();
@@ -79,6 +83,8 @@ public class EstudianteDAOH2 implements EstudianteDAO{
                 estudiante.setPromedio(rs.getDouble("promedio"));
 
                 long programaId = rs.getLong("programa_id");
+
+                System.out.println("❌ programaId=" + programaId);
                 if (programaId != 0) {
                     Programa programa = new Programa();
                     programa.setID(programaId);
@@ -101,7 +107,8 @@ public class EstudianteDAOH2 implements EstudianteDAO{
             ? (long) entidad.getPrograma().getID()
             : null;
 
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, (long) entidad.getCodigo());
             if (programaId != null && programaId > 0) {
                 ps.setLong(2, programaId);
@@ -125,7 +132,8 @@ public class EstudianteDAOH2 implements EstudianteDAO{
     @Override
     public void eliminar(Long id) {
         String sql = "DELETE FROM ESTUDIANTE WHERE id = ?";
-        try (PreparedStatement ps = dataSource.getConnection().prepareStatement(sql)) {
+        try (Connection con = dataSource.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setLong(1, id);
             ps.executeUpdate();
         } catch (SQLException e) {

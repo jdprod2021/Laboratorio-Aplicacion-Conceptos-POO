@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.ejemplo.Controladores.*;
+import com.ejemplo.DTOs.Respuesta.EstudianteRespuestaDTO;
 import com.ejemplo.DTOs.Respuesta.ProfesorRespuestaDTO;
 import com.ejemplo.DTOs.Respuesta.ProgramaRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.*;
@@ -654,19 +655,19 @@ public class VistaConsola implements InterfaceVista {
                     boolean activo = Boolean.parseBoolean(scanner.nextLine().trim());
                     System.out.print("Promedio: ");
                     double promedio = Double.parseDouble(scanner.nextLine());
-                    System.out.print("Semestre: ");
-                    long semestre = Long.parseLong(scanner.nextLine());
+                    System.out.print("Programa: ");
+                    long programaId = Long.parseLong(scanner.nextLine());
 
-                    EstudianteSolicitudDTO solicitud = new EstudianteSolicitudDTO(nombres, apellidos, email, edad, activo, promedio, semestre);
+                    EstudianteSolicitudDTO solicitud = new EstudianteSolicitudDTO(nombres, apellidos, email, edad, activo, promedio, programaId);
                     controlador.crearEstudiante(solicitud);
                     System.out.println("✅ Estudiante creado con éxito.");
                     break;
 
                 case 2:
-                    List<Estudiante> estudiantes = controlador.listarEstudiantes();
+                    List<EstudianteRespuestaDTO> estudiantes = controlador.listarEstudiantes();
                     System.out.println("\n📋 LISTA DE ESTUDIANTES:");
-                    for (Estudiante e : estudiantes) {
-                        System.out.println(e);
+                    for (EstudianteRespuestaDTO e : estudiantes) {
+                        System.out.println(e.toString());
                     }
                     break;
 
@@ -681,19 +682,17 @@ public class VistaConsola implements InterfaceVista {
                     String a = scanner.nextLine();
                     System.out.print("Email: ");
                     String em = scanner.nextLine();
-                    System.out.print("Carrera: ");
-                    String ca = scanner.nextLine();
                     System.out.print("Edad: ");
                     long edadActualizar = scanner.nextLong();
                     System.out.print("¿Está activo? (true/false): ");
                     boolean estaActivo = scanner.nextBoolean();
                     System.out.print("Promedio: ");
                     double promedioActualizado = scanner.nextDouble();
-                    System.out.print("Semestre: ");
-                    long semestreActualizado = scanner.nextLong();
+                    System.out.print("Programa: ");
+                    long programaIdActualizado = scanner.nextLong();
                     scanner.nextLine(); // Limpiar buffer
 
-                    EstudianteSolicitudDTO actSolicitud = new EstudianteSolicitudDTO(n, a, em, edadActualizar,  estaActivo, promedioActualizado, semestreActualizado);
+                    EstudianteSolicitudDTO actSolicitud = new EstudianteSolicitudDTO(n, a, em, edadActualizar,  estaActivo, promedioActualizado, programaIdActualizado);
                     controlador.actualizarEstudiante(idActualizar, actSolicitud);
                     System.out.println("✅ Estudiante actualizado.");
                     break;

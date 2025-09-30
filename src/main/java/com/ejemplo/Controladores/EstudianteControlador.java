@@ -7,6 +7,7 @@ import com.ejemplo.DAOs.Interfaces.EstudianteDAO;
 import com.ejemplo.DAOs.Interfaces.PersonaDAO;
 import com.ejemplo.DAOs.Interfaces.ProgramaDAO;
 import com.ejemplo.DTOs.Mappers.EstudianteMapper;
+import com.ejemplo.DTOs.Respuesta.EstudianteRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.EstudianteSolicitudDTO;
 import com.ejemplo.Modelos.Estudiante;
 import com.ejemplo.Modelos.Persona;
@@ -38,18 +39,23 @@ public class EstudianteControlador {
 
         Programa programa = programaDAO.buscarPorId(datosDeEstudiante.programaId).orElse(null);
 
+        if(programa == null) {
+            throw new RuntimeException("Programa no encontrado con ID: " + datosDeEstudiante.programaId);
+        }
+
         Estudiante estudiante = EstudianteMapper.toEntity(datosDeEstudiante, programa, (long)persona.getId());
 
         estudianteDAO.guardar(estudiante);
     }
 
-    public List<Estudiante> listarEstudiantes() {
+    public List<EstudianteRespuestaDTO> listarEstudiantes() {
 
         List<Estudiante> estudiantes = estudianteDAO.listar();
-        List<Estudiante> respuestas = new ArrayList<>();
+        List<EstudianteRespuestaDTO> respuestas = new ArrayList<>();
 
         for (Estudiante estudiante : estudiantes) {
-            respuestas.add(estudiante);
+            Programa programa = programaDAO.buscarPorId((long)estudiante.getPrograma().getID()).orElse(null);
+            respuestas.add(EstudianteMapper.toDTO(estudiante, programa));
         }
 
         return respuestas;

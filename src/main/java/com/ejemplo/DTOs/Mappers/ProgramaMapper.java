@@ -19,7 +19,8 @@ public class ProgramaMapper {
     public static ProgramaRespuestaDTO toDTO(Programa p) {
         return new ProgramaRespuestaDTO(
             (long)p.getID(),
-            p.getNombre()
+            p.getNombre(),
+            p.getDuracion()
         );
     }
 
