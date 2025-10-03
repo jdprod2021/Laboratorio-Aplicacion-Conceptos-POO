@@ -5,13 +5,24 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05768e26-d798-40cc-8c36-ed5e7017aee1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ejemplo/GUI/MainGUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/GUI/MainGUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/presenter/MainMenuPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/presenter/MainMenuPresenter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/view/InscribirPersonaDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/view/InscribirPersonaDialog.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/view/MainMenuFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/view/MainMenuFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/view/MainMenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/view/MainMenuView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
@@ -21,21 +32,21 @@
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "jdprod2021"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;jdprod2021&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/jdprod2021/Laboratorio-Aplicacion-Conceptos-POO.git",
-    "accountId": "06a951c5-8f45-4598-8d9f-4c1b12ae148d"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/jdprod2021/Laboratorio-Aplicacion-Conceptos-POO.git&quot;,
+    &quot;accountId&quot;: &quot;06a951c5-8f45-4598-8d9f-4c1b12ae148d&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="327d3L1PdpvPpGs1ngYK6GfDue6" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -43,7 +54,9 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Application.App.executor": "Run",
     "Application.MainGUI.executor": "Run",
+    "Application.MainMenuFrame.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "Daniel",

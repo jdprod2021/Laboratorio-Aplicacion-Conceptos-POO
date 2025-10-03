@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/24.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            prefHeight="500.0" prefWidth="360.0"
+            style="-fx-background-color: #E7E7E7;"
+            fx:controller="com.ejemplo.controllers.InscripcionController">
+
+    <children>
+        <!-- Header -->
+        <HBox prefHeight="50.0" prefWidth="360.0" style="-fx-background-color: #2B6CB6;">
+            <children>
+                <Label alignment="CENTER"
+                       prefHeight="50.0" prefWidth="340.0"
+                       text="INSCRIPCIÓN DE ESTUDIANTES"
+                       textAlignment="CENTER"
+                       textFill="WHITE">
+                    <font>
+                        <Font name="Rockwell Extra Bold" size="16.0" />
+                    </font>
+                </Label>
+            </children>
+        </HBox>
+
+        <!-- Formulario -->
+        <VBox layoutX="20.0" layoutY="70.0"
+              spacing="8"
+              prefWidth="320.0" style="-fx-background-color: #E7E7E7;">
+
+            <!-- Nombres -->
+            <Label text="Nombres:"/>
+            <TextField fx:id="txtNombre" promptText="Digite nombres"/>
+
+            <!-- Apellidos -->
+            <Label text="Apellidos:"/>
+            <TextField fx:id="txtApellidos" promptText="Digite apellidos"/>
+
+            <!-- Email -->
+            <Label text="Email:"/>
+            <TextField fx:id="txtEmail" promptText="ejemplo@correo.com"/>
+
+            <!-- Código -->
+            <Label text="Código:"/>
+            <TextField fx:id="txtCodigo" promptText="Número de estudiante"/>
+
+            <!-- Promedio -->
+            <Label text="Promedio:"/>
+            <TextField fx:id="txtPromedio" promptText="0.0 - 5.0"/>
+
+            <!-- Activo -->
+            <Label text="Activo:"/>
+            <ComboBox fx:id="comboActivo" prefWidth="150.0">
+                <items>
+                    <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="Sí"/>
+                        <String fx:value="No"/>
+                    </FXCollections>
+                </items>
+            </ComboBox>
+
+            <!-- Programa -->
+            <Label text="Programa:"/>
+            <ComboBox fx:id="cmbPrograma" promptText="Seleccione programa"/>
+
+            <!-- Botones -->
+            <HBox spacing="20" alignment="CENTER_RIGHT">
+            <padding>
+                <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <Button fx:id="btnInscribir"
+                    text="Inscribir"
+                    style="-fx-background-color: #2FBF71;"
+                    onAction="#guardarEstudiante"/>
+
+            <Button fx:id="btnCancelar"
+                    text="Cancelar"
+                    onAction="#volverMenu"/>
+        </HBox>
+        </VBox>
+    </children>
+</AnchorPane>
