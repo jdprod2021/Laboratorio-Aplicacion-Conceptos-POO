@@ -1,12 +1,13 @@
 package com.ejemplo.Vistas.Implementaciones;
 
-import javax.swing.*;
+import java.awt.FlowLayout;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
 
 import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
-import com.ejemplo.Vistas.GUI.VistaSwingCursos;
+import com.ejemplo.Vistas.GUI.*;
 import com.ejemplo.Vistas.Interface.Vista;
-
-import java.awt.*;
 
 public class VistaSwing implements Vista{
 
@@ -32,15 +33,22 @@ public class VistaSwing implements Vista{
         JButton programasBtn = new JButton("Gestión de Programas");
         JButton cursosBtn = new JButton("Gestión de Cursos");
         JButton estudiantesBtn = new JButton("Gestión de Estudiantes");
+        JButton consultaHoraBtn = new JButton("Consultar hora del servidor");
 
         // Acción botón Estudiante
         cursosBtn.addActionListener(e -> mostrarGestionCursos());
+        profesoresBtn.addActionListener(e -> mostrarGestionProfesores());
+        estudiantesBtn.addActionListener(e -> mostrarGestionEstudiantes());
+        facultadesBtn.addActionListener(e -> mostrarGestionFacultades());
+        programasBtn.addActionListener(e -> mostrarGestionProgramas());
+        consultaHoraBtn.addActionListener(e -> mostrarHora());
 
         frame.add(cursosBtn);
         frame.add(facultadesBtn);
         frame.add(programasBtn);
         frame.add(profesoresBtn);
         frame.add(estudiantesBtn);
+        frame.add(consultaHoraBtn);
 
         frame.setLocationRelativeTo(null); // Centrar ventana
         frame.setVisible(true);
@@ -49,4 +57,20 @@ public class VistaSwing implements Vista{
     private void mostrarGestionCursos() {
         new VistaSwingCursos(fabricaControladores.crearControladorCurso()).setVisible(true);
     }
+    private void mostrarGestionProfesores() {
+        new VistaSwingProfesores(fabricaControladores.crearControladorProfesor()).setVisible(true);
+    }
+    private void mostrarGestionEstudiantes() {
+        new VistaSwingEstudiantes(fabricaControladores.crearControladorEstudiante()).setVisible(true);
+    }
+    private void mostrarGestionFacultades() {
+        new VistaSwingFacultades(fabricaControladores.crearControladorFacultad()).setVisible(true);
+    }
+    private void mostrarGestionProgramas(){
+        new VistaSwingProgramas(fabricaControladores.crearControladorPrograma()).setVisible(true);
+    }
+    private void mostrarHora(){
+
+    }
+
 }
