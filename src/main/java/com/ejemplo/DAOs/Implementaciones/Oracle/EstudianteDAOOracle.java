@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 import com.ejemplo.DAOs.Interfaces.EstudianteDAO;
 import com.ejemplo.Modelos.Estudiante;
 import com.ejemplo.Modelos.Programa;
-import com.ejemplo.infra.SqlErrorDetailer;
+import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 
 public class EstudianteDAOOracle implements EstudianteDAO {
 

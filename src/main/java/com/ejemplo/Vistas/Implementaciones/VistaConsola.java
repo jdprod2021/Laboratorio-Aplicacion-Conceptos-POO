@@ -1,7 +1,7 @@
 package com.ejemplo.Vistas.Implementaciones;
 
 
-import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
+import com.ejemplo.Fabricas.FabricaExterna.FabricaControladores;
 import com.ejemplo.Utils.InputUtils;
 import com.ejemplo.Vistas.Consola.VistaConsolaCursos;
 import com.ejemplo.Vistas.Consola.VistaConsolaEstudiante;

@@ -12,8 +12,9 @@ import com.ejemplo.DAOs.Interfaces.ProgramaDAO;
 public abstract class FabricaDAO {
     
     protected final DataSource dataSource;
+    private static FabricaDAO fabricaDAO;
 
-    public FabricaDAO(DataSource dataSource) {
+    protected FabricaDAO(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -25,12 +26,20 @@ public abstract class FabricaDAO {
     abstract public EstudianteDAO crearEstudianteDAO();
 
     public static FabricaDAO of(String vendor, DataSource dataSource) {
-        return switch (vendor.toUpperCase()) {
-            case "H2" -> new FabricaDAOH2(dataSource);
-            case "MYSQL" -> new FabricaDAOMySQL(dataSource);
-            case "ORACLE" -> new FabricaDAOOracle(dataSource);
-            default -> throw new IllegalArgumentException("Vendor no soportado: " + vendor);
-        };
+        if(fabricaDAO == null){
+            synchronized (FabricaDAO.class) {
+                if(fabricaDAO == null){
+                    fabricaDAO = switch (vendor.toUpperCase()) {
+                        case "H2" -> new FabricaDAOH2(dataSource);
+                        case "MYSQL" -> new FabricaDAOMySQL(dataSource);
+                        case "ORACLE" -> new FabricaDAOOracle(dataSource);
+                        default -> throw new IllegalArgumentException("Vendor no soportado: " + vendor);
+                    };   
+                } 
+            }
+        }
+        
+        return fabricaDAO;
     }
 
 }

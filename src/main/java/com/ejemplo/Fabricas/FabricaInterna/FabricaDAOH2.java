@@ -17,7 +17,7 @@ import com.ejemplo.DAOs.Interfaces.ProgramaDAO;
 
 public class FabricaDAOH2 extends FabricaDAO{
 
-    public FabricaDAOH2(DataSource dataSource) {
+    FabricaDAOH2(DataSource dataSource) {
         super(dataSource);
     }
 

@@ -1,4 +1,4 @@
-package com.ejemplo.infra;
+package com.ejemplo.Utils.Erros;
 
 import java.sql.*;
 import java.time.OffsetDateTime;

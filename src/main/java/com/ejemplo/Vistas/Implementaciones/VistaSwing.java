@@ -2,7 +2,7 @@ package com.ejemplo.Vistas.Implementaciones;
 
 import javax.swing.*;
 
-import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
+import com.ejemplo.Fabricas.FabricaExterna.FabricaControladores;
 import com.ejemplo.Vistas.GUI.VistaSwingCursos;
 import com.ejemplo.Vistas.Interface.Vista;
 

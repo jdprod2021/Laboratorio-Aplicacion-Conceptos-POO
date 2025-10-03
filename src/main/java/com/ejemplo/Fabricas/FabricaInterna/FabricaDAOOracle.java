@@ -15,7 +15,7 @@ import com.ejemplo.DAOs.Interfaces.ProgramaDAO;
 
 public class FabricaDAOOracle extends FabricaDAO {
 
-    public FabricaDAOOracle(javax.sql.DataSource dataSource) {
+    FabricaDAOOracle(javax.sql.DataSource dataSource) {
         super(dataSource);
     }
 

@@ -9,7 +9,7 @@ import javax.sql.DataSource;
 import com.ejemplo.DAOs.Interfaces.ProgramaDAO;
 import com.ejemplo.Modelos.Facultad;
 import com.ejemplo.Modelos.Programa;
-import com.ejemplo.infra.SqlErrorDetailer;
+import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 
 public class ProgramaDAOMySQL implements ProgramaDAO {
 

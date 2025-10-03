@@ -15,14 +15,25 @@ public class ProgramaControlador {
 
     private ProgramaDAO programaDAO;
     private FacultadDAO facultadDAO;
+    private static ProgramaControlador programaControlador;
 
-    public ProgramaControlador(ProgramaDAO programaDAO, FacultadDAO facultadDAO) {
+    private ProgramaControlador(ProgramaDAO programaDAO, FacultadDAO facultadDAO) {
         this.programaDAO = programaDAO;
         this.facultadDAO = facultadDAO;
     }
 
+    public static ProgramaControlador crearProgramaControlador(ProgramaDAO programaDAO, FacultadDAO facultadDAO){
+        if(programaControlador == null){
+            synchronized (ProgramaControlador.class){
+                if(programaControlador == null){
+                    programaControlador = new ProgramaControlador(programaDAO, facultadDAO);
+                }
+            }
+        }
+        return programaControlador;
+    }
+
     public void crearPrograma(ProgramaSolicitudDTO datosDePrograma) {
-        
         Facultad facultad = facultadDAO.buscarPorId(datosDePrograma.facultadId).orElse(null);
         if (facultad != null) {
             Programa programa = ProgramaMapper.toEntity(datosDePrograma, facultad);

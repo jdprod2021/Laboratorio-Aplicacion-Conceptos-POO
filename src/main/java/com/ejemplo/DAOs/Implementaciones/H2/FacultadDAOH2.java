@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 import com.ejemplo.DAOs.Interfaces.FacultadDAO;
 import com.ejemplo.Modelos.Facultad;
 import com.ejemplo.Modelos.Persona;
-import com.ejemplo.infra.SqlErrorDetailer;
+import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 
 public class FacultadDAOH2 implements FacultadDAO{
 

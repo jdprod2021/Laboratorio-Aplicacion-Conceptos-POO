@@ -8,7 +8,7 @@ import javax.sql.DataSource;
 
 import com.ejemplo.DAOs.Interfaces.PersonaDAO;
 import com.ejemplo.Modelos.Persona;
-import com.ejemplo.infra.SqlErrorDetailer;
+import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 
 public class PersonaDAOOracle implements PersonaDAO {
     private final DataSource dataSource;

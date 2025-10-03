@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 
 import com.ejemplo.DAOs.Interfaces.ProfesorDAO;
 import com.ejemplo.Modelos.Profesor;
-import com.ejemplo.infra.SqlErrorDetailer;
+import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 
 public class ProfesorDAOH2 implements ProfesorDAO{
 

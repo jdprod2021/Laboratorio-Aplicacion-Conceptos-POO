@@ -18,7 +18,7 @@ import com.ejemplo.DAOs.Interfaces.ProgramaDAO;
 public class FabricaDAOMySQL extends FabricaDAO {
 
 
-    public FabricaDAOMySQL(DataSource dataSource) {
+    FabricaDAOMySQL(DataSource dataSource) {
         super(dataSource);
     }
     
