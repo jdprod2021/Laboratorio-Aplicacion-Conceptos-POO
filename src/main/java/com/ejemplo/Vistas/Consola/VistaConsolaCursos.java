@@ -1,31 +1,23 @@
 
-package com.ejemplo.Vistas;
-
-
-import java.util.Scanner;
+package com.ejemplo.Vistas.Consola;
 
 import com.ejemplo.Controladores.CursoControlador;
 import com.ejemplo.DTOs.Solicitud.CursoSolicitudDTO;
-import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
-
-
+import com.ejemplo.Utils.InputUtils;
 
 public class VistaConsolaCursos {
-    private Scanner scanner;
-    private FabricaControladores fabricaControladores;
+
     private CursoControlador controlador;
 
-    public VistaConsolaCursos(FabricaControladores fabricaControladores, Scanner scanner) {
-        this.fabricaControladores = fabricaControladores;
-        this.scanner = scanner;
-        this.controlador = fabricaControladores.crearControladorCurso();
+    public VistaConsolaCursos(CursoControlador controlador) {
+        this.controlador = controlador;
     }
 
     public void mostrarMenu() {
         boolean volver = false;
         while (!volver) {
             mostrarOpciones();
-            int opcion = leerOpcion();
+            int opcion = InputUtils.readInt();
             volver = procesarOpcion(opcion);
         }
     }
@@ -41,14 +33,6 @@ public class VistaConsolaCursos {
         System.out.println("║ 0. 🔙 Volver al menú principal║");
         System.out.println("╚═══════════════════════════════╝");
         System.out.print("👉 Seleccione una opción: ");
-    }
-
-    private int leerOpcion() {
-        try {
-            return Integer.parseInt(scanner.nextLine().trim());
-        } catch (NumberFormatException e) {
-            return -1;
-        }
     }
 
     private boolean procesarOpcion(int opcion) {
@@ -76,16 +60,16 @@ public class VistaConsolaCursos {
     private void crearCurso() {
         System.out.println("\n=== Crear Nuevo Curso ===");
         System.out.print("📝 Nombre del curso: ");
-        String nombre = scanner.nextLine();
+        String nombre = InputUtils.readLine();
         
         System.out.print("🏛️ ID del programa: ");
-        long programaId = Long.parseLong(scanner.nextLine());
+        long programaId = InputUtils.readLong();
         
         System.out.print("⚡ ¿Activo? (true/false): ");
-        boolean activo = Boolean.parseBoolean(scanner.nextLine().trim());
+        boolean activo = InputUtils.readBoolean();
 
-        CursoSolicitudDTO solicitud = new CursoSolicitudDTO(nombre, programaId, activo);
-        controlador.crearCurso(solicitud);
+        CursoSolicitudDTO CursoSolicitud = new CursoSolicitudDTO(nombre, programaId, activo);
+        controlador.crearCurso(CursoSolicitud);
         System.out.println("✅ Curso creado exitosamente.");
         pausar();
     }
@@ -101,16 +85,16 @@ public class VistaConsolaCursos {
     private void actualizarCurso() {
         System.out.println("\n=== Actualizar Curso ===");
         System.out.print("🔍 ID del curso a actualizar: ");
-        long id = Long.parseLong(scanner.nextLine());
+        long id = InputUtils.readLong();
 
         System.out.print("📝 Nuevo nombre: ");
-        String nombre = scanner.nextLine();
+        String nombre = InputUtils.readLine();
         
         System.out.print("🏛️ Nuevo ID del programa: ");
-        long programaId = Long.parseLong(scanner.nextLine());
+        long programaId = InputUtils.readLong();
         
         System.out.print("⚡ ¿Activo? (true/false): ");
-        boolean activo = Boolean.parseBoolean(scanner.nextLine().trim());
+        boolean activo = InputUtils.readBoolean();
 
         CursoSolicitudDTO solicitud = new CursoSolicitudDTO(nombre, programaId, activo);
         controlador.actualizarCurso(id, solicitud);
@@ -121,7 +105,7 @@ public class VistaConsolaCursos {
     private void eliminarCurso() {
         System.out.println("\n=== Eliminar Curso ===");
         System.out.print("🔍 ID del curso a eliminar: ");
-        long id = Long.parseLong(scanner.nextLine());
+        long id = InputUtils.readLong();
         
         controlador.eliminarCurso(id);
         System.out.println("✅ Curso eliminado exitosamente.");
@@ -130,6 +114,6 @@ public class VistaConsolaCursos {
 
     private void pausar() {
         System.out.println("\n📋 Presione ENTER para continuar...");
-        scanner.nextLine();
+        InputUtils.readLine();
     }
 }

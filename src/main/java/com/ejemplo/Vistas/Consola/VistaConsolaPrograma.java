@@ -1,4 +1,4 @@
-package com.ejemplo.Vistas;
+package com.ejemplo.Vistas.Consola;
 
 import java.sql.Date;
 import java.util.List;

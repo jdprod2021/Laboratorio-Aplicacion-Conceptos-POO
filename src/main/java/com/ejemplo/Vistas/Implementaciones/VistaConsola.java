@@ -1,41 +1,27 @@
-package com.ejemplo.Vistas;
+package com.ejemplo.Vistas.Implementaciones;
 
-import java.util.Scanner;
 
 import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
+import com.ejemplo.Utils.InputUtils;
+import com.ejemplo.Vistas.Consola.VistaConsolaCursos;
+import com.ejemplo.Vistas.Consola.VistaConsolaEstudiante;
+import com.ejemplo.Vistas.Consola.VistaConsolaFacultades;
+import com.ejemplo.Vistas.Consola.VistaConsolaProfesor;
+//import com.ejemplo.Vistas.Consola.VistaConsolaPrograma;
+import com.ejemplo.Vistas.Interface.Vista;
 
-/**
- * Implementación de vista para interfaz de consola
- * Maneja toda la interacción CRUD a través de la línea de comandos
- */
-public class VistaConsola extends UtilsVistaConsola implements InterfaceVista {
+public class VistaConsola implements Vista {
 
     private FabricaControladores fabricaControladores;
     private boolean aplicacionEjecutandose;
 
-    public VistaConsola() {
-        super(new Scanner(System.in)); // Inicializamos UtilsVistaConsola con el scanner
+    public VistaConsola(FabricaControladores fabricaControladores) {
+        this.fabricaControladores = fabricaControladores;
         this.aplicacionEjecutandose = true;
     }
 
-    @Override
-    public void inicializar() {
-        limpiarPantalla();
-        mostrarBanner("SISTEMA DE GESTIÓN ACADÉMICA - INTERFAZ DE CONSOLA");
-        System.out.println("✅ Vista de Consola inicializada correctamente.");
-        System.out.println("📋 Presione ENTER para continuar...");
-        scanner.nextLine();
-    }
-
-    @Override
-    public void setFabricaControladores(FabricaControladores fabricaControladores) {
-        this.fabricaControladores = fabricaControladores;
-        System.out.println("🔗 Fábrica de controladores configurada correctamente.");
-    }
-
-    @Override
     public void mostrarMenuPrincipal() {
-        limpiarPantalla();
+        InputUtils.limpiarPantalla();
         System.out.println("╔═══════════════════════════════════════════════════════════════╗");
         System.out.println("║                    🎓 SISTEMA ACADÉMICO 🎓                    ║");
         System.out.println("║                        MENÚ PRINCIPAL                         ║");
@@ -50,35 +36,24 @@ public class VistaConsola extends UtilsVistaConsola implements InterfaceVista {
         System.out.print("👉 Seleccione una opción: ");
     }
 
-    @Override
-    public void mostrarMensaje(String mensaje) {
-        super.mostrarMensaje(mensaje);
-    }
-
-    @Override
-    public void mostrarError(String error) {
-        super.mostrarError(error);
-    }
-
-    @Override
     public void cerrar() {
-        System.out.println("👋 Cerrando aplicación...");
-        System.out.println("¡Gracias por usar el Sistema Académico!");
+        InputUtils.mostrarMensaje("👋 Cerrando aplicación...");
+        InputUtils.mostrarMensaje("¡Gracias por usar el Sistema Académico!");
         aplicacionEjecutandose = false;
-        scanner.close();
+        InputUtils.readLine();
     }
 
     @Override
-    public void ejecutar() {
+    public void inicializar() {
         while (aplicacionEjecutandose) {
             try {
                 mostrarMenuPrincipal();
-                int opcion = leerOpcionMenu();
+                int opcion = InputUtils.readInt();
                 procesarOpcionPrincipal(opcion);
             } catch (Exception e) {
-                mostrarError("Error inesperado: " + e.getMessage());
+                InputUtils.mostrarError("Error inesperado: " + e.getMessage());
                 e.printStackTrace();
-                pausar();
+                InputUtils.pausar();
             }
         }
     }
@@ -86,27 +61,27 @@ public class VistaConsola extends UtilsVistaConsola implements InterfaceVista {
     private void procesarOpcionPrincipal(int opcion) {
         switch (opcion) {
             case 1:
-                new VistaConsolaProfesor(fabricaControladores, scanner).mostrarMenu();
+                new VistaConsolaProfesor(fabricaControladores.crearControladorProfesor()).mostrarMenu();
                 break;
             case 2:
-                new VistaConsolaFacultades(fabricaControladores, scanner).mostrarMenu();
+                new VistaConsolaFacultades(fabricaControladores.crearControladorFacultad()).mostrarMenu();
                 break;
             case 3:
-                new VistaConsolaPrograma(fabricaControladores, scanner).mostrarMenu();  
+                //new VistaConsolaPrograma(fabricaControladores.crearControladorPrograma()).mostrarMenu();  
                 break;
             case 4:
-                new VistaConsolaCursos(fabricaControladores, scanner).mostrarMenu();
+                new VistaConsolaCursos(fabricaControladores.crearControladorCurso()).mostrarMenu();
                 break;
             case 5:
-                new VistaConsolaEstudiante(fabricaControladores, scanner).mostrarMenu();    
+                new VistaConsolaEstudiante(fabricaControladores.crearControladorEstudiante()).mostrarMenu();    
                 break;
             case 0:
                 cerrar();
                 break;
             default:
                 if (opcion != -1) { // -1 ya mostró error
-                    mostrarError("Opción no válida. Por favor seleccione una opción del 0 al 5.");
-                    pausar();
+                    InputUtils.mostrarError("Opción no válida. Por favor seleccione una opción del 0 al 5.");
+                    InputUtils.pausar();
                 }
                 break;
         }
