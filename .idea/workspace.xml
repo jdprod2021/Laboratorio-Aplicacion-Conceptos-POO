@@ -5,12 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="05768e26-d798-40cc-8c36-ed5e7017aee1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/Vistas/GUI/VistaSwingFacultades.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/Vistas/GUI/VistaSwingHoraServidor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/Vistas/GUI/VistaSwingProfesores.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/Vistas/GUI/VistaSwingProgramas.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/presenter/MainMenuPresenter.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/presenter/MainMenuPresenter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/view/InscribirPersonaDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/view/InscribirPersonaDialog.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/view/MainMenuFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/view/MainMenuFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/view/MainMenuView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/ui/view/MainMenuView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/sisacad.mv.db" beforeDir="false" afterPath="$PROJECT_DIR$/data/sisacad.mv.db" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/ejemplo/Vistas/Implementaciones/VistaSwing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/ejemplo/Vistas/Implementaciones/VistaSwing.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -44,6 +47,9 @@
     &quot;accountId&quot;: &quot;06a951c5-8f45-4598-8d9f-4c1b12ae148d&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 5
 }</component>
@@ -58,8 +64,9 @@
     "Application.MainGUI.executor": "Run",
     "Application.MainMenuFrame.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "Daniel",
+    "git-widget-placeholder": "DanielBNuevo",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",

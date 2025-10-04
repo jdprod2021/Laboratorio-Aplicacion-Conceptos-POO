@@ -9,14 +9,26 @@ import javax.sql.DataSource;
 import com.ejemplo.DAOs.Interfaces.ProgramaDAO;
 import com.ejemplo.Modelos.Facultad;
 import com.ejemplo.Modelos.Programa;
-import com.ejemplo.infra.SqlErrorDetailer;
+import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 
 public class ProgramaDAOOracle implements ProgramaDAO {
 
     private final DataSource dataSource;
-    
-    public ProgramaDAOOracle(DataSource dataSource) {
+    private static ProgramaDAOOracle programaDAOOracle;
+
+    private ProgramaDAOOracle(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static ProgramaDAOOracle creaProgramaDAOOracle(DataSource dataSource){
+        if(programaDAOOracle == null){
+            synchronized (ProgramaDAOOracle.class){
+                if(programaDAOOracle == null){
+                    programaDAOOracle = new ProgramaDAOOracle(dataSource);
+                }
+            }
+        }
+        return programaDAOOracle;
     }
 
     @Override

@@ -7,14 +7,26 @@ import javax.sql.DataSource;
 
 import com.ejemplo.DAOs.Interfaces.ProfesorDAO;
 import com.ejemplo.Modelos.Profesor;
-import com.ejemplo.infra.SqlErrorDetailer;
+import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 
 public class ProfesorDAOOracle implements ProfesorDAO {
 
     private final DataSource dataSource;
+    private static ProfesorDAOOracle profesorDAOOracle;
 
-    public ProfesorDAOOracle(DataSource dataSource) {
+    private ProfesorDAOOracle(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static ProfesorDAOOracle crearProfesorDAOOracle(DataSource dataSource){
+        if(profesorDAOOracle == null){
+            synchronized (ProfesorDAOOracle.class){
+                if(profesorDAOOracle == null){
+                    profesorDAOOracle = new ProfesorDAOOracle(dataSource);
+                }
+            }
+        }
+        return profesorDAOOracle;
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.nio.file.*;
 import java.util.Properties;
 import javax.sql.DataSource;
 
-import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
+import com.ejemplo.Fabricas.FabricaExterna.FabricaControladores;
 import com.ejemplo.Fabricas.FabricaInterna.FabricaDAO;
 import com.ejemplo.Utils.DB.ConexionDB;
 
@@ -32,6 +32,6 @@ public class AppConfig {
   }
 
   private DataSource crearDataSource() { return new ConexionDB(vendor, props).crearConexion(); }
-  private FabricaDAO crearFabricaDAO() { return FabricaDAO.of(vendor, crearDataSource()); }
-  public FabricaControladores crearFabricaControladores() { return new FabricaControladores(crearFabricaDAO()); }
+  private FabricaDAO crearFabricaDAO() { return FabricaDAO.of(vendor, crearDataSource());}
+  public FabricaControladores crearFabricaControladores() { return FabricaControladores.crearFabricaControladores(crearFabricaDAO()); }
 }

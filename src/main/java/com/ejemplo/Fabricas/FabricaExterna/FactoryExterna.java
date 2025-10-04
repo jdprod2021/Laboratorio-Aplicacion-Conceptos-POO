@@ -4,8 +4,6 @@ import com.ejemplo.Utils.Config.AppConfig;
 import com.ejemplo.Vistas.Implementaciones.VistaConsola;
 import com.ejemplo.Vistas.Implementaciones.VistaSwing;
 import com.ejemplo.Vistas.Interface.Vista;
-//import com.ejemplo.Vistas.VistaGUI;
-import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
 
 /**
  * Factory Externa - Patrón Factory para crear vistas

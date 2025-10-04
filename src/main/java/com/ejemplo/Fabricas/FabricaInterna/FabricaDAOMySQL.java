@@ -18,37 +18,37 @@ import com.ejemplo.DAOs.Interfaces.ProgramaDAO;
 public class FabricaDAOMySQL extends FabricaDAO {
 
 
-    public FabricaDAOMySQL(DataSource dataSource) {
+    FabricaDAOMySQL(DataSource dataSource) {
         super(dataSource);
     }
     
     @Override
     public ProfesorDAO crearProfesorDAO() {
-        return new ProfesorDAOMySQL(dataSource);
+        return ProfesorDAOMySQL.crearProfesorDAOMySQL(dataSource);
     }
 
     @Override
     public FacultadDAO crearFacultadDAO() {
-        return new FacultadDAOMySQL(dataSource);
+        return FacultadDAOMySQL.crearFacultadDAOMySQL(dataSource);
     }
 
     @Override
     public ProgramaDAO crearProgramaDAO() {
-        return new ProgramaDAOMySQL(dataSource);
+        return ProgramaDAOMySQL.crearProgramaDAOMySQL(dataSource);
     }
     
     @Override
     public CursoDAO crearCursoDAO() {
-        return new CursoDAOMySQL(dataSource);
+        return CursoDAOMySQL.creaCursoDAOMySQL(dataSource);
     }
 
     @Override
     public PersonaDAO crearPersonaDAO() {
-        return new PersonaDAOMySQL(dataSource);
+        return PersonaDAOMySQL.crearPersonaDAOMySQL(dataSource);
     }
 
     @Override
     public EstudianteDAO crearEstudianteDAO() {
-        return new EstudianteDAOMySQL(dataSource);
+        return EstudianteDAOMySQL.crearEstudianteDAOMySQL(dataSource);
     }
 }

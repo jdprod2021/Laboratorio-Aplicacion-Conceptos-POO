@@ -15,10 +15,22 @@ public class FacultadControlador {
 
     private FacultadDAO facultadDAO;
     private PersonaDAO personaDAO;
+    private static FacultadControlador facultadControlador;
 
-    public FacultadControlador(FacultadDAO facultadDAO, PersonaDAO personaDAO) {
+    private FacultadControlador(FacultadDAO facultadDAO, PersonaDAO personaDAO) {
         this.facultadDAO = facultadDAO;
         this.personaDAO = personaDAO;
+    }
+
+    public static FacultadControlador crearControlador(FacultadDAO facultadDAO, PersonaDAO personaDAO){
+        if(facultadControlador == null){
+           synchronized (FacultadControlador.class){
+                if(facultadControlador == null){
+                    facultadControlador = new FacultadControlador(facultadDAO, personaDAO);
+                }
+           } 
+        }
+        return facultadControlador;
     }
 
     public void crearFacultad(FacultadSolicitudDTO datosDeFacultad) {

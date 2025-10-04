@@ -15,14 +15,26 @@ import com.ejemplo.Modelos.Programa;
 
 public class EstudianteControlador {
 
-    private  EstudianteDAO estudianteDAO;
-    private  PersonaDAO personaDAO;
-    private  ProgramaDAO programaDAO;
+    private EstudianteDAO estudianteDAO;
+    private PersonaDAO personaDAO;
+    private ProgramaDAO programaDAO;
+    private static EstudianteControlador estudianteControlador;
 
-    public EstudianteControlador(EstudianteDAO estudianteDAO, PersonaDAO personaDAO, ProgramaDAO programaDAO) {
+    private EstudianteControlador(EstudianteDAO estudianteDAO, PersonaDAO personaDAO, ProgramaDAO programaDAO) {
         this.estudianteDAO = estudianteDAO;
         this.personaDAO = personaDAO;
         this.programaDAO = programaDAO;
+    }
+
+    public static EstudianteControlador crearEstudianteControlador(EstudianteDAO estudianteDAO, PersonaDAO personaDAO, ProgramaDAO programaDAO){
+        if(estudianteControlador == null){
+            synchronized (EstudianteControlador.class){
+                if(estudianteControlador == null){
+                    estudianteControlador = new EstudianteControlador(estudianteDAO, personaDAO, programaDAO);
+                }
+            }
+        }
+        return estudianteControlador;
     }
 
     public void crearEstudiante(EstudianteSolicitudDTO datosDeEstudiante) {

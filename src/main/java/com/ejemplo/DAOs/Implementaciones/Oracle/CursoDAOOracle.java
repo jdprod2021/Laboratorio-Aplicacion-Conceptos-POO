@@ -8,14 +8,26 @@ import javax.sql.DataSource;
 import com.ejemplo.DAOs.Interfaces.CursoDAO;
 import com.ejemplo.Modelos.Curso;
 import com.ejemplo.Modelos.Programa;
-import com.ejemplo.infra.SqlErrorDetailer;
+import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 
 public class CursoDAOOracle implements CursoDAO {
 
     private final DataSource dataSource;
+    private static CursoDAOOracle cursoDAOOracle;
 
-    public CursoDAOOracle(DataSource dataSource) {
+    private CursoDAOOracle(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static CursoDAOOracle crearCursoDAOOracle(DataSource dataSource){
+        if(cursoDAOOracle == null){
+            synchronized (CursoDAOOracle.class){
+                if(cursoDAOOracle == null){
+                    cursoDAOOracle = new CursoDAOOracle(dataSource);
+                }
+            }
+        }
+        return cursoDAOOracle;
     }
 
     @Override

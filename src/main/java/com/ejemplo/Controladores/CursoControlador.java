@@ -15,10 +15,22 @@ public class CursoControlador {
 
     private CursoDAO cursoDAO;
     private ProgramaDAO programaDAO;
+    private static CursoControlador cursoControlador;
 
-    public CursoControlador(CursoDAO cursoDAO, ProgramaDAO programaDAO) {
+    private CursoControlador(CursoDAO cursoDAO, ProgramaDAO programaDAO) {
         this.cursoDAO = cursoDAO;
         this.programaDAO = programaDAO;
+    }
+
+    public static CursoControlador crearCursoControlador(CursoDAO cursoDAO, ProgramaDAO programaDAO){
+        if(cursoControlador == null){
+            synchronized (CursoControlador.class){
+                if(cursoControlador == null){
+                    cursoControlador = new CursoControlador(cursoDAO , programaDAO);
+                }
+            }
+        }
+        return cursoControlador;
     }
 
     public void crearCurso(CursoSolicitudDTO datosDeCurso) {

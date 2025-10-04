@@ -8,13 +8,26 @@ import javax.sql.DataSource;
 
 import com.ejemplo.DAOs.Interfaces.PersonaDAO;
 import com.ejemplo.Modelos.Persona;
-import com.ejemplo.infra.SqlErrorDetailer;
+import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 
 public class PersonaDAOMySQL implements PersonaDAO {
-    private final DataSource dataSource;
 
-    public PersonaDAOMySQL(DataSource dataSource) {
+    private final DataSource dataSource;
+    private static PersonaDAOMySQL personaDAOMySQL;
+
+    private PersonaDAOMySQL(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static PersonaDAOMySQL crearPersonaDAOMySQL(DataSource dataSource){
+        if(personaDAOMySQL == null){
+            synchronized (PersonaDAOMySQL.class){
+                if(personaDAOMySQL == null){
+                    personaDAOMySQL = new PersonaDAOMySQL(dataSource);
+                }
+            }
+        }
+        return personaDAOMySQL;
     }
 
     @Override

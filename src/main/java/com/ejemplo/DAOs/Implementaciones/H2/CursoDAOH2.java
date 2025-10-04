@@ -13,15 +13,27 @@ import javax.sql.DataSource;
 import com.ejemplo.DAOs.Interfaces.CursoDAO;
 import com.ejemplo.Modelos.Curso;
 import com.ejemplo.Modelos.Programa;
-import com.ejemplo.infra.SqlErrorDetailer;
+import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 
 public class CursoDAOH2 implements CursoDAO{
     
     private final DataSource dataSource;
+    private static CursoDAOH2 cursoDAOH2;
 
-    public CursoDAOH2(DataSource dataSource) {
+    private CursoDAOH2(DataSource dataSource) {
         this.dataSource = dataSource;
     }
+
+    public static CursoDAOH2 crearCursoDAOH2(DataSource dataSource){
+        if(cursoDAOH2 == null){
+            synchronized (CursoDAOH2.class){
+                if(cursoDAOH2 == null){
+                    cursoDAOH2 = new CursoDAOH2(dataSource);
+                }
+            }
+        }
+        return cursoDAOH2;
+    }    
 
     @Override
     public Curso guardar(Curso entidad) {

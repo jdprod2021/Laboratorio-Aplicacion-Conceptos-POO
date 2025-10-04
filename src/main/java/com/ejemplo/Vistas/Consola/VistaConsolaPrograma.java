@@ -7,7 +7,7 @@ import java.util.Scanner;
 import com.ejemplo.Controladores.ProgramaControlador;
 import com.ejemplo.DTOs.Respuesta.ProgramaRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.ProgramaSolicitudDTO;
-import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
+import com.ejemplo.Fabricas.FabricaExterna.FabricaControladores;
 
 
 
