@@ -111,7 +111,7 @@ public class VistaConsolaProfesor {
             System.out.print("🔍 ID del profesor a actualizar: ");
             long id = InputUtils.readLong();
 
-            System.out.println("=== Crear Nuevo Profesor ===");
+            System.out.println("=== Datos Nuevo Profesor ===");
             System.out.print("Nombres: ");
             String nombres = InputUtils.readLine();
             

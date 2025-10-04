@@ -3,10 +3,7 @@ package com.ejemplo.Vistas.Implementaciones;
 
 import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
 import com.ejemplo.Utils.InputUtils;
-import com.ejemplo.Vistas.Consola.VistaConsolaCursos;
-import com.ejemplo.Vistas.Consola.VistaConsolaEstudiante;
-import com.ejemplo.Vistas.Consola.VistaConsolaFacultades;
-import com.ejemplo.Vistas.Consola.VistaConsolaProfesor;
+import com.ejemplo.Vistas.Consola.*;
 //import com.ejemplo.Vistas.Consola.VistaConsolaPrograma;
 import com.ejemplo.Vistas.Interface.Vista;
 
@@ -67,7 +64,7 @@ public class VistaConsola implements Vista {
                 new VistaConsolaFacultades(fabricaControladores.crearControladorFacultad()).mostrarMenu();
                 break;
             case 3:
-                //new VistaConsolaPrograma(fabricaControladores.crearControladorPrograma()).mostrarMenu();  
+                new VistaConsolaPrograma(fabricaControladores.crearControladorPrograma()).mostrarMenu();
                 break;
             case 4:
                 new VistaConsolaCursos(fabricaControladores.crearControladorCurso()).mostrarMenu();

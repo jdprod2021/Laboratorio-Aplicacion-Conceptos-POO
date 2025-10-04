@@ -7,99 +7,139 @@ import java.util.Scanner;
 import com.ejemplo.Controladores.ProgramaControlador;
 import com.ejemplo.DTOs.Respuesta.ProgramaRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.ProgramaSolicitudDTO;
-import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
-
-
+import com.ejemplo.Utils.InputUtils;
 
 
 public class VistaConsolaPrograma {
-    private Scanner scanner;
-    private FabricaControladores fabricaControladores;
 
-    public VistaConsolaPrograma(FabricaControladores fabricaControladores, Scanner scanner) {
-        this.fabricaControladores = fabricaControladores;
-        this.scanner = scanner;
+    private ProgramaControlador controlador;
+
+    public VistaConsolaPrograma(ProgramaControlador programaControlador) {
+        this.controlador = programaControlador;
     }
 
     public void mostrarMenu() {
-        ProgramaControlador controlador = fabricaControladores.crearControladorPrograma();
 
-        boolean volver = false;
+        boolean volver = true;
         while (!volver) {
-            System.out.println("\n===== MENÚ PROGRAMAS =====");
-            System.out.println("1. Crear programa");
-            System.out.println("2. Listar programas");
-            System.out.println("3. Actualizar programa");
-            System.out.println("4. Eliminar programa");
-            System.out.println("0. Volver al menú principal");
-            System.out.print("👉 Seleccione una opción: ");
-
-            int opcion = scanner.nextInt();
-            scanner.nextLine();
-
-            switch (opcion) {
-                case 1:
-                    System.out.print("Nombre: ");
-                    String nombre = scanner.nextLine();
-                    System.out.print("Duración (años): ");
-                    double duracion = scanner.nextDouble();
-                    scanner.nextLine();
-                    System.out.print("ID de la facultad: ");
-                    long facultadId = scanner.nextLong();
-                    scanner.nextLine();
-
-                    Date registro = new Date(System.currentTimeMillis());
-                    ProgramaSolicitudDTO solicitud = new ProgramaSolicitudDTO(nombre, duracion, registro, facultadId);
-                    controlador.crearPrograma(solicitud);
-                    System.out.println("✅ Programa creado con éxito.");
-                    break;
-
-                case 2:
-                    List<ProgramaRespuestaDTO> programas = controlador.listarProgramas();
-                    System.out.println("\n📋 LISTA DE PROGRAMAS:");
-                    for (ProgramaRespuestaDTO p : programas) {
-                        System.out.println(p.toString());
-                    }
-                    break;
-
-                case 3:
-                    System.out.print("Ingrese ID del programa a actualizar: ");
-                    long idActualizar = scanner.nextLong();
-                    scanner.nextLine();
-
-                    System.out.print("Nombre: ");
-                    String nuevoNombre = scanner.nextLine();
-                    System.out.print("Duración (años): ");
-                    double nuevaDuracion = scanner.nextDouble();
-                    scanner.nextLine();
-                    System.out.print("ID de la facultad: ");
-                    long nuevaFacultadId = scanner.nextLong();
-                    scanner.nextLine();
-
-                    Date nuevoRegistro = new Date(System.currentTimeMillis());
-                    ProgramaSolicitudDTO actSolicitud = new ProgramaSolicitudDTO(nuevoNombre, nuevaDuracion, nuevoRegistro, nuevaFacultadId);
-                    controlador.actualizarPrograma(idActualizar, actSolicitud);
-                    System.out.println("✅ Programa actualizado.");
-                    break;
-
-                case 4:
-                    System.out.print("Ingrese ID del programa a eliminar: ");
-                    long idEliminar = scanner.nextLong();
-                    scanner.nextLine();
-
-                    controlador.eliminarPrograma(idEliminar);
-                    System.out.println("🗑️ Programa eliminado.");
-                    break;
-
-                case 0:
-                    volver = true;
-                    break;
-
-                default:
-                    System.out.println("❌ Opción inválida.");
-            }
+            mostrarOpciones();
+            int opcion = InputUtils.readInt();
+            volver = procesarOpcion(opcion);
         }
-        System.out.println("\n📋 Presione ENTER para continuar...");
-        scanner.nextLine();
     }
+
+
+    private void mostrarOpciones() {
+        System.out.println("\n===== MENÚ PROGRAMAS =====");
+        System.out.println("1. Crear programa");
+        System.out.println("2. Listar programas");
+        System.out.println("3. Actualizar programa");
+        System.out.println("4. Eliminar programa");
+        System.out.println("0. Volver al menú principal");
+        System.out.print("👉 Seleccione una opción: ");
+    }
+
+    private boolean procesarOpcion(int opcion) {
+        switch (opcion) {
+            case 1:
+                crearPrograma();
+            case 2:
+                listarProgramas();
+            case 3:
+                actualizarPrograma();
+            case 4:
+                eliminarPrograma();
+            case 0:
+                return true;
+            default:
+                InputUtils.mostrarError("Opción inválida");
+        }
+
+        return false;
+    }
+
+    private void crearPrograma(){
+
+        InputUtils.limpiarPantalla();
+        System.out.println("➕ CREAR PROGRAMAS-");
+
+        System.out.print("Nombre: ");
+        String nombre = InputUtils.readLine();
+
+        System.out.print("Duración (años): ");
+        double duracion = InputUtils.readDouble();
+
+        System.out.print("ID de la facultad: ");
+        long facultadId = InputUtils.readLong();
+
+        Date registro = new Date(System.currentTimeMillis());
+
+        ProgramaSolicitudDTO solicitud = new ProgramaSolicitudDTO(nombre, duracion, registro, facultadId);
+        controlador.crearPrograma(solicitud);
+        InputUtils.mostrarMensaje("✅ Programa creado con éxito.");
+        InputUtils.pausar();
+
+    }
+
+
+    private void listarProgramas(){
+        InputUtils.limpiarPantalla();
+        System.out.println("📋 LISTA DE PROFESORES");
+
+        try {
+
+            controlador.listarProgramas().forEach(programa->
+                    System.out.println(" " + programa.toString())
+            );
+
+            InputUtils.pausar();
+
+        } catch (Exception e) {
+            InputUtils.mostrarError("Error al listar: " + e.getMessage());
+        }
+        InputUtils.pausar();
+
+    }
+
+    private void actualizarPrograma(){
+
+        InputUtils.limpiarPantalla();
+        System.out.println("✏️ ACTUALIZAR PROFESOR");
+
+        System.out.print("🔍 ID del profesor a actualizar: ");
+        long id = InputUtils.readLong();
+
+        System.out.println("=== Datos Nuevo Programa ===");
+
+        System.out.print("Nombre: ");
+        String nombre = InputUtils.readLine();
+
+        System.out.print("Duración (años): ");
+        double duracion = InputUtils.readDouble();
+
+        System.out.print("ID de la facultad: ");
+        long facultadId = InputUtils.readLong();
+
+        Date registro = new Date(System.currentTimeMillis());
+
+        ProgramaSolicitudDTO solicitud = new ProgramaSolicitudDTO(nombre, duracion, registro, facultadId);
+        controlador.actualizarPrograma(id, solicitud);
+        InputUtils.pausar();
+
+    }
+
+    private void eliminarPrograma(){
+
+        InputUtils.limpiarPantalla();
+        System.out.println("✏️ ELIMINAR PROFESOR");
+
+        System.out.print("🔍 ID del profesor a eliminar: ");
+        long id = InputUtils.readLong();
+
+        controlador.eliminarPrograma(id);
+        System.out.println("✅ Curso eliminado exitosamente.");
+        InputUtils.pausar();
+
+    }
+
 }
