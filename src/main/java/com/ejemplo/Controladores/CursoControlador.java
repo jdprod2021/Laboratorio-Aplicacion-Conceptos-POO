@@ -9,17 +9,21 @@ import com.ejemplo.DTOs.Mappers.CursoMapper;
 import com.ejemplo.DTOs.Respuesta.CursoRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.CursoSolicitudDTO;
 import com.ejemplo.Modelos.Curso;
+import com.ejemplo.Modelos.CursosCreados;
 import com.ejemplo.Modelos.Programa;
+import com.ejemplo.Obersavador.Observador;
 
 public class CursoControlador {
 
     private CursoDAO cursoDAO;
     private ProgramaDAO programaDAO;
     private static CursoControlador cursoControlador;
+    private CursosCreados cursosCreados;
 
     private CursoControlador(CursoDAO cursoDAO, ProgramaDAO programaDAO) {
         this.cursoDAO = cursoDAO;
         this.programaDAO = programaDAO;
+        this.cursosCreados = CursosCreados.crearCursosCreados();
     }
 
     public static CursoControlador crearCursoControlador(CursoDAO cursoDAO, ProgramaDAO programaDAO){
@@ -36,8 +40,12 @@ public class CursoControlador {
     public void crearCurso(CursoSolicitudDTO datosDeCurso) {
         Programa programa = programaDAO.buscarPorId(datosDeCurso.programaId).orElse(null);
         if (programa != null) {
-            cursoDAO.guardar(CursoMapper.toEntity(datosDeCurso, programa));
+            Curso curso = cursoDAO.guardar(CursoMapper.toEntity(datosDeCurso, programa));
+            if(curso != null){
+                cursosCreados.adicionarCurso(curso);
+            }
         }
+        
     }
 
     public List<CursoRespuestaDTO> listarCursos() {
@@ -62,6 +70,11 @@ public class CursoControlador {
     }
 
     public void eliminarCurso(Long id) {
+        cursosCreados.removerCurso(id);
         cursoDAO.eliminar(id);
+    }
+
+    public void adicionarObservador(Observador observador){
+        cursosCreados.adicionarObservador(observador);
     }
 }

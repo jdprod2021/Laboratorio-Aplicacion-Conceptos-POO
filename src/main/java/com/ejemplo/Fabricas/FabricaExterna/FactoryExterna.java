@@ -2,6 +2,7 @@ package com.ejemplo.Fabricas.FabricaExterna;
 
 import com.ejemplo.Utils.Config.AppConfig;
 import com.ejemplo.Vistas.Implementaciones.VistaConsola;
+import com.ejemplo.Vistas.Implementaciones.VistaCursoCreado;
 import com.ejemplo.Vistas.Implementaciones.VistaSwing;
 import com.ejemplo.Vistas.Interface.Vista;
 
@@ -41,7 +42,9 @@ public class FactoryExterna {
                 System.out.println("🏭 Factory Externa: Creando Vista GUI...");
                 vista = new VistaSwing(fabricaControladores);
                 break;
-
+            case "CURSOS":
+                vista = new VistaCursoCreado(fabricaControladores.crearControladorCurso());
+                break;
             default:
                 throw new IllegalArgumentException("Tipo de vista no soportado: " + tipo);
         }
