@@ -5,12 +5,14 @@ import javax.sql.DataSource;
 import com.ejemplo.DAOs.Implementaciones.MySQL.CursoDAOMySQL;
 import com.ejemplo.DAOs.Implementaciones.MySQL.EstudianteDAOMySQL;
 import com.ejemplo.DAOs.Implementaciones.MySQL.FacultadDAOMySQL;
+import com.ejemplo.DAOs.Implementaciones.MySQL.HoraDAOMySQL;
 import com.ejemplo.DAOs.Implementaciones.MySQL.PersonaDAOMySQL;
 import com.ejemplo.DAOs.Implementaciones.MySQL.ProfesorDAOMySQL;
 import com.ejemplo.DAOs.Implementaciones.MySQL.ProgramaDAOMySQL;
 import com.ejemplo.DAOs.Interfaces.CursoDAO;
 import com.ejemplo.DAOs.Interfaces.EstudianteDAO;
 import com.ejemplo.DAOs.Interfaces.FacultadDAO;
+import com.ejemplo.DAOs.Interfaces.HoraDAO;
 import com.ejemplo.DAOs.Interfaces.PersonaDAO;
 import com.ejemplo.DAOs.Interfaces.ProfesorDAO;
 import com.ejemplo.DAOs.Interfaces.ProgramaDAO;
@@ -50,5 +52,9 @@ public class FabricaDAOMySQL extends FabricaDAO {
     @Override
     public EstudianteDAO crearEstudianteDAO() {
         return EstudianteDAOMySQL.crearEstudianteDAOMySQL(dataSource);
+    }
+
+    public HoraDAO crearHoraDAO() {
+        return HoraDAOMySQL.crearHoraDAOMySQL(dataSource);
     }
 }

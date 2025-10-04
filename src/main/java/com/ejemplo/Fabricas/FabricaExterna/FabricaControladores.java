@@ -3,6 +3,7 @@ package com.ejemplo.Fabricas.FabricaExterna;
 import com.ejemplo.Controladores.CursoControlador;
 import com.ejemplo.Controladores.EstudianteControlador;
 import com.ejemplo.Controladores.FacultadControlador;
+import com.ejemplo.Controladores.HoraControlador;
 import com.ejemplo.Controladores.ProfesorControlador;
 import com.ejemplo.Controladores.ProgramaControlador;
 import com.ejemplo.Fabricas.FabricaInterna.FabricaDAO;
@@ -45,6 +46,10 @@ public class FabricaControladores {
 
     public EstudianteControlador crearControladorEstudiante() {
         return EstudianteControlador.crearEstudianteControlador(fabricaDAO.crearEstudianteDAO(), fabricaDAO.crearPersonaDAO(), fabricaDAO.crearProgramaDAO());
+    }
+
+    public HoraControlador crearControladorHora() {
+        return HoraControlador.crearHoraControlador(fabricaDAO.crearHoraDAO());
     }
 
 }

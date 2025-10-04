@@ -1,6 +1,6 @@
 package com.ejemplo.DAOs.IDsCompuestos;
 
-public class IDInscripcion {
+public class IDInscripcionDTO {
     long CursoId;
     Integer Anio;
     Integer Semestre;

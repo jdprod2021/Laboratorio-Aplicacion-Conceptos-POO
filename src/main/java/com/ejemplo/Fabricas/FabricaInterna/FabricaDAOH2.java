@@ -5,12 +5,14 @@ import javax.sql.DataSource;
 import com.ejemplo.DAOs.Implementaciones.H2.CursoDAOH2;
 import com.ejemplo.DAOs.Implementaciones.H2.EstudianteDAOH2;
 import com.ejemplo.DAOs.Implementaciones.H2.FacultadDAOH2;
+import com.ejemplo.DAOs.Implementaciones.H2.HoraDAOH2;
 import com.ejemplo.DAOs.Implementaciones.H2.PersonaDAOH2;
 import com.ejemplo.DAOs.Implementaciones.H2.ProfesorDAOH2;
 import com.ejemplo.DAOs.Implementaciones.H2.ProgramaDAOH2;
 import com.ejemplo.DAOs.Interfaces.CursoDAO;
 import com.ejemplo.DAOs.Interfaces.EstudianteDAO;
 import com.ejemplo.DAOs.Interfaces.FacultadDAO;
+import com.ejemplo.DAOs.Interfaces.HoraDAO;
 import com.ejemplo.DAOs.Interfaces.PersonaDAO;
 import com.ejemplo.DAOs.Interfaces.ProfesorDAO;
 import com.ejemplo.DAOs.Interfaces.ProgramaDAO;
@@ -49,6 +51,10 @@ public class FabricaDAOH2 extends FabricaDAO{
     @Override
     public EstudianteDAO crearEstudianteDAO() {
         return EstudianteDAOH2.crearEstudianteDAOH2(dataSource);
+    }
+
+    public HoraDAO crearHoraDAO() {
+        return HoraDAOH2.crearHoraDAOH2(dataSource);
     }
 
 }

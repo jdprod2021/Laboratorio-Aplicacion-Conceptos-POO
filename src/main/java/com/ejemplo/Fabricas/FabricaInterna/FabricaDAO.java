@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 import com.ejemplo.DAOs.Interfaces.CursoDAO;
 import com.ejemplo.DAOs.Interfaces.EstudianteDAO;
 import com.ejemplo.DAOs.Interfaces.FacultadDAO;
+import com.ejemplo.DAOs.Interfaces.HoraDAO;
 import com.ejemplo.DAOs.Interfaces.PersonaDAO;
 import com.ejemplo.DAOs.Interfaces.ProfesorDAO;
 import com.ejemplo.DAOs.Interfaces.ProgramaDAO;
@@ -24,6 +25,7 @@ public abstract class FabricaDAO {
     abstract public CursoDAO crearCursoDAO();
     abstract public PersonaDAO crearPersonaDAO();
     abstract public EstudianteDAO crearEstudianteDAO();
+    abstract public HoraDAO crearHoraDAO();
 
     public static FabricaDAO of(String vendor, DataSource dataSource) {
         if(fabricaDAO == null){

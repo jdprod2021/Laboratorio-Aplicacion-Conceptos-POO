@@ -3,12 +3,14 @@ package com.ejemplo.Fabricas.FabricaInterna;
 import com.ejemplo.DAOs.Implementaciones.Oracle.CursoDAOOracle;
 import com.ejemplo.DAOs.Implementaciones.Oracle.EstudianteDAOOracle;
 import com.ejemplo.DAOs.Implementaciones.Oracle.FacultadDAOOracle;
+import com.ejemplo.DAOs.Implementaciones.Oracle.HoraDAOOracle;
 import com.ejemplo.DAOs.Implementaciones.Oracle.PersonaDAOOracle;
 import com.ejemplo.DAOs.Implementaciones.Oracle.ProfesorDAOOracle;
 import com.ejemplo.DAOs.Implementaciones.Oracle.ProgramaDAOOracle;
 import com.ejemplo.DAOs.Interfaces.CursoDAO;
 import com.ejemplo.DAOs.Interfaces.EstudianteDAO;
 import com.ejemplo.DAOs.Interfaces.FacultadDAO;
+import com.ejemplo.DAOs.Interfaces.HoraDAO;
 import com.ejemplo.DAOs.Interfaces.PersonaDAO;
 import com.ejemplo.DAOs.Interfaces.ProfesorDAO;
 import com.ejemplo.DAOs.Interfaces.ProgramaDAO;
@@ -47,6 +49,11 @@ public class FabricaDAOOracle extends FabricaDAO {
     @Override
     public EstudianteDAO crearEstudianteDAO() {
         return EstudianteDAOOracle.crearEstudianteDAOOracle(dataSource);
+    }
+
+    @Override
+    public HoraDAO crearHoraDAO() {
+        return HoraDAOOracle.crearHoraDAOOracle(dataSource);
     }
 
 }

@@ -9,16 +9,12 @@ import com.ejemplo.DTOs.Respuesta.ProgramaRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.ProgramaSolicitudDTO;
 import com.ejemplo.Fabricas.FabricaExterna.FabricaControladores;
 
-
-
-
 public class VistaConsolaPrograma {
     private Scanner scanner;
     private FabricaControladores fabricaControladores;
 
-    public VistaConsolaPrograma(FabricaControladores fabricaControladores, Scanner scanner) {
+    public VistaConsolaPrograma(FabricaControladores fabricaControladores) {
         this.fabricaControladores = fabricaControladores;
-        this.scanner = scanner;
     }
 
     public void mostrarMenu() {
