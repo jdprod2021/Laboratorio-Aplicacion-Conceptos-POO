@@ -1,7 +1,8 @@
 package com.ejemplo.Vistas.Implementaciones;
 
 
-import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
+import com.ejemplo.Controladores.HoraControlador;
+import com.ejemplo.Fabricas.FabricaExterna.FabricaControladores;
 import com.ejemplo.Utils.InputUtils;
 import com.ejemplo.Vistas.Consola.*;
 //import com.ejemplo.Vistas.Consola.VistaConsolaPrograma;
@@ -28,6 +29,7 @@ public class VistaConsola implements Vista {
         System.out.println("║  3. 📚 Gestión de Programas                                   ║");
         System.out.println("║  4. 📖 Gestión de Cursos                                      ║");
         System.out.println("║  5. 🎓 Gestión de Estudiantes                                 ║");
+        System.out.println("║  6. ⏰ Obtener Horas                                          ║");
         System.out.println("║  0. 🚪 Salir                                                  ║");
         System.out.println("╚═══════════════════════════════════════════════════════════════╝");
         System.out.print("👉 Seleccione una opción: ");
@@ -71,6 +73,12 @@ public class VistaConsola implements Vista {
                 break;
             case 5:
                 new VistaConsolaEstudiante(fabricaControladores.crearControladorEstudiante()).mostrarMenu();    
+                break;
+            case 6:
+                HoraControlador horaControlador = fabricaControladores.crearControladorHora();
+                String horaServidor = horaControlador.obtenerHoraServidor();
+                InputUtils.mostrarMensaje("⏰ Hora del servidor: " + horaServidor);
+                InputUtils.pausar();
                 break;
             case 0:
                 cerrar();

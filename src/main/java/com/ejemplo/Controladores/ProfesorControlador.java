@@ -15,11 +15,22 @@ public class ProfesorControlador {
 
     private ProfesorDAO profesorDAO;
     private PersonaDAO personaDAO;
+    private static ProfesorControlador profesorControlador;
 
-
-    public ProfesorControlador(ProfesorDAO profesorDAO, PersonaDAO personaDAO) {
+    private ProfesorControlador(ProfesorDAO profesorDAO, PersonaDAO personaDAO) {
         this.profesorDAO = profesorDAO;
         this.personaDAO = personaDAO;
+    }
+
+    public static ProfesorControlador crearProfesorControlador(ProfesorDAO profesorDAO, PersonaDAO personaDAO){
+        if(profesorControlador == null){
+            synchronized (ProfesorControlador.class){
+                if(profesorControlador == null){
+                    profesorControlador = new ProfesorControlador(profesorDAO, personaDAO);
+                }
+            }
+        }
+        return profesorControlador;
     }
 
     public void crearProfesor(ProfesorSolicitudDTO profesorSolicitudDTO){

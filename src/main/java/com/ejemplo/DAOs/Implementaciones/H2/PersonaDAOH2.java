@@ -13,13 +13,27 @@ import javax.sql.DataSource;
 
 import com.ejemplo.DAOs.Interfaces.PersonaDAO;
 import com.ejemplo.Modelos.Persona;
-import com.ejemplo.infra.SqlErrorDetailer;
+import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 
 public class PersonaDAOH2 implements PersonaDAO{
+
     private final DataSource dataSource;
+    private static PersonaDAOH2 personaDAOH2;
     
-    public PersonaDAOH2(DataSource dataSource) {
+    private PersonaDAOH2(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static PersonaDAOH2 crearPersonaDAOH2(DataSource dataSource){
+        if(personaDAOH2 == null){
+            synchronized (PersonaDAOH2.class){
+                if(personaDAOH2 == null){
+                    personaDAOH2 = new PersonaDAOH2(dataSource);
+                }
+            }
+        }
+
+        return personaDAOH2;
     }
 
     @Override

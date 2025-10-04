@@ -12,14 +12,26 @@ import javax.sql.DataSource;
 
 import com.ejemplo.DAOs.Interfaces.ProfesorDAO;
 import com.ejemplo.Modelos.Profesor;
-import com.ejemplo.infra.SqlErrorDetailer;
+import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 
 public class ProfesorDAOH2 implements ProfesorDAO{
 
     private final DataSource dataSource;
+    private static ProfesorDAOH2 profesorDAOH2;
 
-    public ProfesorDAOH2(DataSource dataSource) {
+    private ProfesorDAOH2(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static ProfesorDAOH2 crearProfesorDAOH2(DataSource dataSource){
+        if(profesorDAOH2 == null){
+            synchronized (ProfesorDAOH2.class){
+                if(profesorDAOH2 == null){
+                    profesorDAOH2 = new ProfesorDAOH2(dataSource);
+                }
+            }
+        }
+        return profesorDAOH2;
     }
 
     @Override

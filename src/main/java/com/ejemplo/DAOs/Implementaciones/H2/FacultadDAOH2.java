@@ -14,14 +14,26 @@ import javax.sql.DataSource;
 import com.ejemplo.DAOs.Interfaces.FacultadDAO;
 import com.ejemplo.Modelos.Facultad;
 import com.ejemplo.Modelos.Persona;
-import com.ejemplo.infra.SqlErrorDetailer;
+import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 
 public class FacultadDAOH2 implements FacultadDAO{
 
     private final DataSource dataSource;
+    private static FacultadDAOH2 facultadDAOH2;
 
-    public FacultadDAOH2(DataSource dataSource) {
+    private FacultadDAOH2(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static FacultadDAOH2 crearFacultadDAOH2(DataSource dataSource){
+        if(facultadDAOH2 == null){
+            synchronized (FacultadDAOH2.class){
+                if(facultadDAOH2 == null){
+                    facultadDAOH2 = new FacultadDAOH2(dataSource);
+                }
+            }
+        }
+        return facultadDAOH2;
     }
 
     @Override

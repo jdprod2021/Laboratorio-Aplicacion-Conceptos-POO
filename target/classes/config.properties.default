@@ -5,6 +5,8 @@ db.vendor=H2
  db.h2.url=jdbc:h2:file:./data/sisacad;AUTO_SERVER=TRUE
  db.h2.user=sa
  db.h2.pass=
+ db.h2.init.enabled=true
+ db.h2.init.script=DB/H2.sql
 
 # MySQL (si cambias a MYSQL)
 # db.mysql.url=jdbc:mysql://localhost:3306/prueba?allowPublicKeyRetrieval=true&useSSL=false

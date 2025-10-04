@@ -13,14 +13,26 @@ import javax.sql.DataSource;
 import com.ejemplo.DAOs.Interfaces.EstudianteDAO;
 import com.ejemplo.Modelos.Estudiante;
 import com.ejemplo.Modelos.Programa;
-import com.ejemplo.infra.SqlErrorDetailer;
+import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 
 public class EstudianteDAOH2 implements EstudianteDAO{
 
     private final DataSource dataSource;
+    private static EstudianteDAOH2 estudianteDAOH2;
 
-    public EstudianteDAOH2(DataSource dataSource) {
+    private EstudianteDAOH2(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static EstudianteDAOH2 crearEstudianteDAOH2(DataSource dataSource){
+        if(estudianteDAOH2 == null){
+            synchronized (EstudianteDAOH2.class){
+                if(estudianteDAOH2 == null){
+                    estudianteDAOH2 = new EstudianteDAOH2(dataSource);
+                }
+            }
+        }
+        return estudianteDAOH2;
     }
 
     @Override
@@ -84,7 +96,6 @@ public class EstudianteDAOH2 implements EstudianteDAO{
 
                 long programaId = rs.getLong("programa_id");
 
-                System.out.println("❌ programaId=" + programaId);
                 if (programaId != 0) {
                     Programa programa = new Programa();
                     programa.setID(programaId);
