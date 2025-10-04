@@ -5,7 +5,7 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-import com.ejemplo.Fabricas.FabricaInterna.FabricaControladores;
+import com.ejemplo.Fabricas.FabricaExterna.FabricaControladores;
 import com.ejemplo.Vistas.GUI.*;
 import com.ejemplo.Vistas.Interface.Vista;
 
