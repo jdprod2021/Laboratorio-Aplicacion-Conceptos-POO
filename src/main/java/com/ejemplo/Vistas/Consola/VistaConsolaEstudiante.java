@@ -15,7 +15,7 @@ public class VistaConsolaEstudiante {
     }
 
       public void mostrarMenu() {
-        boolean volver = true;
+        boolean volver = false;
         while (!volver) {
             mostrarOpciones();
             int opcion = InputUtils.readInt();
@@ -41,12 +41,16 @@ public class VistaConsolaEstudiante {
         switch (opcion) {
                 case 1:
                     crearEstudiante();
+                    break;
                 case 2:
                     listarEstudiantes();
+                    break;
                 case 3: 
                     actualizarEstudiantes();
+                    break;
                 case 4:
                     eliminarEstudiantes();
+                    break;
                 case 0:
                     return true;
                 default:

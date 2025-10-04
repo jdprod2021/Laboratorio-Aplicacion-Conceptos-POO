@@ -15,7 +15,7 @@ public class VistaConsolaFacultades {
     }
     
     public void mostrarMenu() {
-        boolean volver = true;
+        boolean volver = false;
         while (!volver) {
             mostrarOpciones();
             int opcion = InputUtils.readInt();
@@ -42,12 +42,16 @@ public class VistaConsolaFacultades {
         switch (opcion) {
                 case 1:
                     crearFacultad();
+                    break;
                 case 2:
                     listarFacultades();
+                    break;
                 case 3: 
                     actualizarFacultad();
+                    break;
                 case 4:
                     eliminarFacultad();
+                    break;
                 case 0:
                     return true;
                 default:

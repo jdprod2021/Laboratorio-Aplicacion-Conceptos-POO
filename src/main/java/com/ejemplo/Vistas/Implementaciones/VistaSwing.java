@@ -1,15 +1,15 @@
 package com.ejemplo.Vistas.Implementaciones;
 
-import java.awt.FlowLayout;
+import java.awt.*;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.*;
 
+import com.ejemplo.Controladores.HoraControlador;
 import com.ejemplo.Fabricas.FabricaExterna.FabricaControladores;
 import com.ejemplo.Vistas.GUI.*;
 import com.ejemplo.Vistas.Interface.Vista;
 
-public class VistaSwing implements Vista{
+public class VistaSwing extends Component implements Vista {
 
     private FabricaControladores fabricaControladores;
 
@@ -25,7 +25,7 @@ public class VistaSwing implements Vista{
     public void crearMenu() {
         JFrame frame = new JFrame("Menú Principal - Swing");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 200);
+        frame.setSize(300, 260);
         frame.setLayout(new FlowLayout());
 
         JButton profesoresBtn = new JButton("Gestión de Profesores");
@@ -70,6 +70,7 @@ public class VistaSwing implements Vista{
         new VistaSwingProgramas(fabricaControladores.crearControladorPrograma()).setVisible(true);
     }
     private void mostrarHora(){
+        new VistaSwingHoraServidor(fabricaControladores.crearControladorHora()).setVisible(true);
 
     }
 

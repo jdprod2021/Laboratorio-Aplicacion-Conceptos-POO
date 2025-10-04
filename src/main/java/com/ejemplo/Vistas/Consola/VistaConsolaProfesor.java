@@ -15,7 +15,7 @@ public class VistaConsolaProfesor {
     }
 
     public void mostrarMenu() {
-        boolean volver = true;
+        boolean volver = false;
         while (!volver) {
             mostrarOpciones();
             int opcion = InputUtils.readInt();
