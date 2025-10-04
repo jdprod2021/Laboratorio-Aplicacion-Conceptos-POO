@@ -21,32 +21,32 @@ public class FabricaDAOOracle extends FabricaDAO {
 
     @Override
     public ProfesorDAO crearProfesorDAO() {
-        return new ProfesorDAOOracle(dataSource);
+        return ProfesorDAOOracle.crearProfesorDAOOracle(dataSource);
     }
 
     @Override
     public FacultadDAO crearFacultadDAO() {
-        return new FacultadDAOOracle(dataSource);
+        return FacultadDAOOracle.crearFacultadDAOOracle(dataSource);
     }
 
     @Override
     public ProgramaDAO crearProgramaDAO() {
-        return new ProgramaDAOOracle(dataSource);
+        return ProgramaDAOOracle.creaProgramaDAOOracle(dataSource);
     }
 
     @Override
     public CursoDAO crearCursoDAO() {
-        return new CursoDAOOracle(dataSource);
+        return CursoDAOOracle.crearCursoDAOOracle(dataSource);
     }
 
     @Override
     public PersonaDAO crearPersonaDAO() {
-        return new PersonaDAOOracle(dataSource);
+        return PersonaDAOOracle.crearPersonaDAOOracle(dataSource);
     }
 
     @Override
     public EstudianteDAO crearEstudianteDAO() {
-        return new EstudianteDAOOracle(dataSource);
+        return EstudianteDAOOracle.crearEstudianteDAOOracle(dataSource);
     }
 
 }

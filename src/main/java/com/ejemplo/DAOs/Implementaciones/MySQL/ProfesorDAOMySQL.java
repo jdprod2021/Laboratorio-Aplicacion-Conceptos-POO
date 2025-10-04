@@ -12,9 +12,21 @@ import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 public class ProfesorDAOMySQL implements ProfesorDAO {
 
     private final DataSource dataSource;
+    private static ProfesorDAOMySQL profesorDAOMySQL;
 
-    public ProfesorDAOMySQL(DataSource dataSource) {
+    private ProfesorDAOMySQL(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static ProfesorDAOMySQL crearProfesorDAOMySQL(DataSource dataSource){
+        if(profesorDAOMySQL == null){
+            synchronized (ProfesorDAOMySQL.class){
+                if(profesorDAOMySQL == null){
+                    profesorDAOMySQL = new ProfesorDAOMySQL(dataSource);
+                }
+            }
+        }
+        return profesorDAOMySQL;
     }
 
     @Override

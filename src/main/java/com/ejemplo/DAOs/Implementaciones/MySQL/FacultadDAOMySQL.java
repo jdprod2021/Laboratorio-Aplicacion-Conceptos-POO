@@ -14,10 +14,23 @@ import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 public class FacultadDAOMySQL implements FacultadDAO {
 
     private final DataSource dataSource;
+    private static FacultadDAOMySQL facultadDAOMySQL;
 
-    public FacultadDAOMySQL(DataSource dataSource) {
+    private FacultadDAOMySQL(DataSource dataSource) {
         this.dataSource = dataSource;
     }
+
+    public static FacultadDAOMySQL crearFacultadDAOMySQL(DataSource dataSource){
+        if(facultadDAOMySQL == null){
+            synchronized (FacultadDAOMySQL.class){
+                if(facultadDAOMySQL == null){
+                    facultadDAOMySQL = new FacultadDAOMySQL(dataSource);
+                }
+            }
+        }
+        return facultadDAOMySQL;
+    }
+
 
     @Override
     public Facultad guardar(Facultad entidad) {

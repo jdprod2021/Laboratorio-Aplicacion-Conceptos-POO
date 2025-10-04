@@ -13,9 +13,21 @@ import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 public class EstudianteDAOMySQL implements EstudianteDAO {
 
     private final DataSource dataSource;
+    public static EstudianteDAOMySQL estudianteDAOMySQL;
 
-    public EstudianteDAOMySQL(DataSource dataSource) {
+    private EstudianteDAOMySQL(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static EstudianteDAOMySQL crearEstudianteDAOMySQL(DataSource dataSource){
+        if(estudianteDAOMySQL == null){
+            synchronized (EstudianteDAOMySQL.class){
+                if(estudianteDAOMySQL == null){
+                    estudianteDAOMySQL = new EstudianteDAOMySQL(dataSource);
+                }
+            }
+        }
+        return estudianteDAOMySQL;
     }
 
     @Override

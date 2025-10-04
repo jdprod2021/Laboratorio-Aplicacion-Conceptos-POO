@@ -14,9 +14,21 @@ import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 public class FacultadDAOOracle implements FacultadDAO {
 
     private final DataSource dataSource;
+    private static FacultadDAOOracle facultadDAOOracle;
 
-    public FacultadDAOOracle(DataSource dataSource) {
+    private FacultadDAOOracle(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static FacultadDAOOracle crearFacultadDAOOracle(DataSource dataSource){
+        if(facultadDAOOracle == null){
+            synchronized (FacultadDAOOracle.class){
+                if(facultadDAOOracle == null){
+                    facultadDAOOracle = new FacultadDAOOracle(dataSource);
+                }
+            }
+        }
+        return facultadDAOOracle;
     }
 
     @Override

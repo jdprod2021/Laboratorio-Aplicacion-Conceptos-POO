@@ -13,9 +13,21 @@ import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 public class EstudianteDAOOracle implements EstudianteDAO {
 
     private final DataSource dataSource;
+    private static EstudianteDAOOracle estudianteDAOOracle;
 
-    public EstudianteDAOOracle(DataSource dataSource) {
+    private EstudianteDAOOracle(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+    
+    public static EstudianteDAOOracle crearEstudianteDAOOracle(DataSource dataSource){
+        if(estudianteDAOOracle == null){
+            synchronized (EstudianteDAOOracle.class){
+                if(estudianteDAOOracle == null){
+                    estudianteDAOOracle = new EstudianteDAOOracle(dataSource);
+                }
+            }
+        }
+        return estudianteDAOOracle;
     }
 
     @Override

@@ -19,9 +19,21 @@ import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 public class ProgramaDAOH2 implements ProgramaDAO{
 
     private final DataSource dataSource;
+    private static ProgramaDAOH2 programaDAOH2;
 
-    public ProgramaDAOH2(DataSource dataSource) {
+    private ProgramaDAOH2(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static ProgramaDAOH2 crearProgramaDAOH2(DataSource dataSource){
+        if(programaDAOH2 == null){
+            synchronized (ProgramaDAOH2.class){
+                if(programaDAOH2 == null){
+                    programaDAOH2 = new ProgramaDAOH2(dataSource);
+                }
+            }
+        }
+        return programaDAOH2;
     }
 
     @Override

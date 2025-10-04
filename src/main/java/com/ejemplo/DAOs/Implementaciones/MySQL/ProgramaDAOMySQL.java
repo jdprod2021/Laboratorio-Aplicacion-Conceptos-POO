@@ -14,9 +14,21 @@ import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 public class ProgramaDAOMySQL implements ProgramaDAO {
 
     private final DataSource dataSource;
+    private static ProgramaDAOMySQL programaDAOMySQL;
 
-    public ProgramaDAOMySQL(DataSource dataSource) {
+    private ProgramaDAOMySQL(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static ProgramaDAOMySQL crearProgramaDAOMySQL(DataSource dataSource){
+        if(programaDAOMySQL == null){
+            synchronized (ProgramaDAOMySQL.class){
+                if(programaDAOMySQL == null){
+                    programaDAOMySQL = new ProgramaDAOMySQL(dataSource);
+                }
+            }
+        }
+        return programaDAOMySQL;
     }
 
     @Override

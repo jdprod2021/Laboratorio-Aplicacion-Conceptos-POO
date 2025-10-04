@@ -11,10 +11,23 @@ import com.ejemplo.Modelos.Persona;
 import com.ejemplo.Utils.Erros.SqlErrorDetailer;
 
 public class PersonaDAOOracle implements PersonaDAO {
-    private final DataSource dataSource;
 
-    public PersonaDAOOracle(DataSource dataSource) {
+    private final DataSource dataSource;
+    private static PersonaDAOOracle personaDAOOracle;
+
+    private PersonaDAOOracle(DataSource dataSource) {
         this.dataSource = dataSource;
+    }
+
+    public static PersonaDAOOracle crearPersonaDAOOracle(DataSource dataSource){
+        if(personaDAOOracle == null){
+            synchronized (PersonaDAOOracle.class){
+                if(personaDAOOracle == null){
+                    personaDAOOracle = new PersonaDAOOracle(dataSource);
+                }
+            }
+        }
+        return personaDAOOracle;
     }
 
     @Override
