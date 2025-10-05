@@ -33,3 +33,9 @@ replay_pid*
 .idea/workspace.xml
 .idea/workspace.xml
 .idea/workspace.xml
+target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+data/sisacad.mv.db
+data/sisacad.lock.db
+.idea/workspace.xml
+.idea/encodings.xml
