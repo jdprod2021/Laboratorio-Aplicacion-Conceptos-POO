@@ -3,8 +3,8 @@ package com.ejemplo.Modelos;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.ejemplo.Obersavador.Observable;
-import com.ejemplo.Obersavador.Observador;
+import com.ejemplo.Observador.Observable;
+import com.ejemplo.Observador.Observador;
 
 public class CursosCreados implements Observable{
     

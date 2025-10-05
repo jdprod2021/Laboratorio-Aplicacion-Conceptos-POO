@@ -71,7 +71,6 @@ public class VistaSwing extends Component implements Vista {
     }
     private void mostrarHora(){
         new VistaSwingHoraServidor(fabricaControladores.crearControladorHora()).setVisible(true);
-
     }
 
 }

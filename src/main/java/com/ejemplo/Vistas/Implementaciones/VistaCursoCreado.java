@@ -1,7 +1,7 @@
 package com.ejemplo.Vistas.Implementaciones;
 
 import com.ejemplo.Controladores.CursoControlador;
-import com.ejemplo.Obersavador.Observador;
+import com.ejemplo.Observador.Observador;
 import com.ejemplo.Vistas.Interface.Vista;
 
 public class VistaCursoCreado implements Observador, Vista{

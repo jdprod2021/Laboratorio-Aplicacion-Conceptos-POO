@@ -11,7 +11,7 @@ import com.ejemplo.DTOs.Solicitud.CursoSolicitudDTO;
 import com.ejemplo.Modelos.Curso;
 import com.ejemplo.Modelos.CursosCreados;
 import com.ejemplo.Modelos.Programa;
-import com.ejemplo.Obersavador.Observador;
+import com.ejemplo.Observador.Observador;
 
 public class CursoControlador {
 

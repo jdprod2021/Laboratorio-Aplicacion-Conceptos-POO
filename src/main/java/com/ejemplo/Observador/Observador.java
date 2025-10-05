@@ -1,4 +1,4 @@
-package com.ejemplo.Obersavador;
+package com.ejemplo.Observador;
 
 public interface Observador {
 

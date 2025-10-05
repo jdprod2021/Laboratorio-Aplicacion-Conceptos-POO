@@ -8,7 +8,6 @@ com\ejemplo\Vistas\Interface\Vista.class
 com\ejemplo\Modelos\CursoProfesor.class
 com\ejemplo\Vistas\GUI\VistaSwingCursos.class
 com\ejemplo\DTOs\Solicitud\ProfesorSolicitudDTO.class
-com\ejemplo\DAOs\IDsCompuestos\IDInscripcion.class
 com\ejemplo\Vistas\Consola\VistaConsolaPrograma.class
 com\ejemplo\Vistas\GUI\VistaSwingProgramas.class
 com\ejemplo\DAOs\Implementaciones\H2\FacultadDAOH2.class
@@ -29,7 +28,6 @@ com\ejemplo\Controladores\ProgramaControlador.class
 com\ejemplo\DTOs\Solicitud\EstudianteSolicitudDTO.class
 com\ejemplo\DAOs\Implementaciones\H2\ProfesorDAOH2.class
 com\ejemplo\DAOs\Implementaciones\Oracle\FacultadDAOOracle.class
-com\ejemplo\infra\SqlErrorDetailer.class
 com\ejemplo\DAOs\Implementaciones\H2\PersonaDAOH2.class
 com\ejemplo\Controladores\CursoControlador.class
 com\ejemplo\DAOs\Interfaces\DAOGeneral.class
@@ -48,7 +46,6 @@ com\ejemplo\Fabricas\FabricaExterna\FactoryExterna.class
 com\ejemplo\DAOs\Implementaciones\MySQL\CursoDAOMySQL.class
 com\ejemplo\Vistas\GUI\VistaSwingProfesores.class
 com\ejemplo\Vistas\Consola\VistaConsolaCursos.class
-com\ejemplo\Fabricas\FabricaInterna\FabricaControladores.class
 com\ejemplo\Fabricas\FabricaInterna\FabricaDAO.class
 com\ejemplo\Fabricas\FabricaInterna\FabricaDAOOracle.class
 com\ejemplo\DAOs\Implementaciones\MySQL\PersonaDAOMySQL.class
@@ -57,7 +54,6 @@ com\ejemplo\DTOs\Respuesta\ProgramaRespuestaDTO.class
 com\ejemplo\DAOs\Implementaciones\MySQL\FacultadDAOMySQL.class
 com\ejemplo\Fabricas\FabricaInterna\FabricaDAOMySQL.class
 com\ejemplo\Modelos\Profesor.class
-com\ejemplo\DAOs\IDsCompuestos\IDCursoProfesor.class
 com\ejemplo\Modelos\Facultad.class
 com\ejemplo\Utils\Config\AppConfig.class
 com\ejemplo\DAOs\Implementaciones\H2\EstudianteDAOH2.class
