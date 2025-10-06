@@ -1,11 +1,13 @@
 package com.ejemplo.Vistas.GUI;
 
 import com.ejemplo.Controladores.ProfesorControlador;
+import com.ejemplo.DTOs.Respuesta.ProfesorRespuestaDTO;
+import com.ejemplo.DTOs.Respuesta.ProfesorRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.ProfesorSolicitudDTO;
 
 import javax.swing.*;
 import java.awt.*;
-
+import java.util.List;
 public class VistaSwingProfesores extends JFrame {
 
     private ProfesorControlador controlador;
@@ -74,16 +76,101 @@ private void initUI(){
     }
 
     private void listarProfesores() {
-        StringBuilder sb = new StringBuilder("=== Lista de Profesores ===\n");
-        controlador.listarProfesores().forEach(profesor -> sb.append("📚 ").append(profesor.toString()).append("\n"));
+        List<ProfesorRespuestaDTO> profesores = controlador.listarProfesores();
 
-        JOptionPane.showMessageDialog(this, sb.toString(), "📋 Profesores", JOptionPane.INFORMATION_MESSAGE);
+        if (profesores.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No hay profesores registrados",
+                    "📋 Profesores",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Definir columnas
+        String[] columnas = {"ID", "Nombres", "Apellidos", "Email", "Tipo de Contrato"};
+
+        // Crear matriz de datos
+        Object[][] datos = new Object[profesores.size()][5];
+        for (int i = 0; i < profesores.size(); i++) {
+            ProfesorRespuestaDTO profesor = profesores.get(i);
+            datos[i][0] = profesor.getID();
+            datos[i][1] = profesor.getNombres();
+            datos[i][2] = profesor.getApellidos();
+            datos[i][3] = profesor.getEmail();
+            datos[i][4] = profesor.getTipoContrato();
+        }
+
+
+        JTable tabla = new JTable(datos, columnas);
+        tabla.setEnabled(false);
+        tabla.setFillsViewportHeight(true);
+
+
+        tabla.getTableHeader().setReorderingAllowed(false);
+        tabla.setRowHeight(25);
+
+
+        tabla.getColumnModel().getColumn(0).setPreferredWidth(50);   // ID
+        tabla.getColumnModel().getColumn(1).setPreferredWidth(120);  // Nombres
+        tabla.getColumnModel().getColumn(2).setPreferredWidth(120);  // Apellidos
+        tabla.getColumnModel().getColumn(3).setPreferredWidth(180);  // Email
+        tabla.getColumnModel().getColumn(4).setPreferredWidth(130);  // Tipo de Contrato
+
+
+        JScrollPane scrollPane = new JScrollPane(tabla);
+        scrollPane.setPreferredSize(new Dimension(650, 350));
+
+        JOptionPane.showMessageDialog(this,
+                scrollPane,
+                "👨‍🏫 Lista de Profesores",
+                JOptionPane.PLAIN_MESSAGE);
     }
 
     private void actualizarProfesor() {
-        String idStr = JOptionPane.showInputDialog(this, "🔍 ID del Profesor a actualizar:");
-        if (idStr == null) return;
-        long id = Long.parseLong(idStr);
+
+        List<ProfesorRespuestaDTO> profesores = controlador.listarProfesores();
+
+
+        if (profesores == null || profesores.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "⚠️ No hay estudiantes registrados para actualizar.");
+            return;
+        }
+
+
+        JComboBox<ProfesorRespuestaDTO> comboProfesores = new JComboBox<>(profesores.toArray(new ProfesorRespuestaDTO[0]));
+
+
+        comboProfesores.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof ProfesorRespuestaDTO profesor) {
+                    setText("ID: " + profesor.getID() + " - " + profesor.getNombres() +  " - " + profesor.getApellidos());
+                }
+                return this;
+            }
+        });
+
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("👨‍🎓 Selecciona el profesor:"));
+        panel.add(comboProfesores);
+
+        int option = JOptionPane.showConfirmDialog(
+                this,
+                panel,
+                "Seleccionar profesor para actualizar",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+        );
+
+        if (option != JOptionPane.OK_OPTION) return;
+
+
+        ProfesorRespuestaDTO profesorSeleccionado = (ProfesorRespuestaDTO) comboProfesores.getSelectedItem();
+        if (profesorSeleccionado == null) return;
+
+        long id = profesorSeleccionado.getID();
 
         String nombre = JOptionPane.showInputDialog(this, "📝 Nuevo Nombre del profesor:");
         if (nombre == null || nombre.isBlank()) return;
@@ -105,9 +192,50 @@ private void initUI(){
     }
 
     private void eliminarProfesor() {
-        String idStr = JOptionPane.showInputDialog(this, "🔍 ID del Profesor a eliminar:");
-        if (idStr == null) return;
-        long id = Long.parseLong(idStr);
+
+        List<ProfesorRespuestaDTO> profesores = controlador.listarProfesores();
+
+
+        if (profesores == null || profesores.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "⚠️ No hay estudiantes registrados para actualizar.");
+            return;
+        }
+
+
+        JComboBox<ProfesorRespuestaDTO> comboProfesores = new JComboBox<>(profesores.toArray(new ProfesorRespuestaDTO[0]));
+
+
+        comboProfesores.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof ProfesorRespuestaDTO profesor) {
+                    setText("ID: " + profesor.getID() + " - " + profesor.getNombres() +  " - " + profesor.getApellidos());
+                }
+                return this;
+            }
+        });
+
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("👨‍🎓 Selecciona el profesor:"));
+        panel.add(comboProfesores);
+
+        int option = JOptionPane.showConfirmDialog(
+                this,
+                panel,
+                "Seleccionar profesor para actualizar",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+        );
+
+        if (option != JOptionPane.OK_OPTION) return;
+
+
+        ProfesorRespuestaDTO profesorSeleccionado = (ProfesorRespuestaDTO) comboProfesores.getSelectedItem();
+        if (profesorSeleccionado == null) return;
+
+        long id = profesorSeleccionado.getID();
 
         controlador.eliminarProfesor(id);
         JOptionPane.showMessageDialog(this, "✅ Profesor eliminado exitosamente.");

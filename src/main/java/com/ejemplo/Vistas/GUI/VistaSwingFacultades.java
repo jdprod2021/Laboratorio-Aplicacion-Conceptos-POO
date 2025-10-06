@@ -1,10 +1,13 @@
 package com.ejemplo.Vistas.GUI;
 
 import com.ejemplo.Controladores.FacultadControlador;
+import com.ejemplo.DTOs.Respuesta.EstudianteRespuestaDTO;
+import com.ejemplo.DTOs.Respuesta.FacultadRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.FacultadSolicitudDTO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class VistaSwingFacultades extends JFrame {
 
@@ -66,16 +69,96 @@ public class VistaSwingFacultades extends JFrame {
     }
 
     private void listarFacultades() {
-        StringBuilder sb = new StringBuilder("=== Lista de Facultades ===\n");
-        controlador.listarFacultades().forEach(facultad -> sb.append("🏛️ ").append(facultad.toString()).append("\n"));
+        List<FacultadRespuestaDTO> facultades = controlador.listarFacultades();
 
-        JOptionPane.showMessageDialog(this, sb.toString(), "📋 Facultades", JOptionPane.INFORMATION_MESSAGE);
+        if (facultades.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No hay facultades registradas",
+                    "📋 Facultades",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Definir columnas
+        String[] columnas = {"ID", "Nombre"};
+
+        // Crear matriz de datos
+        Object[][] datos = new Object[facultades.size()][2];
+        for (int i = 0; i < facultades.size(); i++) {
+            FacultadRespuestaDTO facultad = facultades.get(i);
+            datos[i][0] = facultad.getID();
+            datos[i][1] = facultad.getNombre();
+        }
+
+
+        JTable tabla = new JTable(datos, columnas);
+        tabla.setEnabled(false);
+        tabla.setFillsViewportHeight(true);
+
+
+        tabla.getTableHeader().setReorderingAllowed(false);
+        tabla.setRowHeight(25);
+
+
+        tabla.getColumnModel().getColumn(0).setPreferredWidth(50);   // ID
+        tabla.getColumnModel().getColumn(1).setPreferredWidth(300);  // Nombre
+
+        // Mostrar en un JScrollPane
+        JScrollPane scrollPane = new JScrollPane(tabla);
+        scrollPane.setPreferredSize(new Dimension(400, 300));
+
+        JOptionPane.showMessageDialog(this,
+                scrollPane,
+                "🏛️ Lista de Facultades",
+                JOptionPane.PLAIN_MESSAGE);
     }
 
     private void actualizarFacultad() {
-        String idStr = JOptionPane.showInputDialog(this, "🔍 ID de la facultad a actualizar:");
-        if (idStr == null) return;
-        long id = Long.parseLong(idStr);
+
+        List<FacultadRespuestaDTO> facultades = controlador.listarFacultades();
+
+        if (facultades == null || facultades.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "⚠️ No hay estudiantes registrados para actualizar.");
+            return;
+        }
+
+
+        JComboBox<FacultadRespuestaDTO> comboFacultades = new JComboBox<>(facultades.toArray(new FacultadRespuestaDTO[0]));
+
+
+        comboFacultades.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof FacultadRespuestaDTO facultad) {
+                    setText("ID: " + facultad.getID() + " - " + facultad.getNombre());
+                }
+                return this;
+            }
+        });
+
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("👨‍🎓 Selecciona la facultad:"));
+        panel.add(comboFacultades);
+
+        int option = JOptionPane.showConfirmDialog(
+                this,
+                panel,
+                "Seleccionar facultad para actualizar",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+        );
+
+        if (option != JOptionPane.OK_OPTION) return;
+
+
+        FacultadRespuestaDTO facultadSeleccionada = (FacultadRespuestaDTO) comboFacultades.getSelectedItem();
+        if (facultadSeleccionada == null) return;
+
+        long id = facultadSeleccionada.getID();
+
+
 
         String nombre = JOptionPane.showInputDialog(this, "📝 Nuevo Nombre de la facultad:");
         if (nombre == null || nombre.isBlank()) return;
@@ -91,9 +174,49 @@ public class VistaSwingFacultades extends JFrame {
     }
 
     private void eliminarFacultad() {
-        String idStr = JOptionPane.showInputDialog(this, "🔍 ID de la facultad a eliminar:");
-        if (idStr == null) return;
-        long id = Long.parseLong(idStr);
+
+        List<FacultadRespuestaDTO> facultades = controlador.listarFacultades();
+
+        if (facultades == null || facultades.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "⚠️ No hay estudiantes registrados para actualizar.");
+            return;
+        }
+
+
+        JComboBox<FacultadRespuestaDTO> comboFacultades = new JComboBox<>(facultades.toArray(new FacultadRespuestaDTO[0]));
+
+
+        comboFacultades.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof FacultadRespuestaDTO facultad) {
+                    setText("ID: " + facultad.getID() + " - " + facultad.getNombre());
+                }
+                return this;
+            }
+        });
+
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("👨‍🎓 Selecciona la facultad:"));
+        panel.add(comboFacultades);
+
+        int option = JOptionPane.showConfirmDialog(
+                this,
+                panel,
+                "Seleccionar facultad para actualizar",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+        );
+
+        if (option != JOptionPane.OK_OPTION) return;
+
+
+        FacultadRespuestaDTO facultadSeleccionada = (FacultadRespuestaDTO) comboFacultades.getSelectedItem();
+        if (facultadSeleccionada == null) return;
+
+        long id = facultadSeleccionada.getID();
 
         controlador.eliminarFacultad(id);
         JOptionPane.showMessageDialog(this, "✅ Facultad eliminada exitosamente.");

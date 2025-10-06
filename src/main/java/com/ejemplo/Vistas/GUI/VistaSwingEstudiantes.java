@@ -1,10 +1,12 @@
 package com.ejemplo.Vistas.GUI;
 
 import com.ejemplo.Controladores.EstudianteControlador;
+import com.ejemplo.DTOs.Respuesta.EstudianteRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.EstudianteSolicitudDTO;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 public class VistaSwingEstudiantes extends JFrame {
 
@@ -84,17 +86,102 @@ public class VistaSwingEstudiantes extends JFrame {
     }
 
     private void listarEstudiantes() {
-        StringBuilder sb = new StringBuilder("=== Lista de Estudiantes ===\n");
-        controlador.listarEstudiantes().forEach(estudiante -> sb.append("🎓 ").append(estudiante.toString()).append("\n"));
+        List<EstudianteRespuestaDTO> estudiantes = controlador.listarEstudiantes();
 
-        JOptionPane.showMessageDialog(this, sb.toString(), "📋 Estudiantes", JOptionPane.INFORMATION_MESSAGE);
+        if (estudiantes.isEmpty()) {
+            JOptionPane.showMessageDialog(this,
+                    "No hay estudiantes registrados",
+                    "📋 Estudiantes",
+                    JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+
+        // Definir columnas
+        String[] columnas = {"ID", "Nombres", "Apellidos", "Email", "Programa"};
+
+        // Crear matriz de datos
+        Object[][] datos = new Object[estudiantes.size()][5];
+        for (int i = 0; i < estudiantes.size(); i++) {
+            EstudianteRespuestaDTO estudiante = estudiantes.get(i);
+            datos[i][0] = estudiante.getID();
+            datos[i][1] = estudiante.getNombres();
+            datos[i][2] = estudiante.getApellidos();
+            datos[i][3] = estudiante.getEmail();
+            datos[i][4] = estudiante.getNombrePrograma();
+        }
+
+        // Crear tabla
+        JTable tabla = new JTable(datos, columnas);
+        tabla.setEnabled(false);
+        tabla.setFillsViewportHeight(true);
+
+        // Personalizar apariencia
+        tabla.getTableHeader().setReorderingAllowed(false);
+        tabla.setRowHeight(25);
+
+        // Ajustar ancho de columnas
+        tabla.getColumnModel().getColumn(0).setPreferredWidth(50);   // ID
+        tabla.getColumnModel().getColumn(1).setPreferredWidth(120);  // Nombres
+        tabla.getColumnModel().getColumn(2).setPreferredWidth(120);  // Apellidos
+        tabla.getColumnModel().getColumn(3).setPreferredWidth(180);  // Email
+        tabla.getColumnModel().getColumn(4).setPreferredWidth(130);  // Programa
+
+        // Mostrar en un JScrollPane
+        JScrollPane scrollPane = new JScrollPane(tabla);
+        scrollPane.setPreferredSize(new Dimension(650, 350));
+
+        JOptionPane.showMessageDialog(this,
+                scrollPane,
+                "👥 Lista de Estudiantes",
+                JOptionPane.PLAIN_MESSAGE);
     }
 
     private void actualizarEstudiante() {
-        String idStr = JOptionPane.showInputDialog(this, "🔍 ID del estudiante a actualizar:");
-        if (idStr == null) return;
-        long id = Long.parseLong(idStr);
 
+        List<EstudianteRespuestaDTO> estudiantes = controlador.listarEstudiantes();
+
+        if (estudiantes == null || estudiantes.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "⚠️ No hay estudiantes registrados para actualizar.");
+            return;
+        }
+
+        JComboBox<EstudianteRespuestaDTO> comboEstudiantes = new JComboBox<>(estudiantes.toArray(new EstudianteRespuestaDTO[0]));
+
+
+        comboEstudiantes.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof EstudianteRespuestaDTO estudiante) {
+                    setText("ID: " + estudiante.getID() + " - " + estudiante.getNombres() + " " + estudiante.getApellidos());
+                }
+                return this;
+            }
+        });
+
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("👨‍🎓 Selecciona el estudiante:"));
+        panel.add(comboEstudiantes);
+
+        int option = JOptionPane.showConfirmDialog(
+                this,
+                panel,
+                "Seleccionar estudiante para actualizar",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+        );
+
+        if (option != JOptionPane.OK_OPTION) return;
+
+
+        EstudianteRespuestaDTO estudianteSeleccionado = (EstudianteRespuestaDTO) comboEstudiantes.getSelectedItem();
+        if (estudianteSeleccionado == null) return;
+
+        long id = estudianteSeleccionado.getID();
+
+
+        JOptionPane.showMessageDialog(this, "✅ Estudiante actualizado exitosamente.");
         String nombres = JOptionPane.showInputDialog(this, "📝 Nuevos Nombres del estudiante:");
         if (nombres == null || nombres.isBlank()) return;
 
@@ -127,9 +214,47 @@ public class VistaSwingEstudiantes extends JFrame {
     }
 
     private void eliminarEstudiante() {
-        String idStr = JOptionPane.showInputDialog(this, "🔍 ID del estudiante a eliminar:");
-        if (idStr == null) return;
-        long id = Long.parseLong(idStr);
+        List<EstudianteRespuestaDTO> estudiantes = controlador.listarEstudiantes();
+
+        if (estudiantes == null || estudiantes.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "⚠️ No hay estudiantes registrados para actualizar.");
+            return;
+        }
+
+        JComboBox<EstudianteRespuestaDTO> comboEstudiantes = new JComboBox<>(estudiantes.toArray(new EstudianteRespuestaDTO[0]));
+
+
+        comboEstudiantes.setRenderer(new DefaultListCellRenderer() {
+            @Override
+            public Component getListCellRendererComponent(
+                    JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
+                super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
+                if (value instanceof EstudianteRespuestaDTO estudiante) {
+                    setText("ID: " + estudiante.getID() + " - " + estudiante.getNombres() + " " + estudiante.getApellidos());
+                }
+                return this;
+            }
+        });
+
+        JPanel panel = new JPanel();
+        panel.add(new JLabel("👨‍🎓 Selecciona el estudiante:"));
+        panel.add(comboEstudiantes);
+
+        int option = JOptionPane.showConfirmDialog(
+                this,
+                panel,
+                "Seleccionar estudiante para actualizar",
+                JOptionPane.OK_CANCEL_OPTION,
+                JOptionPane.PLAIN_MESSAGE
+        );
+
+        if (option != JOptionPane.OK_OPTION) return;
+
+
+        EstudianteRespuestaDTO estudianteSeleccionado = (EstudianteRespuestaDTO) comboEstudiantes.getSelectedItem();
+        if (estudianteSeleccionado == null) return;
+
+        long id = estudianteSeleccionado.getID();
 
         controlador.eliminarEstudiante(id);
         JOptionPane.showMessageDialog(this, "✅ Estudiante eliminado exitosamente.");
