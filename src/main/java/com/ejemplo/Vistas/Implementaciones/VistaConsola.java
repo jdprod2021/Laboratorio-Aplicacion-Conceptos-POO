@@ -38,6 +38,7 @@ public class VistaConsola implements Vista {
     public void cerrar() {
         InputUtils.mostrarMensaje("👋 Cerrando aplicación...");
         InputUtils.mostrarMensaje("¡Gracias por usar el Sistema Académico!");
+        InputUtils.mostrarMensaje("Hecho por Daniel Barreto (160004622) y Dhanielt Rubio (160004935)");
         aplicacionEjecutandose = false;
         InputUtils.readLine();
     }
