@@ -26,12 +26,12 @@ public class VistaConsolaEstudiante {
 
     private void mostrarOpciones(){
          System.out.println("╔════════════════════════════════════════════╗");
-            System.out.println("║            👨‍🏫 GESTIÓN DE PROFESORES           ║");
+            System.out.println("║            👨‍🏫 GESTIÓN DE ESTUDIANTE        ║");
             System.out.println("╠════════════════════════════════════════════╣");
-            System.out.println("║ 1. ➕ Crear Profesor                        ║");
-            System.out.println("║ 2. 📋 Listar Profesores                     ║");
-            System.out.println("║ 3. ✏️  Actualizar Profesor                   ║");
-            System.out.println("║ 4. 🗑️  Eliminar Profesor                     ║");
+            System.out.println("║ 1. ➕ Crear Estudiante                        ║");
+            System.out.println("║ 2. 📋 Listar Estudiantes                     ║");
+            System.out.println("║ 3. ✏️  Actualizar Estudiante                   ║");
+            System.out.println("║ 4. 🗑️  Eliminar Estudiante                     ║");
             System.out.println("║ 0. 🔙 Volver                                ║");
             System.out.println("╚════════════════════════════════════════════╝");
             System.out.print("👉 Seleccione una opción: ");
@@ -95,7 +95,7 @@ public class VistaConsolaEstudiante {
 
         private void listarEstudiantes(){
              
-            System.out.println("\n=== Lista de Cursos ===");
+            System.out.println("\n=== Lista de Estudiantes ===");
             controlador.listarEstudiantes().forEach(curso -> 
             System.out.println("📚 " + curso.toString())
             );

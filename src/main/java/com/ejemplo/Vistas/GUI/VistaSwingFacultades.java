@@ -1,7 +1,6 @@
 package com.ejemplo.Vistas.GUI;
 
 import com.ejemplo.Controladores.FacultadControlador;
-import com.ejemplo.DTOs.Respuesta.EstudianteRespuestaDTO;
 import com.ejemplo.DTOs.Respuesta.FacultadRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.FacultadSolicitudDTO;
 

@@ -1,13 +1,9 @@
 package com.ejemplo.Vistas.Consola;
 
 import java.sql.Date;
-import java.util.List;
-import java.util.Scanner;
 
 import com.ejemplo.Controladores.ProgramaControlador;
-import com.ejemplo.DTOs.Respuesta.ProgramaRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.ProgramaSolicitudDTO;
-import com.ejemplo.Fabricas.FabricaExterna.FabricaControladores;
 import com.ejemplo.Utils.InputUtils;
 
 public class VistaConsolaPrograma {
@@ -89,7 +85,7 @@ public class VistaConsolaPrograma {
 
     private void listarProgramas(){
         InputUtils.limpiarPantalla();
-        System.out.println("📋 LISTA DE PROFESORES");
+        System.out.println("📋 LISTA DE PROGRAMAS");
 
         try {
 
@@ -109,9 +105,9 @@ public class VistaConsolaPrograma {
     private void actualizarPrograma(){
 
         InputUtils.limpiarPantalla();
-        System.out.println("✏️ ACTUALIZAR PROFESOR");
+        System.out.println("✏️ ACTUALIZAR PROGRAMAS");
 
-        System.out.print("🔍 ID del profesor a actualizar: ");
+        System.out.print("🔍 ID del programa a actualizar: ");
         long id = InputUtils.readLong();
 
         System.out.println("=== Datos Nuevo Programa ===");
@@ -136,9 +132,9 @@ public class VistaConsolaPrograma {
     private void eliminarPrograma(){
 
         InputUtils.limpiarPantalla();
-        System.out.println("✏️ ELIMINAR PROFESOR");
+        System.out.println("✏️ ELIMINAR PROGRAMA");
 
-        System.out.print("🔍 ID del profesor a eliminar: ");
+        System.out.print("🔍 ID del programa a eliminar: ");
         long id = InputUtils.readLong();
 
         controlador.eliminarPrograma(id);

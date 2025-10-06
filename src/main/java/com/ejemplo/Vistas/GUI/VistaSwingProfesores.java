@@ -2,7 +2,6 @@ package com.ejemplo.Vistas.GUI;
 
 import com.ejemplo.Controladores.ProfesorControlador;
 import com.ejemplo.DTOs.Respuesta.ProfesorRespuestaDTO;
-import com.ejemplo.DTOs.Respuesta.ProfesorRespuestaDTO;
 import com.ejemplo.DTOs.Solicitud.ProfesorSolicitudDTO;
 
 import javax.swing.*;

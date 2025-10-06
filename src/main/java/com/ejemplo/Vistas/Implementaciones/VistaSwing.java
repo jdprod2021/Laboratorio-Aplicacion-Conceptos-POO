@@ -4,7 +4,6 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import com.ejemplo.Controladores.HoraControlador;
 import com.ejemplo.Fabricas.FabricaExterna.FabricaControladores;
 import com.ejemplo.Vistas.GUI.*;
 import com.ejemplo.Vistas.Interface.Vista;

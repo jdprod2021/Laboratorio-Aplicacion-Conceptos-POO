@@ -41,12 +41,16 @@ public class VistaConsolaProfesor {
         switch (opcion) {
                 case 1:
                     crearProfesor();
+                    break;
                 case 2:
                     listarProfesores();
+                    break;
                 case 3: 
                     actualizarProfesor();
+                    break;
                 case 4:
                     eliminarProfesor();
+                    break;
                 case 0:
                     return true;
                 default:
